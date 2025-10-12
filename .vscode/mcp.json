@@ -1,0 +1,29 @@
+﻿{
+  "inputs": [
+    {
+      "id": "github_token",
+      "type": "promptString",
+      "description": "GitHub Personal Access Token (optional, nur fÃ¼r GitHub-MCP via PAT)",
+      "password": true
+    }
+  ],
+  "servers": {
+    "github": { "url": "https://api.githubcopilot.com/mcp/" },
+    "arduino": {
+      "command": "uvx",
+      "args": ["mcp-arduino-server"],
+      "env": { "LOG_LEVEL": "INFO" }
+    },
+    "ddg-search": { "command": "uvx", "args": ["duckduckgo-mcp-server"] },
+    "desktop-commander": { "command": "npx", "args": ["-y","@wonderwhy-er/desktop-commander@latest"] },
+    "memory-bank": {
+      "command": "npx",
+      "args": ["-y","@allpepper/memory-bank-mcp@latest"],
+      "env": { "MEMORY_BANK_ROOT": "${workspaceFolder}\\.memory-bank" }
+    },
+    "knowledge-graph": {
+      "command": "npx",
+      "args": ["-y","mcp-knowledge-graph","--memory-path","${workspaceFolder}\\.aim"]
+    }
+  }
+}
