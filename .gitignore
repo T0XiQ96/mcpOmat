@@ -1,0 +1,5 @@
+# Ignore Codex agent artifacts
+.codex/
+
+# Ignore Spec Kit memory (regenerated)
+.specify/memory/
