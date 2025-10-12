@@ -2,6 +2,6 @@
 
 ## Spec Kit Workflow
 
-Separates Repo für Spec Kit (Spezifikation/Plan/Tasks, PR-Checks).
+Separates Repo fuer Spec Kit (Spezifikation/Plan/Tasks, PR-Checks).
 
-Siehe `.vscode/mcp.json` für MCP-Server und `specify` CLI für Checks/Init.
+Siehe `.vscode/mcp.json` fuer MCP-Server und `specify` CLI fuer Checks/Init.
