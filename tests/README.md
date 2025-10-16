@@ -25,3 +25,6 @@ In diesem Verzeichnis liegen alle Hardware-Testpakete, die vor dem Flashen der G
 4. Nach erfolgreichem Test Bundle nach `/tests/succeeded/` verschieben und Ergebnis dokumentieren.
 
 Weitere Details siehe `docs/operations/test-package-workflow.md`.
+
+## Generatorskript
+- python tests/scripts/generate_bundles.py erstellt/aktualisiert die Bundles s485-link, led-ring und display-sync auf Basis der Waveshare-Treiber.
