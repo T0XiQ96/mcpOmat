@@ -1,148 +1,148 @@
-# Tasks: PitterOmat Core Experience
+# Aufgaben: PitterOmat Kernerlebnis
 
-**Input**: Design documents from `/specs/002-clarify-pitteromat/`
-**Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/
+**Eingangsdokumente**: Unterlagen aus `/specs/002-clarify-pitteromat/`  
+**Voraussetzungen**: plan.md, spec.md, research.md, data-model.md, contracts/
 
-**Tests**: Included only where diagnostics or manifest validation require explicit verification.
+**Tests**: Nur dort, wo Diagnosen oder Manifest-Validierung eine explizite Prüfung benötigen.
 
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+**Organisation**: Aufgaben sind nach User Stories gruppiert, damit jede Story unabhängig implementiert und getestet werden kann.
 
-## Format: `[ID] [P?] [Story] Description`
-- **[P]**: Task can run in parallel (different files, no dependencies)
-- **[Story]**: User story label (US1, US2, US3) for story phases
-- Every description includes exact file paths
+## Format: `[ID] [P?] [Story] Beschreibung`
+- **[P]**: Aufgabe kann parallel laufen (unabhängige Dateien, keine offenen Abhängigkeiten).
+- **[Story]**: Label der User Story (US1, US2, US3) – nur in Story-Phasen erforderlich.
+- Jede Beschreibung enthält den exakten Dateipfad.
 
-## Phase 1: Setup (Shared Infrastructure)
+## Phase 1: Setup (Gemeinsame Infrastruktur)
 
-**Purpose**: Establish documentation references and SD workspace needed across stories.
+**Ziel**: Dokumentationsgrundlagen und SD-Arbeitsbereich für alle Stories bereitstellen.
 
-- [ ] T001 Document current hardware wiring assumptions in docs/hardware/pitter-o-mat-setup.md
-- [ ] T002 Add TREIBER source reference to tests/README.md for hardware bundles
-- [ ] T003 [P] Update docs/operations/test-package-workflow.md with naming guidance for new bundles
-- [ ] T004 [P] Create placeholder SDCARD/README.md describing manifest_tool usage workflow
-
----
-
-## Phase 2: Foundational (Blocking Prerequisites)
-
-**Purpose**: Implement manifest tooling, shared RS485 framing, and baseline hardware bundles required before story work.
-
-- [ ] T005 Validate firmware/shared/proto/manifest.schema.json against JSON Schema draft-07 rules
-- [ ] T006 Create sample SD assets in SDCARD/games/sample-game.json and SDCARD/options/sample-options.json following schemas
-- [ ] T007 [P] Run python -m firmware.shared.scripts.manifest_tool generate --root SDCARD --output SDCARD/manifest.json
-- [ ] T008 [P] Run python -m firmware.shared.scripts.manifest_tool validate SDCARD/manifest.json --root SDCARD and capture output in docs/operations/config-manifest.md
-- [ ] T009 Implement RS485 frame encode/decode in firmware/esp32/main/transport_rs485.c using shared proto
-- [ ] T010 Mirror RS485 frame parsing in firmware/arduino/src/transport_rs485.cpp
-- [ ] T011 Seed tests/rs485-link bundle by adapting TREIBER RS485 demo with manifest hash echo and expected.log
-- [ ] T012 [P] Seed tests/led-ring bundle by adapting TREIBER LED demo with segment map verification script
-- [ ] T013 Add manifest workflow note to docs/operations/config-manifest.md referencing research decisions
+- [ ] T001 Dokumentiere aktuelle Hardwareverkabelung in docs/hardware/pitter-o-mat-setup.md
+- [ ] T002 Ergänze in tests/README.md einen Verweis auf die Waveshare-TREIBER-Quellen
+- [ ] T003 [P] Aktualisiere docs/operations/test-package-workflow.md mit Namenskonventionen für neue Bundles
+- [ ] T004 [P] Lege SDCARD/README.md als Anleitung für den Einsatz von manifest_tool an
 
 ---
 
-## Phase 3: User Story 1 - Guided Game Setup (Priority: P1) - MVP
+## Phase 2: Fundament (Blockierende Voraussetzungen)
 
-**Goal**: Touch-driven setup flow from idle to gameplay with ready checks for 2-6 players.
+**Ziel**: Manifest-Tooling, gemeinsames RS485-Framing und Basis-Testbundles herstellen.
 
-**Independent Test**: Select four players, choose a valid game, have each player confirm readiness, and observe gameplay start without admin intervention.
-
-### Implementation Tasks
-
-- [ ] T014 [US1] Ensure firmware/shared/proto/segment_map.json reflects spec PlayerSlot seating (update if mismatched)
-- [ ] T015 [US1] Implement player count selection and game filtering in firmware/esp32/main/ui_menu.c
-- [ ] T016 [US1] Broadcast session configuration (RS485 msg 0x01) via firmware/esp32/main/session_bus.c
-- [ ] T017 [US1] Handle ready button mask (msg 0x06) intake in firmware/esp32/main/session_bus.c
-- [ ] T018 [US1] Manage ReadyCheck state transitions in firmware/arduino/src/session_controller.cpp
-- [ ] T019 [US1] Persist last player count/game choice in firmware/esp32/main/storage_config.c
-- [ ] T020 [US1] Append guided setup walkthrough to docs/operations/quickstart.md
+- [ ] T005 Validiere firmware/shared/proto/manifest.schema.json gegen den JSON-Schema-Standard (Draft-07)
+- [ ] T006 Erzeuge Beispiel-Assets in SDCARD/games/sample-game.json und SDCARD/options/sample-options.json
+- [ ] T007 [P] Führe python -m firmware.shared.scripts.manifest_tool generate --root SDCARD --output SDCARD/manifest.json aus
+- [ ] T008 [P] Dokumentiere python -m firmware.shared.scripts.manifest_tool validate SDCARD/manifest.json --root SDCARD in docs/operations/config-manifest.md
+- [ ] T009 Implementiere RS485-Frame-Encoding/Decoding in firmware/esp32/main/transport_rs485.c basierend auf dem gemeinsamen Proto
+- [ ] T010 Spiegle die RS485-Frame-Verarbeitung in firmware/arduino/src/transport_rs485.cpp
+- [ ] T011 Lege tests/rs485-link Bundle mit adaptiertem TREIBER-RS485-Demo und Hash-Echo an
+- [ ] T012 [P] Lege tests/led-ring Bundle mit TREIBER-LED-Demo und Segment-Map-Validierung an
+- [ ] T013 Ergänze docs/operations/config-manifest.md um Hinweise zum Manifest-Workflow gemäß research.md
 
 ---
 
-## Phase 4: User Story 2 - LED & Display Orchestration (Priority: P2)
+## Phase 3: User Story 1 – Geführtes Spiel-Setup (Priorität: P1) – MVP
 
-**Goal**: Keep LED boundaries, Joker rules, and seat displays aligned with manifest mappings.
+**Ziel**: Touch-basiertes Setup vom Idle-Screen bis zum Spielstart mit Ready-Checks für 2–6 Spieler.
 
-**Independent Test**: Run a five-player session with Joker disabled and confirm SpielLED group 2 stays off, boundaries remain lit, and displays show correct seat labels.
+**Unabhängiger Test**: Vier Spieler auswählen, Spiel starten, Ready-Taster betätigen lassen und automatischen Spielstart ohne Admin-Eingriff beobachten.
 
-### Implementation Tasks
+### Umsetzung
 
-- [ ] T021 [P] [US2] Generate LED mapping payload (msg 0x02) in firmware/esp32/main/led_mapper.c
-- [ ] T022 [US2] Apply LED mapping payload in firmware/arduino/src/led_boundary_renderer.cpp
-- [ ] T023 [US2] Implement Joker highlight toggling in firmware/arduino/src/led_boundary_renderer.cpp
-- [ ] T024 [US2] Sync display seat labels in firmware/esp32/main/ui_player_rings.c using PlayerSlot data
-- [ ] T025 [US2] Trigger win/lose animations (msg 0x07) in firmware/esp32/main/gameplay_events.c
-- [ ] T026 [US2] Update docs/operations/config-manifest.md with LED verification checklist
-- [ ] T027 [US2] Extend tests/led-ring/expected.log to capture Joker and boundary assertions
-
----
-
-## Phase 5: User Story 3 - Admin Oversight & Synchronization (Priority: P3)
-
-**Goal**: Provide diagnostics, manifest synchronization, and timed admin unlock for operators.
-
-**Independent Test**: Hold the admin button, enter admin mode, validate manifest hashes, run RS485 and LED diagnostics, and exit to relock within 10 seconds.
-
-### Implementation Tasks
-
-- [ ] T028 [P] [US3] Implement admin unlock timer logic in firmware/esp32/main/admin_controls.c
-- [ ] T029 [US3] Surface manifest hash status UI in firmware/esp32/ui/options_admin.eezi integration
-- [ ] T030 [US3] Broadcast manifest hash (msg 0x05) in firmware/esp32/main/manifest_sync.c
-- [ ] T031 [US3] Echo manifest ack in firmware/arduino/src/manifest_sync.cpp
-- [ ] T032 [US3] Wire RS485/Wi-Fi diagnostics actions in firmware/esp32/main/admin_diagnostics.c
-- [ ] T033 [US3] Persist diagnostics logs in firmware/esp32/main/log_store.c
-- [ ] T034 [US3] Time the diagnostics workflow, targeting <=2 minutes, and log results in docs/operations/performance-results.md
-- [ ] T035 [US3] Document admin workflow updates in docs/operations/ota-playbook.md and docs/operations/test-package-workflow.md
+- [ ] T014 [US1] Prüfe und aktualisiere bei Bedarf firmware/shared/proto/segment_map.json entsprechend der Spezifikation
+- [ ] T015 [US1] Implementiere Spielerzahlauswahl und Spielfilter in firmware/esp32/main/ui_menu.c
+- [ ] T016 [US1] Sende die Session-Konfiguration (RS485-Nachricht 0x01) über firmware/esp32/main/session_bus.c
+- [ ] T017 [US1] Verarbeite den Ready-Button-Maskenwert (Nachricht 0x06) in firmware/esp32/main/session_bus.c
+- [ ] T018 [US1] Steuere den ReadyCheck-Zustand in firmware/arduino/src/session_controller.cpp
+- [ ] T019 [US1] Speichere letzte Spieleranzahl und Spielwahl in firmware/esp32/main/storage_config.c
+- [ ] T020 [US1] Ergänze docs/operations/quickstart.md um den geführten Setup-Ablauf
 
 ---
 
-## Phase N: Polish & Cross-Cutting Concerns
+## Phase 4: User Story 2 – LED- & Display-Orchestrierung (Priorität: P2)
 
-**Purpose**: Final documentation, validation, and cleanup once all stories are implemented.
+**Ziel**: LED-Grenzen, Joker-Verhalten und Sitzanzeigen bleiben konsistent zum Manifest und Sitzplan.
 
-- [ ] T036 [P] Update docs/operations/quickstart.md with screenshots or annotated logs from final test run
-- [ ] T037 Add manifest mismatch recovery FAQ entry to docs/operations/config-manifest.md
-- [ ] T038 [P] Verify tests/succeeded bundles contain latest expected.log and README guidance
-- [ ] T039 Execute end-to-end smoke test (quickstart steps) and record results in docs/operations/performance-results.md
-- [ ] T040 Sweep firmware/ for TODO/FIXME comments and convert to tracked backlog items
+**Unabhängiger Test**: Fünfspieler-Session ohne Joker starten; SpielLED-Gruppe 2 bleibt aus, Grenzen leuchten konstant, Displays zeigen korrekte Sitzlabels.
+
+### Umsetzung
+
+- [ ] T021 [P] [US2] Generiere LED-Mapping-Payload (Nachricht 0x02) in firmware/esp32/main/led_mapper.c
+- [ ] T022 [US2] Übernimm das Mapping in firmware/arduino/src/led_boundary_renderer.cpp
+- [ ] T023 [US2] Implementiere Joker-Hervorhebung in firmware/arduino/src/led_boundary_renderer.cpp
+- [ ] T024 [US2] Synchronisiere Sitzanzeigen in firmware/esp32/main/ui_player_rings.c anhand der PlayerSlot-Daten
+- [ ] T025 [US2] Löse Sieger-/Verlierer-Animationen (Nachricht 0x07) in firmware/esp32/main/gameplay_events.c aus
+- [ ] T026 [US2] Ergänze docs/operations/config-manifest.md um eine LED-Prüfliste
+- [ ] T027 [US2] Aktualisiere tests/led-ring/expected.log mit Joker- und Grenzprüfungen
 
 ---
 
-## Dependencies & Execution Order
+## Phase 5: User Story 3 – Admin-Überwachung & Synchronisation (Priorität: P3)
 
-- **Phase 1 -> Phase 2**: Setup tasks establish documentation and placeholders; Foundational tasks depend on sample assets and manifest tooling readiness.
-- **Phase 2 -> User Stories**: RS485 framing, manifest validation, and test bundles must be complete before any story work begins.
-- **User Stories**: Execute in priority order (US1 MVP -> US2 visuals -> US3 admin). Each story is independently testable after its tasks.
-- **Polish**: Runs after desired story phases conclude.
+**Ziel**: Diagnosen, Manifest-Sync und zeitgesteuerte Admin-Freigabe für Operatoren bereitstellen.
 
-### User Story Dependency Graph
+**Unabhängiger Test**: Admin-Button halten, Manifest-Abgleich und RS485/LED-Diagnosen ausführen, innerhalb von 10 Sekunden zurücksperren und Statusmeldungen prüfen.
+
+### Umsetzung
+
+- [ ] T028 [P] [US3] Implementiere den Admin-Freigabetimer in firmware/esp32/main/admin_controls.c
+- [ ] T029 [US3] Binde Manifest-Hash-Status in firmware/esp32/ui/options_admin.eezi ein
+- [ ] T030 [US3] Sende Manifest-Hash (Nachricht 0x05) in firmware/esp32/main/manifest_sync.c
+- [ ] T031 [US3] Bestätige Manifest-Hash in firmware/arduino/src/manifest_sync.cpp
+- [ ] T032 [US3] Verknüpfe RS485/WLAN-Diagnosen in firmware/esp32/main/admin_diagnostics.c
+- [ ] T033 [US3] Schreibe Diagnoseprotokolle in firmware/esp32/main/log_store.c
+- [ ] T034 [US3] Messe den Diagnoseablauf (≤ 2 Minuten) und notiere Ergebnisse in docs/operations/performance-results.md
+- [ ] T035 [US3] Aktualisiere docs/operations/ota-playbook.md und docs/operations/test-package-workflow.md mit dem Admin-Prozess
+
+---
+
+## Phase N: Feinschliff & Querschnitt
+
+**Ziel**: Abschlussdokumentation, End-to-End-Validierung und Aufräumarbeiten nach allen Stories.
+
+- [ ] T036 [P] Ergänze docs/operations/quickstart.md um Screenshots oder annotierte Logs aus dem finalen Testlauf
+- [ ] T037 Ergänze in docs/operations/config-manifest.md einen FAQ-Eintrag zur Manifest-Wiederherstellung
+- [ ] T038 [P] Prüfe, dass alle Bundles in tests/succeeded/ ein aktuelles expected.log und README besitzen
+- [ ] T039 Führe den vollständigen Smoke-Test (Quickstart) aus und protokolliere die Ergebnisse in docs/operations/performance-results.md
+- [ ] T040 Bereinige TODO/FIXME-Kommentare im Firmware-Code und überführe offene Punkte in den Backlog
+
+---
+
+## Abhängigkeiten & Reihenfolge
+
+- **Phase 1 → Phase 2**: Setup liefert Grundlagen; Fundament baut auf vorhandenen Assets/Tooling auf.
+- **Phase 2 → User Stories**: RS485, Manifest und Testbundles müssen stehen, bevor Stories beginnen.
+- **User Stories**: Reihenfolge nach Priorität (US1 MVP → US2 Visuals → US3 Admin). Jede Story ist danach eigenständig testbar.
+- **Feinschliff**: Läuft nach Abschluss der gewünschten Stories.
+
+### User-Story-Abhängigkeitsgraph
 
 ```
-US1 (Guided Setup) --> enables LED mapping (US2)
-US1 --> enables Admin oversight (US3)
-US2, US3 do not depend on each other directly
+US1 (Setup)  --> ermöglicht LED-Mapping (US2)
+US1 (Setup)  --> ermöglicht Admin-Überwachung (US3)
+US2 und US3 können unabhängig voneinander umgesetzt werden
 ```
 
-### Parallel Opportunities
+### Parallelisierungsmöglichkeiten
 
-- Phase 1: T002/T003/T004 can proceed while T001 is being documented.
-- Phase 2: T007 and T008 (manifest commands) can run once sample assets (T006) exist; T011 and T012 can be developed in parallel.
-- US2: T021 (payload generation) and T024 (display sync) can progress concurrently before integration in T022.
-- US3: T028 (unlock timer) and T030 (hash broadcast) can proceed in parallel, merging for UI tasks later.
+- Phase 1: T002, T003 und T004 parallel zu T001.
+- Phase 2: T007 und T008 nach T006; T011 und T012 parallel.
+- US2: T021 und T024 parallel, vor Integration in T022.
+- US3: T028 und T030 parallel, Zusammenführung bei UI-Aufgaben.
 
 ---
 
-## Implementation Strategy
+## Umsetzungsstrategie
 
-### MVP First (User Story 1)
-1. Complete Phase 1 and Phase 2 tasks.
-2. Implement US1 tasks (T014-T020).
-3. Execute guided setup test flow from quickstart.
+### MVP zuerst (User Story 1)
+1. Phasen 1 und 2 abschließen.  
+2. US1-Aufgaben (T014–T020) erledigen.  
+3. Geführten Setup-Test gemäß Quickstart durchführen.
 
-### Incremental Delivery
-1. Deliver US1 (MVP).
-2. Add US2 LED/display orchestration; run five-player Joker-disabled scenario.
-3. Add US3 admin oversight; run full diagnostics cycle.
+### Inkrementelle Lieferung
+1. US1 als MVP abschließen.  
+2. US2 hinzufügen und Fünfspieler-/Joker-Szenario testen.  
+3. US3 hinzufügen und vollständigen Diagnosedurchlauf ausführen.
 
-### Parallel Team Strategy
-- Developer A: Focus on RS485 framing and session control (Phase 2 + US1).
-- Developer B: Handle LED mapping and display orchestration (US2).
-- Developer C: Implement admin diagnostics and manifest sync (US3).
+### Parallelstrategie im Team
+- Entwickler A: RS485 + Session-Kontrolle (Phase 2 + US1).  
+- Entwickler B: LED-Mapping & Display (US2).  
+- Entwickler C: Admin-Diagnosen & Manifest-Sync (US3).

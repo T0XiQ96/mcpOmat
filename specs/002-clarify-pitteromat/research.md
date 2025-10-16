@@ -1,19 +1,19 @@
-# Research Log – PitterOmat Core Experience
+# Rechercheprotokoll – PitterOmat Kernerlebnis
 
-## Decision: Hardware smoke-test workflow
-- **Rationale**: Reusing Waveshare TREIBER demos keeps low-level drivers aligned with vendor support and shortens bring-up. Each test bundle (RS485, LED ring, display sync, diagnostics) will wrap the official sketch, add project-specific verification (e.g., manifest hash echo, segment map checks), and capture expected serial output for comparison.
-- **Alternatives considered**:
-  - Building bespoke mocks for every subsystem → rejected; higher maintenance risk and diverges from proven reference code.
-  - Relying solely on integration firmware for validation → rejected; debugging composite builds without isolated tests is slow and brittle.
+## Entscheidung: Hardware-Smoke-Test-Workflow
+- **Begründung**: Durch die Wiederverwendung der Waveshare-TREIBER-Demos bleiben Low-Level-Treiber nahe an der Herstellerversion und die Inbetriebnahme wird kürzer. Jedes Test-Bundle (RS485, LED-Ring, Display-Sync, Diagnosen) erweitert das Original-Sketch um projektspezifische Prüfungen (z.B. Manifest-Hash-Echo, Segment-Map-Checks) und protokolliert erwartete serielle Ausgaben.
+- **Betrachtete Alternativen**:
+  - Eigene Mocks für jedes Subsystem – verworfen wegen höherem Wartungsaufwand und Abweichung vom Referenzcode.
+  - Ausschließlich Integrationstests mit Gesamtfirmware – verworfen, weil Fehlersuche ohne isolierte Tests mühsam und fehleranfällig ist.
 
-## Decision: Manifest validation pipeline
-- **Rationale**: Development machines will run `python -m firmware.shared.scripts.manifest_tool generate --root SDCARD` after content updates, commit the resulting `manifest.json`, and record the bundle hash. At boot and before each session, the master ESP32 recomputes hashes for local files and broadcasts them; clients acknowledge only when hashes match, otherwise gameplay stays locked until `validate` passes.
-- **Alternatives considered**:
-  - Manual hash tracking or spreadsheets → rejected; error-prone and violates Constitution Principle I.
-  - Real-time hash streaming per asset → rejected; unnecessary bandwidth on RS485 and duplicates manifest responsibilities.
+## Entscheidung: Manifest-Validierungs-Pipeline
+- **Begründung**: Nach Content-Änderungen führen Entwickler `python -m firmware.shared.scripts.manifest_tool generate --root SDCARD` aus, committen das erzeugte `manifest.json` und notieren den Bundle-Hash. Beim Boot und vor jeder Session berechnet der Master-ESP32 Hashes neu und sendet sie an die Clients; nur bei Übereinstimmung wird gespielt, sonst bleibt der Spielstart gesperrt, bis `validate` erfolgreich ist.
+- **Betrachtete Alternativen**:
+  - Manuelle Hash-Listen/Spreadsheets – verworfen, fehleranfällig und verstößt gegen Verfassungsprinzip I.
+  - Echtzeit-Hash-Streaming pro Asset – verworfen, unnötige RS485-Bandbreite und doppelte Verantwortung neben dem Manifest.
 
-## Decision: Admin unlock behaviour
-- **Rationale**: Holding the physical admin button unlocks admin options for a 10-second window. This matches user expectation, avoids PIN management overhead in early builds, and still prevents accidental access by requiring deliberate input.
-- **Alternatives considered**:
-  - Permanent button toggle → rejected; easy to leave console in admin state.
-  - PIN challenge on touch UI → deferred; adds friction and UI scope not required for current operators.
+## Entscheidung: Admin-Freigabeverhalten
+- **Begründung**: Längeres Drücken des physischen Admin-Buttons schaltet das Menü für 10 Sekunden frei. Das entspricht der Nutzungserwartung, vermeidet PIN-Verwaltung in frühen Ausbaustufen und schützt trotzdem vor versehentlicher Freigabe.
+- **Betrachtete Alternativen**:
+  - Dauerhafte Umschaltung per Button – verworfen, weil das Gerät leicht im Admin-Modus verbleibt.
+  - PIN-Eingabe auf dem Touchdisplay – verschoben; erhöht die UI-Komplexität ohne aktuellen Bedarf.

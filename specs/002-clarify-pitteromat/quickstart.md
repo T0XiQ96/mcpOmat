@@ -1,54 +1,54 @@
-# Quickstart – PitterOmat Core Experience
+# Quickstart – PitterOmat Kernerlebnis
 
-## Prerequisites
+## Voraussetzungen
 
-- Waveshare ESP32-S3 Touch LCD 4 (master) plus up to seven mirror displays connected via RS485.
-- Arduino Mega 2560 wired to the LED ring (SpielLED pin 12, GrenzLED pin 13) and player buttons/encoder.
-- Shared RS485 bus (A/B lines, DE/RE control) with 120 Ω termination and common ground.
-- microSD card (FAT32) containing `/games`, `/options`, `/themes`, `/profiles`, `/music`, `/logos`, `/updates`.
-- Python 3.11+ with project tooling: `pip install -r firmware/shared/scripts/requirements.txt`.
-- `TREIBER/` folder from Waveshare cloned into the repository root.
+- Waveshare ESP32-S3 Touch LCD 4 (Master) plus bis zu sieben Spiegel-Displays über RS485.
+- Arduino Mega 2560, verdrahtet mit dem LED-Ring (SpielLED Pin 12, GrenzLED Pin 13) sowie Spieler-Tastern/Encoder.
+- Gemeinsamer RS485-Bus (A/B-Leitungen, DE/RE-Steuerung) mit 120 Ω Abschluss und gemeinsamer Masse.
+- microSD-Karte (FAT32) mit `/games`, `/options`, `/themes`, `/profiles`, `/music`, `/logos`, `/updates`.
+- Python 3.11+ samt Projekt-Tools: `pip install -r firmware/shared/scripts/requirements.txt`.
+- Waveshare-TREIBER-Ordner (`TREIBER/`) im Repository.
 
-## 1. Prepare SD Content
+## 1. SD-Inhalte vorbereiten
 
-1. Populate `/games/*.json` and `/options/*.json` using the schemas in `firmware/shared/proto/`.
-2. Run the manifest generator:
+1. `/games/*.json` und `/options/*.json` gemäß Schemata in `firmware/shared/proto/` anlegen.
+2. Manifest generieren:
    ```bash
-   python -m firmware.shared.scripts.manifest_tool generate --root SDCARD --manifest-version 1.0.0 --firmware-version <current-tag> --notes "core experience bundle"
+   python -m firmware.shared.scripts.manifest_tool generate --root SDCARD --manifest-version 1.0.0 --firmware-version <aktueller-tag> --notes "core experience bundle"
    ```
-3. Validate hashes to ensure content integrity:
+3. Hashes prüfen:
    ```bash
    python -m firmware.shared.scripts.manifest_tool validate SDCARD/manifest.json --root SDCARD
    ```
-4. Copy the entire `SDCARD/` directory to the microSD card and insert it into the master ESP32-S3.
+4. Kompletten `SDCARD/`-Ordner auf die microSD kopieren und in den Master-ESP32-S3 einsetzen.
 
-## 2. Flash Hardware Test Bundles
+## 2. Hardware-Test-Bundles flashen
 
-1. Choose the subsystem to verify (e.g., RS485, LED ring, display sync).
-2. From `tests/<bundle>/`, flash the ESP32 and Arduino sketches derived from the corresponding Waveshare TREIBER demo.
-3. Follow the README wiring instructions, observe serial logs, and compare with `expected.log`.
-4. On success, move the bundle directory into `tests/succeeded/` and archive the serial output for future reference.
+1. Relevantes Subsystem wählen (z.B. RS485, LED-Ring, Display-Sync).
+2. Unter `tests/<bundle>/` die ESP32- und Arduino-Sketche aus dem passenden TREIBER-Demo flashen.
+3. Verkabelung gemäß README prüfen, serielle Ausgaben beobachten und mit `expected.log` vergleichen.
+4. Bei Erfolg Bundle nach `tests/succeeded/` verschieben und Logs archivieren.
 
-## 3. Deploy Runtime Firmware
+## 3. Laufzeit-Firmware aufspielen
 
-1. Flash the consolidated Arduino firmware from `firmware/arduino/`.
-2. Flash the ESP32-S3 firmware from `firmware/esp32/` (LVGL UI + manifest sync logic).
-3. Confirm both nodes boot and report `ready` status over the RS485 diagnostics view.
+1. Arduino-Gesamtfirmware aus `firmware/arduino/` flashen.
+2. ESP32-S3-Firmware aus `firmware/esp32/` flashen (LVGL-UI + Manifest-Sync).
+3. Sicherstellen, dass beide Knoten starten und im RS485-Diagnosefenster den Status „ready“ melden.
 
-## 4. Run Functional Smoke Test
+## 4. Funktionalen Smoke-Test ausführen
 
-1. Boot the console to the idle screen.
-2. Hold the hardware admin button to enter admin mode and verify:
-   - Manifest hash matches across all nodes.
-   - RS485, LED, display, and Wi-Fi diagnostics report “OK”.
-3. Exit admin mode. Start a four-player session:
-   - Select 4 players and verify only compatible games appear.
-   - Start gameplay, confirm LED allocations and display seat labels.
-4. Finish the game, review win/lose animations, and inspect logged results in the highscore view (if applicable).
+1. Konsole bis zum Idle-Screen hochfahren.
+2. Admin-Button halten, Admin-Modus aufrufen und prüfen:
+   - Manifest-Hashes sind auf allen Knoten identisch.
+   - RS485-, LED-, Display- und WLAN-Diagnosen zeigen „OK“.
+3. Admin-Modus verlassen. Vier-Spieler-Session starten:
+   - Vier Spieler wählen und kontrollieren, dass nur passende Spiele sichtbar sind.
+   - Gameplay starten, LED-Zuordnung und Displays prüfen.
+4. Spiel beenden, Gewinner-/Verlierer-Animationen ansehen und Highscore-Einträge kontrollieren (falls vorhanden).
 
-## 5. Operational Checklist
+## 5. Operative Checkliste
 
-- Run `manifest_tool validate` before every deployment to ensure SD content matches the committed manifest.
-- Ensure the latest hardware test bundles remain in `tests/succeeded/`; rerun tests whenever wiring or firmware changes.
-- During events, keep admin access limited: holding the button grants a 10 s window; release to relock immediately.
-- Capture diagnostics logs (`docs/operations/test-package-workflow.md`) whenever faults occur to aid troubleshooting.
+- Vor jedem Deployment `manifest_tool validate` ausführen, um Hash-Abweichungen auszuschließen.
+- Hardware-Test-Bundles in `tests/succeeded/` aktuell halten und bei Verkabelungs-/Firmwareänderungen erneut laufen lassen.
+- Während Events Admin-Zugriff begrenzen: Button halten öffnet für 10 Sekunden, Loslassen sperrt sofort.
+- Bei Störungen Diagnoselog nach `docs/operations/test-package-workflow.md` aufnehmen.

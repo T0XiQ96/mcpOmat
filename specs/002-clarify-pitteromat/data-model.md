@@ -1,95 +1,95 @@
-# Data Model – PitterOmat Core Experience
+# Datenmodell – PitterOmat Kernerlebnis
 
 ## GameDefinition
 
-| Field | Type | Description | Constraints |
-|-------|------|-------------|-------------|
-| `id` | string | Unique identifier for the game (e.g., `lightloser`) | Must match `game.schema.json` pattern |
-| `version` | semver | Content version displayed in menus and used for hash changes | Required |
-| `title` | string | Localised display name | Required |
-| `players.min` | integer | Minimum supported players | 2 ≤ min ≤ 6 |
-| `players.max` | integer | Maximum supported players | min ≤ max ≤ 6 |
-| `supportsHighscore` | bool | Whether highscore view is shown | Determines highscore menu |
-| `requiresHardware` | array | Hardware capabilities (e.g., `encoder`, `display`) | Used to filter incompatible modes |
-| `ledProfile` | object | Describes Spiel/Grenz segments used in the mode | Must reference segments in `segment_map.json` |
-| `optionRefs` | array | Linked option bundle IDs | Optional |
-| `phases` | array | Ordered gameplay phases with timings | Required for countdown/gameplay sequencing |
+| Feld | Typ | Beschreibung | Restriktionen |
+|------|-----|--------------|---------------|
+| `id` | string | Eindeutige Spielkennung (z.B. `lightloser`) | Muss dem Muster aus `game.schema.json` entsprechen |
+| `version` | semver | Versionsanzeige für Menüs und Hash-Änderungen | Erforderlich |
+| `title` | string | Lokalisierter Anzeigename | Erforderlich |
+| `players.min` | integer | Minimale Spielerzahl | 2 ≤ min ≤ 6 |
+| `players.max` | integer | Maximale Spielerzahl | min ≤ max ≤ 6 |
+| `supportsHighscore` | bool | Steuert, ob Highscore-Ansicht erscheint | Erforderlich |
+| `requiresHardware` | array | Benötigte Hardware (z.B. `encoder`, `display`) | Filtert inkompatible Modi |
+| `ledProfile` | object | Nutzung von Spiel-/Grenzsegmenten | Referenzen müssen in `segment_map.json` existieren |
+| `optionRefs` | array | Zugeordnete Options-Bundles | Optional |
+| `phases` | array | Abfolge von Spielphasen mit Zeiten | Pflicht für Countdown/Gameplay-Steuerung |
 
-**Relationships**: References multiple `OptionBundle` entries. Consumed by ESP32; mirrored metadata informs Arduino scheduling.
+**Beziehungen**: Referenziert mehrere `OptionBundle`-Einträge. Wird vom ESP32 ausgewertet; Metadaten informieren die Arduino-Planung.
 
 ## OptionBundle
 
-| Field | Type | Description | Constraints |
-|-------|------|-------------|-------------|
-| `id` | string | Unique bundle identifier | Required |
-| `title` | string | Display name | Required |
-| `scope` | enum | `user`, `admin`, or `system` | Drives menu placement |
-| `fields[]` | object | Individual option definitions with key/type/default | Keys unique per bundle |
-| `effects` | array | Describes impacted subsystems (`led`, `session`, etc.) | Optional |
-| `appliesTo` | array | Game IDs or `["*"]` wildcard | Defaults to all modes |
+| Feld | Typ | Beschreibung | Restriktionen |
+|------|-----|--------------|---------------|
+| `id` | string | Eindeutige Bundle-ID | Erforderlich |
+| `title` | string | Anzeigename | Erforderlich |
+| `scope` | enum | `user`, `admin` oder `system` | Bestimmt Menübereich |
+| `fields[]` | object | Einzeloptionen mit key/type/default | Schlüssel einzigartig innerhalb des Bundles |
+| `effects` | array | Betroffene Subsysteme (`led`, `session`, …) | Optional |
+| `appliesTo` | array | Spiel-IDs oder `["*"]` | Standardmäßig global |
 
-**Relationships**: Referenced by `GameDefinition.optionRefs`. Applied by ESP32 runtime and broadcast to Arduino when gameplay starts.
+**Beziehungen**: Wird in `GameDefinition.optionRefs` referenziert. ESP32-Anwendung verarbeitet und verteilt Einstellungen an den Arduino.
 
 ## PlayerSlot
 
-| Field | Type | Description | Constraints |
-|-------|------|-------------|-------------|
-| `slotId` | integer | Logical seat number (1–6) | Unique per active session |
-| `displayId` | integer | Physical display assignment (1–8) | According to seating table |
-| `spiel.start` | integer | Start SpielLED group | From `segment_map.json` |
-| `spiel.end` | integer | End SpielLED group (wrap allowed) | Inclusive |
-| `border.left` | integer | GrenzLED group shared with previous player | Live boundary |
-| `border.right` | integer | GrenzLED group shared with next player | Live boundary |
-| `jokerGroup` | integer/null | Special SpielLED when Joker enabled | Null when Joker disabled |
+| Feld | Typ | Beschreibung | Restriktionen |
+|------|-----|--------------|---------------|
+| `slotId` | integer | Logischer Sitzplatz (1–6) | Eindeutig pro aktiver Session |
+| `displayId` | integer | Zugeteiltes Display (1–8) | Laut Sitzplan |
+| `spiel.start` | integer | Start-Segment auf SpielLED | Aus `segment_map.json` |
+| `spiel.end` | integer | End-Segment (inklusive, Wrap erlaubt) | Aus `segment_map.json` |
+| `border.left` | integer | GrenzLED zum linken Nachbarn | Dauerhaft aktiv |
+| `border.right` | integer | GrenzLED zum rechten Nachbarn | Dauerhaft aktiv |
+| `jokerGroup` | integer/null | Joker-Segment bei aktiviertem Joker | Null, wenn Joker aus |
 
-**Relationships**: Generated by ESP32 during setup based on player count; communicated to Arduino for LED rendering.
+**Beziehungen**: Wird vom ESP32 beim Setup erzeugt und an den Arduino zur LED-Steuerung übertragen.
 
 ## HardwareNode
 
-| Field | Type | Description | Constraints |
-|-------|------|-------------|-------------|
-| `nodeId` | string | Unique identifier (e.g., `esp-master`, `arduino-led`) | Required |
-| `role` | enum | `master_esp`, `client_esp`, `arduino` | Determines responsibilities |
-| `firmwareVersion` | string | Firmware build identifier | Compared during updates |
-| `bundleHash` | string | Last acknowledged manifest hash | Must match master for gameplay |
-| `lastSeen` | timestamp | Last heartbeat from node | Staleness >10 s triggers alert |
-| `status` | enum | `ready`, `syncing`, `fault`, `offline` | Drives admin notifications |
+| Feld | Typ | Beschreibung | Restriktionen |
+|------|-----|--------------|---------------|
+| `nodeId` | string | Eindeutiger Knoten (z.B. `esp-master`) | Erforderlich |
+| `role` | enum | `master_esp`, `client_esp`, `arduino` | Legt Verantwortungen fest |
+| `firmwareVersion` | string | Installierte Firmware-Version | Wird bei Updates verglichen |
+| `bundleHash` | string | Bestätigter Manifest-Hash | Muss Master-Hash entsprechen |
+| `lastSeen` | timestamp | Letzter Heartbeat | >10 s löst Warnung aus |
+| `status` | enum | `ready`, `syncing`, `fault`, `offline` | Speist Admin-Anzeige |
 
-**Relationships**: Master ESP tracks all nodes; admin diagnostics page displays this dataset.
+**Beziehungen**: Der Master-ESP verwaltet den Status aller Knoten; Admin-Diagnosen zeigen diese Übersicht.
 
 ## ManifestEntry
 
-| Field | Type | Description | Constraints |
-|-------|------|-------------|-------------|
-| `type` | enum | `game`, `options`, `theme`, `profile`, `music`, `logo` | Required |
-| `id` | string | Asset identifier | Unique within type |
-| `version` | semver | Version of the asset | Required |
-| `file` | string | POSIX relative path on SD | Must exist |
-| `hash` | string | `sha256:<digest>` | Must match actual SHA-256 |
-| `metadata` | object | Additional capability info | Optional |
+| Feld | Typ | Beschreibung | Restriktionen |
+|------|-----|--------------|---------------|
+| `type` | enum | `game`, `options`, `theme`, `profile`, `music`, `logo` | Erforderlich |
+| `id` | string | Asset-ID | Innerhalb eines Typs eindeutig |
+| `version` | semver | Inhaltsversion | Erforderlich |
+| `file` | string | POSIX-Pfad auf SD | Muss existieren |
+| `hash` | string | `sha256:<digest>` | Muss zum Dateihash passen |
+| `metadata` | object | Zusatzinfos (z.B. Kompatibilität) | Optional |
 
-**Relationships**: Generated by `manifest_tool`; used by ESP32 to validate SD contents and broadcast bundle hash.
+**Beziehungen**: Wird vom `manifest_tool` generiert; ESP32 prüft damit SD-Inhalte und sendet den Bundle-Hash.
 
-## State Transitions
+## Zustandsübergänge
 
-### Session Lifecycle
+### Sitzungslebenszyklus
 
 `Idle` → `Configuring` → `ReadyCheck` → `Gameplay` → `Results` → `Idle`
 
-- Transition `Configuring → ReadyCheck`: triggered after Player 1 selects player count and game; PlayerSlot allocations broadcast.
-- Transition `ReadyCheck → Gameplay`: requires confirmation from all player buttons; if any player cancels, revert to `Configuring`.
-- Transition `Gameplay → Results`: occurs when game phase emits completion event; LED animations and scores published.
-- Manual abort (admin) returns session to `Idle` and logs reason.
+- Übergang `Configuring → ReadyCheck`: Auslösung nach Spielerauswahl und Spielwahl, PlayerSlots werden verteilt.
+- Übergang `ReadyCheck → Gameplay`: Alle Spieler müssen bestätigen; bei Abbruch Rückkehr zu `Configuring`.
+- Übergang `Gameplay → Results`: Trigger durch Spielende; LED-Animationen und Ergebnisse werden angezeigt.
+- Manueller Abbruch (Admin) bringt das System nach `Idle` zurück und protokolliert den Grund.
 
-### Admin Unlock Window
+### Admin-Freigabefenster
 
-`Locked` → `Unlocked` (when admin button held) → auto-revert to `Locked` after 10 s or on explicit exit.
+`Locked` → `Unlocked` (Button gehalten) → automatische Rückkehr zu `Locked` nach 10 s oder bei manuellem Beenden.
 
-- During `Unlocked`, all admin diagnostics and update controls are visible.
+- Während `Unlocked` sind alle Admin-Diagnosen und Update-Steuerungen sichtbar.
 
-## Validation Rules Summary
+## Validierungsregeln (Zusammenfassung)
 
-- Player-to-display table must exactly match the seating configuration per player count.
-- Joker-enabled sessions must include Joker color and associated SpielLED group; disabled sessions must explicitly nullify the group.
-- Manifest validation must succeed (`bundleHash` aligned) before session can move from `ReadyCheck` to `Gameplay`.
-- Hardware diagnostics logging is required whenever `HardwareNode.status` transitions into `fault` or `offline`.
+- Sitzplatz-zu-Display-Tabelle muss pro Spielerzahl exakt dem Sitzplan entsprechen.
+- Bei aktiviertem Joker sind Joker-Farbe und entsprechendes SpielLED-Segment verpflichtend; deaktivierte Joker müssen explizit gesetzt sein.
+- Manifestprüfung (`bundleHash`) muss erfolgreich sein, bevor `ReadyCheck` in `Gameplay` übergeht.
+- Hardware-Diagnosen müssen protokolliert werden, sobald `HardwareNode.status` auf `fault` oder `offline` wechselt.
