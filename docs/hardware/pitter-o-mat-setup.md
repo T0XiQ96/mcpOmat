@@ -1,27 +1,27 @@
-# Pitter-o-mat Hardware Bring-up Checklist
+# PitterOmat Hardware Bring-up Checkliste
 
-## Power Budget
-- Verify 5V 60A supply connected with 10AWG wiring to LED ring and logic rails.
-- Ensure separate fused branch for Arduino/ESP32 electronics (5V/2A per node).
+## Leistungsbudget
+- Sicherstellen, dass das 5 V/60 A-Netzteil mit 10 AWG-Leitungen LED-Ring und Logik versorgt.
+- Separaten abgesicherten Zweig für Arduino/ESP32-Elektronik vorsehen (je 5 V/2 A pro Knoten).
 
-## Controllers
-- Mount Arduino Mega 2560 with RS485 transceiver wired to Serial1 (TX=18, RX=19, DE=2).
-- Install Waveshare ESP32S3-Touch-LCD-4 units; connect RS485 A/B lines in daisy chain.
+## Controller
+- Arduino Mega 2560 mit RS485-Transceiver auf Serial1 verkabeln (TX = 18, RX = 19, DE = 2).
+- Waveshare ESP32S3-Touch-LCD-4 Einheiten montieren; RS485-A/B-Leitungen in Daisy-Chain verbinden.
 
-## LED Ring
-- Confirm SpielLED strand on Arduino pin 12 (data) with level shifting if required.
-- Confirm GrenzLED strand on Arduino pin 13.
-- Inject power every 144 LEDs around the ring to prevent voltage drop.
+## LED-Ring
+- SpielLED-Strang auf Arduino-Pin 12 (Daten) prüfen, ggf. Pegelwandler einsetzen.
+- GrenzLED-Strang auf Pin 13 verifizieren.
+- Alle 144 LEDs Leistung einspeisen, um Spannungsabfall zu vermeiden.
 
-## Encoders
-- Player 1 encoder: CLK=6, DT=7, SW=5.
-- Remaining encoders: wire but disable until firmware ready.
+## Encoder
+- Spieler 1: CLK = 6, DT = 7, SW = 5.
+- Weitere Encoder vorverdrahten, aber in der Firmware deaktiviert lassen, bis einsatzbereit.
 
 ## Displays
-- Assign ESP32 screens per seat following spec (2-player -> screens 1 & 5, etc.).
-- Connect microSD to master ESP32 for config/highscores.
+- ESP32-Displays gemäß Spezifikation je Sitzplatz zuordnen (z.B. 2 Spieler → Screens 1 & 5).
+- microSD am Master-ESP32 für Konfiguration und Highscores anschließen.
 
-## Safety Checks
-- Perform insulation resistance test on LED ring.
-- Validate emergency cut-off accessible and labelled.
-- Boot test without LEDs at full brightness to confirm logic paths.
+## Sicherheitsprüfungen
+- Isolationsmessung am LED-Ring durchführen.
+- Not-Aus-Schalter erreichbar platzieren und eindeutig beschriften.
+- Teststart mit reduzierter LED-Helligkeit durchführen, um Logikpfade zu verifizieren.
