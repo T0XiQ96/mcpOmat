@@ -1,0 +1,514 @@
+PitterOmat 
+Ich möchte ein Spielgerät mit Arduino und ESP32S3 erfinden.
+Dieses besteht aus einem Ring aus LEDs, Encoder mit Druckfunktion für die Spieler (bis 6 Spieler) und auch aus Bildschirmen für die einzelnen Spieler zur Anzeige des Scores und andere Dinge (wie zB Menüführung)..
+
+Dieses Gerät soll eine Menüführung mit verschiedenen auswählbaren Spielen, Optionen etc haben.
+Man kommt beim Start in den idleScreen (bei EEZ Studio der erste Screen), hier ist ein Start Button verbaut der dann ins Hauptmenü führt. 
+Im Hauptmenü gibt es Spielen, Highscore (wenn Spiel vorhanden der Highscore anzeigen kann) und Optionen.
+
+Nur Spieler 1 kann das Menü steuern (ausser es ist anders gewollt), ausser es ist zB im Game und man hat Funktionen auf dem Display. 
+Es wird mit Touch am ESP32S3 gesteuert. 
+
+Für das Spiel gibt es einen Button für jeden Spieler, ein Encoder der drehbar und drückbar ist.
+
+Der Ring aus LEDs ist folgendermaßen aufgebaut:
+Es besteht aus 2 LED Strängen (2 LED Stränge aufgeteilt für die schnellere Ansteuerung, welche vom Arduino besser gesteuert werden können), welche in insgesamt 72 Gruppen aufgeteilt sind und je Gruppe 12 LEDs steuert (also insgesamt 864 einzelne LEDs).
+Jede Gruppe ist eine Linie von 12 LEDs und werden gemeinsam angesteuert, ausser es ist anders gewollt vom Spiel.
+Alle Gruppen sind im Kreis angeordnet, also 72 Gruppen (12 einzelne LEDs pro Gruppe (= 1 Linie)) die ein Kreis ergeben.
+Den ersten LED Strang nennen wir SpielLED und den zweiten GrenzLED.
+Ingesamt sind es 72 Gruppen, aber jeder LED Strang hat 36 Gruppen.
+
+Erst kommt SpielLED Gruppe 1 (LED Strang 1 - LED 1 bis 12 (von insgesamt 432 einzelnen LEDs)), dann GrenzLED Gruppe 1 (LED Strang 2 - LED 1 bis 12 (von insgesamt 432 einzelnen LEDs)), dann SpielLED Gruppe 2 (LED Strang 1 - LED 13 bis 24), dann GrenzLED Gruppe 2 (LED Strang 2 - LED 13 bis 24), und so weiter bis GrenzLED Gruppe 36 (LED Strang 2 - LED 421 bis 432) den Kreis schließt.
+Nach GrenzLED Gruppe 36 kommt wieder SpielLED Gruppe 1 und der Kreis fängt von vorne an.
+
+SpielLED Gruppen werden fürs Spielen benutzt, während GrenzLED Gruppen für die Grenzen genutzt werden, ausser es ist anders vom Spiel gewollt.
+
+
+
+
+Um das Spielfeld der einzelnen Spieler visuell  darzustellen leuchten bestimmte GrenzLED Gruppen dauerhaft auf, die Grenzen (wenn vom Spiel gewollt, es wird auch Spiele geben in denen es keine Grenzen gibt). 
+Die Spieler teilen sich die Grenzen falls sie nebeneinander sind, zB bei 2 Spieler teilen sich beide Spieler die Grenzen:
+Spieler 1 - Grenze links ist gleichzeitig Spieler 2 - Grenze rechts,
+Spieler 1 - Grenze rechts ist gleichzeitig Spieler 2 - Grenze links..
+
+Bei zB 3 Spielern teilt es sich anders auf:
+Spieler 1 - Grenze links ist gleichzeitig Spieler 3 - Grenze rechts,
+Spieler 1 - Grenze rechts ist gleichzeitig Spieler 2 - Grenze links,
+Spieler 2 - Grenze rechts ist gleichzeitig Spieler 3 - Grenze links.
+
+Und so weiter teilen sich die Grenzen bis maximal 6 Spieler.
+Eine Ausnahme gibt es bei 5-Spielern, da die SpielLED Gruppen 36 Gruppen betragen und diese nicht durch 5 teilbar sind.
+Alle anderen Spieleranzahlen sind durch 36 teilbar.
+Bei 5-Spielern wird SpielLED Gruppe 2 aus dem Spiel genommen und übersprungen. Die Grenzen müssen dann ebenfalls angepasst werden.
+Spieler 1 und 5 teilen sich in diesem Fall nicht die Grenzen. Für Spieler 1 ist Grenze links dann GrenzLED Gruppe 2 und für Spieler 5 ist Grenze rechts dann GrenzLED Gruppe 1.
+Die rausgenommene SpielLED Gruppe 2 kann in den Optionen als sogenannter Joker ein und ausgestellt werden. 
+Ist er aus, wird diese SpielLED Gruppe 2 im aktiven Spiel übersprungen und leuchtet auch nicht.
+Ist der Joker an, wird diese SpielLED Gruppe 2 ins Spiel eingebunden und leuchtet dauerhaft in zB Gold auf (Farbe in den Optionen einstellbar).
+
+Bei 2 Spielern sind die GrenzLED Gruppen an:
+GrenzLED Gruppe 18 (Spieler 1 Grenze rechts, Spieler 2 Grenze links) und 36 (Spieler 1 Grenze links, Spieler 2 Grenze rechts)
+SpielLED Gruppe 1-18 für Spieler 1 zugeordnet
+SpielLED Gruppe 19-36 für Spieler 2 zugeordnet
+
+Bei 3 Spielern GrenzLED Gruppen 12,24,36
+SpielLED1-12 Spieler1
+SpielLED13-24 Spieler2
+SpielLED25-36 Spieler3
+
+Bei 4 Spielern GrenzLED Gruppen 4, 13, 22, 31
+SpielLED 5-13 Spieler1
+SpielLED14-22 Spieler2
+SpielLED13-31 Spieler3
+SpielLED32-4 Spieler 4
+
+Bei 5 Spielern wird die SpielLED Gruppe 2 aus dem Spiel genommen da man 36 nicht durch 5 teilen kann. Es leuchten GrenzLED 1,2,9,16,23,30
+SpielLED 3-9 Spieler1
+SpielLED 10-16 Spieler2
+SpielLED 17-23 Spieler3
+SpielLED 24-30 spieler 4
+SpielLED 31-1 Spieler 5
+
+Bei 6 Spielern
+GrenzLED 3,9,15,21,27,33
+SpielLED 4-9 Spieler1
+SpielLED 10-15 Spieler2
+spielLED 16-21 Spieler3
+SpielLED 22-27 Spieler4
+SpielLED 28-33 Spieler5
+SpielLED 34-3 Spieler 6
+
+GrenzLED Zugehörigkeit:
+Die Spiele nutzen die GrenzLED Gruppen nicht für die Spiele, ausser es ist für das Spiel anders gewollt.
+Hier die Zugehörigkeit der GrenzLED Gruppen, falls in Spiele eingebunden werden soll.
+
+2Spieler:
+Spieler 1 GrenzLED 18 und 36 leuchten als Grenzen dauerhaft
+(GrenzLED 1 bis 17 sind Spieler 1 zugehörig, wenn für ein Spiel genutzt werden sollte, was bei der Entwicklung des Spiels erwähnt wird.)
+Spieler 2 GrenzLED 36 und 18 leuchten als Grenzen dauerhaft
+(GrenzLED 19 bis 35 sind Spieler 2 zugehörig)
+
+3Spieler:
+Spieler 1 GrenzLED 36 und 12 dauerhaft
+(1 bis 11 Spieler 1 zugehörig)
+Spieler 2 GrenzLED 12 und 24 dauerhaft
+(13 bis 23 Spieler 2 zugehörig)
+Spieler 3 GrenzLED 24 und 36 dauerhsft
+(25 bis 35 Spieler 3 zugehörig)
+
+4Spieler:
+Spieler 1 GrenzLED 4 und 13 dauerhaft
+(5 bis 12 Spieler 1 zugehörig)
+Spieler 2 GrenzLED 13 und 22 dauerhaft
+(14 bis 21 Spieler 2 zugehörig)
+Spieler 3 GrenzLED 22 und 31 dauerhaft
+(23 bis 30 Spieler 3 zugehörig)
+Spieler 4 GrenzLED 31 und 4 dauerhaft
+(32 bis 3 Spieler 4 zugehörig)
+
+5Spieler:
+Spieler 1 GrenzLED 2 und 9 dauerhaft
+(3-8 Spieler 1 zugehörig)
+Spieler 2 GrenzLED 9 und 16 dauerhaft
+(10-15 Spieler2 zugehörig)
+Spieler 3 GrenzLED 16 und 23 dauerhaft
+(17-22 Spieler3 zugehörig)
+Spieler 4 GrenzLED 23 und 30 dauerhaft
+(24-29 Spieler 4 zugehörig)
+Spieler 5 GrenzLED 30 und 1 dauerhaft
+(31-36 Spieler 5 zugehörig)
+
+6Spieler:
+Spieler 1 GrenzLED 3 und 9 dauerhaft 
+(4 bis 8 Spieler 1 zugehörig)
+Spieler 2 GrenzLED 9 und 15 dauerhaft
+(10 bis 14 Spieler 2 zugehörig)
+Spieler 3 GrenzLED 15 und 21 dauerhaft
+(16 bis 20 Spieler 3 zugehörig)
+Spieler 4 GrenzLED 21 und 27 dauerhaft
+(22 bis 26 Spieler 4 zugehörig)
+Spieler 5 GrenzLED 27 und 33 dauerhaft
+(28 bis 32 Spieler 5 zugehörig)
+Spieler 6 GrenzLED 33 und 3 dauerhaft
+(34 bis 2 Spieler 6 zugehörig)
+
+
+Bildschirme:
+Es wird insgesamt 8 Bildschirme geben, wobei nur die Bildschirme an sein sollen die auch benötigt werden.
+In der Menüführung werden alle 8 Bildschirme das gleiche anzeigen, bis man zur Spieleranzahl-Auswahl kommt.
+Dann zeigen nur die Bildschirme der Spieler etwas an (so kann man sich orientieren wo man sitzt), die mitspielen.
+Oben im Bildschirm steht die Spieleranzahl (zB 2-Spielermodus oder 6-Spielermodus) und in der Mitte zeigt der Bildschirm an welcher Spieler davor sitzt (zB „Spieler 2“ steht auf dem Bildschirm der Spieler 2 zugeordnet ist.)
+Spieler 1 kann mit dem Encoder auswählen wieviele Spieler mitspielen (2 bis 6 Spieler) und die Bildschirme zeigen dann an wo die Spieler sitzen.
+
+Zuordnung:
+2-Spieler:
+Spieler 1 - Bildschirm 1
+Spieler 2 - Bildschirm 5
+
+3-Spieler:
+Spieler 1 - Bildschirm 8
+Spieler 2 - Bildschirm 3
+Spieler 3 - Bildschirm 6
+
+4-Spieler:
+Spieler 1 - Bildschirm 1
+Spieler 2 - Bildschirm 3
+Spieler 3 - Bildschirm 5
+Spieler 4 - Bildschirm 7
+
+5-Spieler:
+Spieler 1 - Bildschirm 8
+Spieler 2 - Bildschirm 2
+Spieler 3 - Bildschirm 3
+Spieler 4 - Bildschirm 5
+Spieler 5 - Bildschirm 7
+
+6-Spieler:
+Spieler 1 - Bildschirm 8
+Spieler 2 - Bildschirm 2
+Spieler 3 - Bildschirm 3
+Spieler 4 - Bildschirm 4
+Spieler 5 - Bildschirm 6
+Spieler 6 - Bildschirm 7
+
+
+
+
+
+Hier ist eine Zusammenfassung der benötigten Hardware für das Projekt:
+
+1. Waveshare ESP32S3-Touch-LCD-4 
+
+2. LED-Strips
+	•	Typ: WS2812B (NeoPixel-kompatibel).
+	•	Anzahl:
+	•	Spiel-LEDs: 432 LEDs.
+	•	Grenz-LEDs: 432 LEDs.
+	•	Total: 864 LEDs.
+	•	Anordnung:
+	•	LEDs sind in 36 Linien à 12 LEDs organisiert, die zu einem Kreis verbunden werden.
+	•	Reihenfolge: Erst Spiel-LEDs, dann Grenz-LEDs.
+	•	Pins:
+	•	Spiel-LEDs: Pin 12.
+	•	Grenz-LEDs: Pin 13.
+	•	Funktionen:
+	•	Visualisierung des Spielstatus.
+	•	Darstellung von Animationen wie Farben, Spiralen, Wellen, etc.
+	•	Separate Animationen für Gewinn- und Verlustbedingungen.
+
+3. Rotary Encoder (Drehencoder)
+	•	Typ: Standard-Rotary Encoder mit Button.
+	•	Pins:
+	•	CLK: Pin 6.
+	•	DT: Pin 7.
+	•	SW (Button): Pin 5.
+	•	Funktionen:
+	•	Navigation im Menü.
+	•	Auswahl und Bestätigung von Menüpunkten.
+	•	Steuerung des Spiels (z. B. Start einer Runde).
+
+4. Mikrocontroller
+	•	Typ: Arduino Mega 2560.
+	•	Warum:
+	•	Ausreichende Anzahl von digitalen Pins für die Verbindung des Displays, der LED-Strips und des Encoders.
+	•	Genug Speicherplatz für komplexe Logik und Animationen.
+
+5. Stromversorgung
+	•	Anforderungen:
+	•	LED-Strips: WS2812B-LEDs benötigen 5V, bei voller Helligkeit ca. 60 mA pro LED.
+	-   Getesteter Treiber, der funktioniert: Adafruit_Neopixel
+	•	Für 864 LEDs: 864 x 0.06A ≈ 51.8A bei maximaler Helligkeit.
+	•	Empfohlen: Netzteil mit 5V und ca 40A wird gebraucht bei einer Helligkeit von ca 50%, wenn alle LEDs leuchten können sollen (z. B. ein leistungsstarkes Schaltnetzteil).
+	•	Arduino Mega und Display: 5V/2A sollten ausreichen (meist vom gleichen Netzteil versorgt).
+	
+	
+Falls zusätzliche Module oder Erweiterungen (z. B. Sound, weitere Displays) gewünscht sind, können diese hinzugefügt werden.
+
+Es wird mit einen ESP32S3 mit Display geben (oder um genau zu sein 8 Stück, welche das gleiche anzeigen bis zb im Game jeder Spieler seine eigene Scoreanzeige hat, bzw die Reihenfolge anders gedreht werden muss, wenn alle scores aller spieler auf dem display angezeigt werden. 
+
+Auf der SD Karte kommen die ganzen Daten drauf, in Flash nur was immer schnell laufen muss. 
+
+Der Arduino kontrolliert den LED Kreis und die Buttons, soll realtime reagieren, das Display auch möglichst schnell. 
+
+Der ESP soll auch mit einem Wifi verbindbar sein, welche später mit einer App oder Internetseite gesteuert werden kann, was Optionen angeht zB. 
+Ich will nur einen ESP updaten mit dem neuen Programm zb und er soll ein Signal an die anderen weitergeben das es neue Software gibt. Wenn es neue Software gibt soll über einen Button in den Optionen UPDATE stehen und die anderen sich automatisch updaten.
+
+Ich mache das UI mit EEZ Studio für den ESP32S3 und es funktioniert wunderbar. Ich muss das UI noch zuende bauen und die Variablen etc hinzufügen damit die Programme miteinander sprechen können.
+
+Der ESP und der Arduino (einer von den ESPs) wird mit RS485 verbunden sein. Der ESP hat so einen RS485 Anschluss. 
+Es ist der Waveshare ESP32S3-Touch-LCD-4 mit 480x480.
+
+Das Menü wird ungefähr so aussehen, mache mir Vorschläge und Änderungen an zB Effekten.
+
+Hier ist die vollständige Menüführung mit allen Untermenüs und Auswahlmöglichkeiten:
+Ich mache das UI noch fertig.
+
+HAUPTMENÜ
+
+PITTEROMAT MENÜ V3
+===================
+
+INFO:
+Dieses Menüsystem ist modular aufgebaut.
+Nutzeroptionen: Anpassungen für das aktive Spiel.
+Adminoptionen: Systemweite Einstellungen, Profile, Design.
+Spiele und Optionen werden automatisch von SD geladen (JSON-basiert).
+
+---------------------------------------
+IDLE SCREEN
+Start Button → Hauptmenü
+LED Idle Effekt: Atmen oder Farbverlauf
+Bildschirm: Logo oder Animation
+Automatischer Timeout zurück zum Idle Screen bei Inaktivität
+
+---------------------------------------
+HAUPTMENÜ
+Start
+Highscore
+Optionen
+Info / About
+(optional: Showcase Modus oder Demo)
+
+---------------------------------------
+START
+1. Spieler 1 wählt 2–6 Spieler
+   Live LED Vorschau: Spielerpositionen und Grenzen
+   Displays zeigen aktive Spielerpositionen
+   Encoder Steuerung für Spieler 1
+
+2. Spielauswahl
+   Nur kompatible Spiele für gewählte Spieleranzahl aktiv
+   Spiele werden aus SD (JSON-Dateien) geladen
+   Zufallsspiel starten: Button
+   Kurze LED Animation bei Auswahl
+
+3. Ready Screen
+   Jeder Spieler bestätigt mit seinem Button
+   LED vor Spieler leuchtet grün bei Ready
+   Display zeigt „Bereit“ oder „Warten auf andere“
+   Countdown Start über LED Kreis oder Display
+   Automatischer Spielstart, wenn alle ready sind
+
+4. Spielstart
+   ESP sendet alle Spielparameter an Arduino
+   LED Startanimation (Wave oder Kreisblitz)
+   Spielverlauf abhängig vom gewählten Spiel
+   Win/Lose Animation: Gold/Rot
+   Displays zeigen Endstand, Score und Platzierung
+   Option: Replay oder zurück zum Menü
+
+---------------------------------------
+HIGHSCORE
+Spielauswahl
+   Nur Spiele mit Highscore
+   Highscores werden aus JSON geladen
+
+Top 10 Liste
+   Einträge: Name, Score, Datum, Uhrzeit
+   Highscore Reset: Button (nur Admin)
+   Animation für Platz 1–3: Gold, Silber, Bronze
+   Anzeige auf allen Displays gleichzeitig
+
+---------------------------------------
+OPTIONEN
+
+Nutzeroptionen:
+Gültig nur innerhalb eines Spiels.
+Werden aus Spiel-JSON geladen.
+Werden nur angezeigt, wenn das Spiel Optionen definiert.
+
+- Spiel-spezifische Einstellungen
+-- Spielgeschwindigkeit
+-- Punktesystem: Linear / Exponentiell
+-- Bonus LEDs: An/Aus
+-- Risikomodus: An/Aus
+-- Zufallsereignisse: Selten / Häufig
+-- Spielstart Signal: Ton / LED
+-- Schwierigkeitsgrad: Einfach / Normal / Schwer
+-- Countdown Stil: LED / Display / Sound
+-- Fehleranzeige: Blinken / Farbwechsel / Sound
+-- Score Anzeige: Text / Kreisfüllung
+-- Handicap Modus: An/Aus
+-- Rundenlänge: 30 / 60 / 90 Sekunden
+-- Pausen zwischen Runden: 3 / 5 / 10 Sekunden
+
+---------------------------------------
+ADMINOPTIONEN
+Nur für Spieler 1 oder per PIN-Zugang.
+
+- LED und Spiel Darstellung
+-- Grenzfarbe: Farbauswahl
+-- Joker Funktion: An/Aus
+-- Joker Farbe: Farbauswahl
+-- Farbverlauf Typ: Linear / Kreisförmig / Zufall / Pulsierend
+-- Globale Helligkeit: 0–100%
+-- Animationsgeschwindigkeit: Langsam – Schnell
+-- Testanimation starten: Button
+-- Thema / Farbschema: Arcade / Retro / Minimal / Cyber
+-- Spielerfarben: Automatisch / Manuell
+-- LED Energiesparmodus: An/Aus
+-- Adaptive Farbanpassung: Darkroom / Arcade / Daylight
+-- LED Selbsttest beim Start: An/Aus
+-- LED Demo Modus: Zufallsanimationen
+
+- Spielmechanik und Flow
+-- Letztes Spiel wiederholen: Button
+-- Turniermodus: An/Aus
+-- Rundenanzahl: 1–10
+-- Gesamtwertung anzeigen: An/Aus
+-- Inaktive Spieler: Aus / Dimmen / Grau
+-- Replay nach Spiel: Automatisch starten
+-- Sieg / Niederlage Effekte: Auswahl aus Liste
+-- Handicap Profilverwaltung: Untermenü
+
+- Sound und Audio
+-- Soundeffekte: An/Aus
+-- Soundprofil: Arcade / Retro / Minimal
+-- Lautstärke Menü: 0–100
+-- Lautstärke Spiel: 0–100
+-- Hintergrundmusik: An/Aus
+-- Musikdatei von SD wählen
+-- Soundtest starten: Button
+
+- Netzwerk und Update
+-- Master Gerät: ESP 1–8
+-- Automatische Master Erkennung: An/Aus
+-- Automatische Update Erkennung: An/Aus
+-- Update jetzt prüfen: Button
+-- Update Sync: Button
+-- Lokaler OTA Server: Start / Stop
+-- Update von Master empfangen: An/Aus
+-- Verbindungstest RS485 / WiFi: Button
+-- Systemstatus Netzwerk: Button
+-- Sync Strategie: Sofort / Nur bei Spielstart
+-- App Steuerung: An/Aus
+-- WLAN Einstellungen:
+--- Verbindungsmodus: Automatisch / Manuell
+--- Verfügbare Netzwerke suchen: Button
+--- SSID aus Liste wählen
+--- Passwort eingeben: Touchfeld
+--- Manuelle IP Eingabe: Optional
+--- Verbindung testen: Button
+--- QR Code für App-Link anzeigen
+
+- Anzeige und System
+-- Displayhelligkeit: Slider
+-- Schriftgröße / Layout: Standard / Groß / Kontrastreich
+-- Startbildschirm Timeout: Sekundenwahl
+-- Startlogo anzeigen: An/Aus
+-- Eigenes Logo von SD laden: Button
+-- Sprache: Deutsch / Englisch
+-- Idle Animation: An/Aus
+-- Themen Übergangseffekt: Sanft / Flash / Kein
+-- Live Farb Vorschau: An/Aus
+-- Bildschirmschoner: An/Aus
+-- Aktivierung nach: 1–10 Minuten
+-- Systemdiagnose: Button
+-- Performance Overlay: An/Aus
+-- FPS Anzeige: An/Aus
+-- Werkseinstellungen zurücksetzen: Button
+-- Firmware Version: Anzeige
+-- Systeminfo: Build, Speicher, Verbindung
+
+- Speicherung und Profile
+-- Profile verwalten: Button
+-- Profil laden: Auswahlmenü
+-- Profil speichern: Button
+-- Einstellungen auf SD sichern: Button
+-- Einstellungen von SD wiederherstellen: Button
+-- Automatisches Backup bei Neustart: An/Aus
+
+- Zeitsteuerung
+-- Systemzeit anzeigen
+-- Zeit synchronisieren: Button
+-- Zeitsteuerung: An/Aus
+-- Auto Demo Nachtmodus: An/Aus
+
+- Developer und Diagnose
+-- Debug Overlay: An/Aus
+-- Serielle Debug Ausgabe: An/Aus
+-- RS485 Baudrate: 9600 / 57600 / 115200
+-- SPI Kommunikation Test: Button
+-- I2C Scan und Anzeige: Button
+-- LED Testdiagnose: Button
+-- Display Testmodus: Button
+-- Kommunikationsmonitor: RS485 / WiFi Daten
+-- Log Speicher anzeigen: Letzte 50 Events
+-- Fehlerprotokoll: An/Aus
+-- Letzte Fehler anzeigen: Button
+-- Temperatur / Spannungssensoren: Anzeigen
+-- WiFi Signalstärke: Anzeige
+-- EEPROM Zustand prüfen: Button
+-- Entwicklermodus: An/Aus
+
+- Bonus intelligente Funktionen
+-- Ereignis Trigger: An/Aus
+-- Trigger Verwaltung: Untermenü
+-- Showcase Modus: An/Aus
+-- Wechselintervall: Sekunden
+-- Adaptive Helligkeit nach Raumlicht: An/Aus
+-- Auto Demo nach Inaktivität: An/Aus
+-- Sprachsteuerung (zukünftig): Platzhalter
+
+---------------------------------------
+INFO / ABOUT
+Projektname: PitterOmat
+Version: Anzeige
+Entwickler: T0XIQ96
+Website / QR Code: Link zur App oder Weboberfläche
+Lizenz und Danksagung
+Firmware Kompatibilität: ESP32S3 / Arduino Mega
+
+---------------------------------------
+DATEISTRUKTUR AUF SD-KARTE:
+/SDCARD/
+  /games/
+    game1.json
+    game2.json
+  /options/
+    user_options.json
+    admin_options.json
+  /themes/
+    theme_arcade.json
+    theme_minimal.json
+  /profiles/
+    profile_default.json
+    profile_turnier.json
+  /music/
+    *.wav
+  /logos/
+    bootlogo.png
+  /updates/
+    firmware.bin
+    version.txt
+
+---------------------------------------
+SYSTEMLOGIK
+Beim Start:
+  SD wird gescannt
+  Alle JSON-Dateien werden automatisch erkannt
+  Ungültige Dateien werden ignoriert und geloggt
+  Neue Spiele oder Optionen werden automatisch hinzugefügt
+  Menü aktualisiert sich dynamisch nach SD-Inhalt
+
+
+Ungefähr so sollte das Menü und die Funktionen sein, mache mir aber noch logische Vorschläge, prüfe ob die Methoden wie beschrieben gut sind oder ob es da bewährtere Methoden gibt, mit Internetrecherche etc.
+Strukturiere die Vorgänge alle so das sie perfekt passen zum System was ich aufbauen will, zB auch Testversionen raushauen, ich teste die dann (zB ESP und Arduino RS485 Test) und muss Antworten ob alles funktioniert hat oder was für ein Fehler aufgetreten ist.
+C:\Users\tommy\PROJEKTE\mcpOmat\firmware\esp32: Hier befindet sich eine lvglcode.ino Datei welche auf dem ESP32S3 ein Test UI das ich mit EEZ Studio gemacht habe beinhaltet, funktioniert. Also ist das möglicherweise die Basis.
+mach die testversionen so, das ich zB rs485 einzeln testen muss indem ich in einem extra ordner fertige versionen zum uploaden an arduino und esp32 und eine anleitung wie ich die verbinden muss (weil rs485 ja mit kabeln miteinander verbunden werden muss.
+sodass alle funktionen einzeln getestet werden, mit ggf dem serialmonitor wenn ein gerät mit usb angeschlossen ist, oder beide gleichzeitig. Mach es logisch, und wenn es funktioniert muss ich diese in einen ordner (zb: succededTESTS) verschieben und so weisst du dann das diese Funktion einzeln funktioniert.
+Am Ende der Tests, falls alle nötigen Test drinne sind (auch wenn ich ausserhalb des Chats mit einem anderen Chat eine Funktion zum funktionieren gebracht habe, auch wenn es nichts mehr mit dem vorgeschlagenen Code zutun hat) eine fertige Version mit allen Funktionen logisch miteinander kombiniert sodass es alles funktionieren sollte. 
+Ich will falls ich Probleme habe wenn ich eine fertige Version bekommen habe, weiter am Projekt arbeiten können und mit dir Probleme besprechen können, sodass du mir weitere Versionen fertigen kannst die dann verbessert sein sollten.
+
+Im Repository habe ich einen Ordner `TREIBER\` abgelegt, dort liegen die offiziellen Waveshare-Treiber und Demo-Tests aus dem ESP32S3-Wiki. Bitte diese Referenzimplementierungen bei Bedarf nutzen (z. B. RS485-, CAN-, SD-, RTC-Demos) oder darauf aufbauen, statt alles neu zu schreiben.
+
+
+Spiele und Optionen sollten wirklich modular funktionieren. Sodass ich in zB spielEngine.txt und optionenEngine.txt eine Beschreibung erstellt bekomme wie genau das funktioniert mit den Spielen und Optionen, sodass ich in Zukunft diese SpielEngine oder OptionenEngine.txt nur dem neuen Chat schreibe und sage was für ein Spiel oder Option er mir dafür kreieren soll. Mache das möglich.
+Will nur auf die SD neue Spiele ziehen oder per App/Webseite klicken und er downloaded mir die Spiele in den ESP32S3 und von dorthin überall. 
+Eine einzigartige HASHnummer soll von dem MainESP erstellt werden die nur in dieser Kombination von Spielen und Optionen gibt. Sodass wenn man zB ein Bug hat und eine Option noch in einen der ESP32 vorhanden ist,  die Hashnummer anders ist als im Main. Dann soll man updaten bzw macht er das bei Start (wenn in Adminoptionen gewollt).
+
+Schlage mir Änderungen vor, falls du denkst die sind angemessener. 
+Schlage mir neue Funktionen vor, die zum System passen und hinzugefügt werden können wenn ich bestätige. 
+Schlage mir Effekte vor für die Animationen und passe sie logisch an, dabei kannst du dich auch im Internet an Effekten von anderen Orientieren. 
+
+
+

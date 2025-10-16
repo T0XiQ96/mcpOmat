@@ -1,0 +1,10 @@
+idf_component_register(
+    SRCS
+        "app_main.c"
+        "transport_rs485.c"
+        "session_bus.c"
+        "http_status_handler.c"
+        "storage_config.c"
+    INCLUDE_DIRS
+        "."
+)

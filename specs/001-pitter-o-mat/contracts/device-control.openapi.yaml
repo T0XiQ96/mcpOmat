@@ -1,0 +1,311 @@
+openapi: 3.0.3
+info:
+  title: Pitter-o-mat Local Control API
+  version: 0.1.0
+  description: >
+    HTTP interface exposed by the master ESP32S3 for companion apps to manage
+    game sessions, options, and firmware updates. Endpoints mirror encoder flows
+    and must be available only on the trusted local network.
+servers:
+  - url: http://pitter-o-mat.local/api
+paths:
+  /status:
+    get:
+      summary: Retrieve hardware and session status
+      operationId: getStatus
+      responses:
+        "200":
+          description: Current state snapshot
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SystemStatus"
+  /game/session:
+    post:
+      summary: Configure and start a new game session
+      operationId: createSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SessionRequest"
+      responses:
+        "202":
+          description: Session accepted; devices preparing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameSession"
+  /game/session/current:
+    patch:
+      summary: Update runtime options for the active session
+      operationId: updateSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SessionPatch"
+      responses:
+        "200":
+          description: Session updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameSession"
+    delete:
+      summary: Abort the active session
+      operationId: abortSession
+      responses:
+        "204":
+          description: Session cancelled
+  /options/joker:
+    put:
+      summary: Persist Joker configuration
+      operationId: setJokerOptions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JokerOptions"
+      responses:
+        "200":
+          description: Options saved
+  /highscores/{modeId}:
+    get:
+      summary: Retrieve highscores for a supported mode
+      operationId: getHighscores
+      parameters:
+        - name: modeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Leaderboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HighscoreList"
+    delete:
+      summary: Reset highscores for a mode
+      operationId: resetHighscores
+      parameters:
+        - name: modeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Highscores cleared
+  /firmware/update:
+    post:
+      summary: Notify clients about available firmware
+      operationId: triggerFirmwareUpdate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FirmwareUpdateRequest"
+      responses:
+        "202":
+          description: Update broadcast started
+components:
+  schemas:
+    SystemStatus:
+      type: object
+      properties:
+        session:
+          $ref: "#/components/schemas/GameSession"
+        nodes:
+          type: array
+          items:
+            $ref: "#/components/schemas/HardwareNode"
+        powerBudgetWatts:
+          type: number
+          example: 300.0
+    SessionRequest:
+      type: object
+      required:
+        - modeId
+        - playerCount
+      properties:
+        modeId:
+          type: string
+        playerCount:
+          type: integer
+          minimum: 2
+          maximum: 6
+        playerAssignments:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerSlotConfig"
+        jokerEnabled:
+          type: boolean
+        jokerColor:
+          type: string
+          example: gold
+        jokerAnimation:
+          type: string
+          example: wave
+    SessionPatch:
+      type: object
+      properties:
+        jokerEnabled:
+          type: boolean
+        jokerColor:
+          type: string
+        jokerAnimation:
+          type: string
+        brightnessPercent:
+          type: integer
+          minimum: 5
+          maximum: 100
+    JokerOptions:
+      type: object
+      required:
+        - enabled
+        - color
+        - animation
+      properties:
+        enabled:
+          type: boolean
+        color:
+          type: string
+        animation:
+          type: string
+    HighscoreList:
+      type: object
+      properties:
+        modeId:
+          type: string
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/HighscoreEntry"
+    FirmwareUpdateRequest:
+      type: object
+      required:
+        - version
+        - artifactUrl
+      properties:
+        version:
+          type: string
+          example: 1.2.0
+        artifactUrl:
+          type: string
+          format: uri
+        force:
+          type: boolean
+          description: Retry even if nodes already report the same version
+    GameSession:
+      type: object
+      properties:
+        sessionId:
+          type: string
+        modeId:
+          type: string
+        playerCount:
+          type: integer
+        status:
+          type: string
+          enum:
+            - configuring
+            - running
+            - completed
+            - aborted
+        joker:
+          $ref: "#/components/schemas/JokerOptions"
+        startedAt:
+          type: string
+          format: date-time
+        endedAt:
+          type: string
+          format: date-time
+        players:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerSlot"
+    PlayerSlotConfig:
+      type: object
+      required:
+        - slotId
+        - displayId
+      properties:
+        slotId:
+          type: integer
+          minimum: 1
+          maximum: 6
+        displayId:
+          type: integer
+        playerProfileId:
+          type: string
+          nullable: true
+    PlayerSlot:
+      allOf:
+        - $ref: "#/components/schemas/PlayerSlotConfig"
+        - type: object
+          properties:
+            spielLedStart:
+              type: integer
+            spielLedEnd:
+              type: integer
+            grenzLedLeft:
+              type: integer
+            grenzLedRight:
+              type: integer
+            active:
+              type: boolean
+    HighscoreEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        playerProfileId:
+          type: string
+        playerName:
+          type: string
+        score:
+          type: integer
+        achievedAt:
+          type: string
+          format: date-time
+        durationSeconds:
+          type: integer
+        metadata:
+          type: object
+          additionalProperties: true
+    HardwareNode:
+      type: object
+      properties:
+        nodeId:
+          type: string
+        role:
+          type: string
+          enum:
+            - master_esp
+            - client_esp
+            - arduino
+        firmwareVersion:
+          type: string
+        updateStatus:
+          type: string
+          enum:
+            - idle
+            - pending
+            - downloading
+            - success
+            - failed
+        lastSeen:
+          type: string
+          format: date-time
+        transport:
+          type: string
+          enum:
+            - rs485
+            - wifi

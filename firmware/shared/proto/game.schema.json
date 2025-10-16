@@ -1,0 +1,282 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mcpomat.dev/schema/game.json",
+  "title": "Pitter-o-mat Game Definition",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "title",
+    "players",
+    "supportsHighscore",
+    "phases",
+    "ledProfile",
+    "displayLayout"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9\\-]{1,63}$"
+    },
+    "version": { "type": "string" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "author": { "type": "string" },
+    "players": {
+      "type": "object",
+      "required": ["min", "max"],
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 6
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 6
+        },
+        "recommended": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 6
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "supportsHighscore": { "type": "boolean" },
+    "joker": {
+      "type": "object",
+      "properties": {
+        "optional": { "type": "boolean", "default": true },
+        "required": { "type": "boolean", "default": false },
+        "defaultColor": { "type": "string" },
+        "allowedAnimations": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "requiresHardware": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["encoder", "rs485", "display", "sound", "wifi"]
+      },
+      "uniqueItems": true
+    },
+    "optionRefs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9\\-]{1,63}$"
+      },
+      "uniqueItems": true
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "durationSeconds"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["setup", "countdown", "gameplay", "intermission", "results", "cleanup"]
+          },
+          "durationSeconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "events": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/event" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ledProfile": {
+      "type": "object",
+      "required": ["segments", "animations"],
+      "properties": {
+        "segments": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/segmentRule" }
+        },
+        "animations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "trigger"],
+            "properties": {
+              "id": { "type": "string" },
+              "trigger": {
+                "type": "string",
+                "enum": ["onStart", "onScore", "onWin", "onLose", "onDraw", "custom"]
+              },
+              "parameters": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "displayLayout": {
+      "type": "object",
+      "required": ["views"],
+      "properties": {
+        "views": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["displayId", "viewId"],
+            "properties": {
+              "displayId": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "viewId": { "type": "string" },
+              "role": {
+                "type": "string",
+                "enum": ["player", "spectator", "admin"]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "assets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "file"],
+            "properties": {
+              "id": { "type": "string" },
+              "file": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "telemetry": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event"],
+        "properties": {
+          "event": { "type": "string" },
+          "description": { "type": "string" },
+          "payload": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": { "players": { "type": "object" } },
+        "required": ["players"]
+      },
+      "then": {
+        "properties": {
+          "players": {
+            "properties": {
+              "min": { "maximum": { "$data": "1/max" } }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "supportsHighscore": { "const": false } }
+      },
+      "then": {
+        "properties": {
+          "telemetry": {
+            "items": {
+              "not": {
+                "properties": {
+                  "event": { "pattern": "^highscore" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "segmentRule": {
+      "type": "object",
+      "required": ["group", "usage"],
+      "properties": {
+        "group": {
+          "type": "string",
+          "pattern": "^(spiel|grenz)-\\d{1,2}$"
+        },
+        "usage": {
+          "type": "string",
+          "enum": ["playfield", "boundary", "effect", "joker"]
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "uniqueItems": true
+        },
+        "color": { "type": "string" },
+        "intensity": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "event": {
+      "type": "object",
+      "required": ["id", "trigger"],
+      "properties": {
+        "id": { "type": "string" },
+        "trigger": {
+          "type": "string",
+          "enum": ["onEnter", "onExit", "timer", "message", "custom"]
+        },
+        "messageType": { "type": "string" },
+        "timerMs": { "type": "integer", "minimum": 0 },
+        "payload": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

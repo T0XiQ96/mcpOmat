@@ -1,0 +1,131 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mcpomat.dev/schema/options.json",
+  "title": "Pitter-o-mat Option Bundle",
+  "type": "object",
+  "required": ["id", "version", "title", "scope", "fields"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9\\-]{1,63}$"
+    },
+    "version": { "type": "string" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "scope": {
+      "type": "string",
+      "enum": ["user", "admin", "system"]
+    },
+    "appliesTo": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9\\-]{1,63}$|^\\*$"
+      },
+      "uniqueItems": true,
+      "default": ["*"]
+    },
+    "requiresRestart": { "type": "boolean", "default": false },
+    "sync": {
+      "type": "string",
+      "enum": ["immediate", "onStart", "manual"],
+      "default": "immediate"
+    },
+    "fields": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/field" }
+    },
+    "effects": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/effect" }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "field": {
+      "type": "object",
+      "required": ["key", "type", "label"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_]{1,63}$"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["boolean", "integer", "float", "enum", "color", "string"]
+        },
+        "label": { "type": "string" },
+        "description": { "type": "string" },
+        "default": {},
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "step": { "type": "number" },
+        "choices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value", "label"],
+            "properties": {
+              "value": {},
+              "label": { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "units": { "type": "string" },
+        "group": { "type": "string" },
+        "visibleWhen": {
+          "type": "object",
+          "additionalProperties": { "type": ["string", "number", "boolean"] }
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": { "type": { "const": "enum" } }
+          },
+          "then": { "required": ["choices"] }
+        },
+        {
+          "if": {
+            "properties": { "type": { "enum": ["integer", "float"] } }
+          },
+          "then": {
+            "properties": {
+              "min": { "type": "number" },
+              "max": { "type": "number" }
+            }
+          }
+        }
+      ]
+    },
+    "effect": {
+      "type": "object",
+      "required": ["target", "action"],
+      "properties": {
+        "target": {
+          "type": "string",
+          "enum": ["led", "audio", "session", "telemetry", "system"]
+        },
+        "action": { "type": "string" },
+        "params": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "apply": {
+          "type": "string",
+          "enum": ["immediate", "onStart", "manual"],
+          "default": "immediate"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
