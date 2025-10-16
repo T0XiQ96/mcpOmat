@@ -16,10 +16,10 @@
 
 **Ziel**: Dokumentationsgrundlagen und SD-Arbeitsbereich für alle Stories bereitstellen.
 
-- [ ] T001 Dokumentiere aktuelle Hardwareverkabelung in docs/hardware/pitter-o-mat-setup.md
-- [ ] T002 Ergänze in tests/README.md einen Verweis auf die Waveshare-TREIBER-Quellen
-- [ ] T003 [P] Aktualisiere docs/operations/test-package-workflow.md mit Namenskonventionen für neue Bundles
-- [ ] T004 [P] Lege SDCARD/README.md als Anleitung für den Einsatz von manifest_tool an
+- [DONE] T001 Dokumentiere aktuelle Hardwareverkabelung in docs/hardware/pitter-o-mat-setup.md
+- [DONE] T002 Ergänze in tests/README.md einen Verweis auf die Waveshare-TREIBER-Quellen
+- [DONE] T003 [P] Aktualisiere docs/operations/test-package-workflow.md mit Namenskonventionen für neue Bundles
+- [DONE] T004 [P] Lege SDCARD/README.md als Anleitung für den Einsatz von manifest_tool an
 
 ---
 
