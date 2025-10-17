@@ -1,26 +1,31 @@
-# rs485 link test
+﻿# rs485 link test
 
 ## Ziel
-- RS485-Verbindung zwischen Master-ESP32 und Arduino prüfen.
+- RS485-Verbindung zwischen Master-ESP32 und Arduino Mega prüfen.
 - Manifest-Hash (`msg 0x05`) senden und per Echo bestätigen lassen.
-- Fehlerfall (CRC, Timeouts) in der seriellen Ausgabe erkennen.
+- Ready-Masken (Msg 0x06) vom Arduino empfangen.
 
 ## Vorbereitung
-- Verkabelung laut `docs/hardware/pitter-o-mat-setup.md` (RS485: GPIO44→DI, GPIO43→RO, GPIO21→DE/RE, Arduino TX=18, RX=19, DE=Pin2).
-- SD-Karte mit `SDCARD/manifest.json` aus diesem Repo bestücken (`python -m firmware.shared.scripts.manifest_tool generate --root SDCARD`).
-- Firmware-Binaries für ESP32/Arduino aus diesem Testpaket aufspielen:
-  - ESP32-Sketch: `tests/rs485-link/esp32/`
-  - Arduino-Sketch: `tests/rs485-link/arduino/`
+- Verdrahtung gemäß `docs/hardware/pitter-o-mat-setup.md`:
+  - ESP32 Touch LCD: RS485-Klemme `A/B/GND`.
+  - Arduino Mega plus RS485-Modul (MAX485 o.ä.):
+    - A/B ↔ Bus, GND gemeinsam.
+    - RO → RX1 (Pin 19), DI → TX1 (Pin 18).
+    - DE & RE gebrückt → Pin 2.
+- SD-Karte mit `SDCARD/manifest.json` bestücken (`python -m firmware.shared.scripts.manifest_tool generate --root SDCARD`).
+- Firmware flashen:
+  - ESP32: `tests/rs485-link/esp32/rs485_link_master/rs485_link_master.ino`
+  - Arduino: `tests/rs485-link/arduino/rs485_link_slave/rs485_link_slave.ino`
 
 ## Ablauf
-1. Beide Geräte via USB anschließen und Terminalfenster mit 115200 Baud öffnen (Master & Arduino separat).
-2. ESP32 bootet, lädt Manifest, sendet `msg 0x05` mit Hash `sha256:02130f436c4c10a17b353205ffd3c85eafb40d670eb654abf7e03b849557950d`.
-3. Arduino bestätigt Empfang, sendet Echo-Frame zurück (`msg 0x05`), ESP32 quittiert „manifest hash echo ok“.
-4. Fehlerfall-Test: RS485-Leitung kurz unterbrechen → ESP32 erwartet Wiederholung, loggt „crc mismatch / requesting resend“.
+1. Beide Geräte per USB verbinden, seriellen Monitor je Board auf 115200 Baud öffnen.
+2. ESP32 startet, sendet Manifest-Hash `sha256:02130f436c4c10a17b353205ffd3c85eafb40d670eb654abf7e03b849557950d`.
+3. Arduino bestätigt Hash (Echo) und sendet nacheinander die Ready-Masken `0x01 … 0x3F`.
+4. Optional: Leitung A/B kurz trennen – beide Sketches melden CRC-Fehler.
 
 ## Erwartete Ausgabe
-- Details siehe `expected.log`. Wichtige Marker:
-  - `[ESP32] manifest hash tx: sha256:02130f...`
-  - `[Arduino] manifest hash rx: sha256:02130f...`
-  - `[ESP32] manifest hash echo ok`
-  - Fehlerfall: `[ESP32] crc mismatch` + erneuter Sendeversuch innerhalb 1 s.
+- Referenz siehe `expected.log`. Typische Marker:
+  - `== RS485 Link Test (ESP32) ==`
+  - `[ESP32] manifest hash tx: …`
+  - `[Arduino] manifest hash rx: …` / `[Arduino] manifest hash echo tx`
+  - `[ESP32] ready mask 0x..`

@@ -1,15 +1,11 @@
 #include <Arduino.h>
 
 /**
- * Display Sync Test – ESP32 side
- * ------------------------------------------------------------
- * - Sends manifest hash to the Arduino and waits for echo.
- * - Broadcasts display-to-slot assignments (6 entries).
- * - Waits for ready-mask updates (0x01 -> 0x3F) from Arduino.
- * - Logs progress on USB Serial to compare with expected.log.
- *
- * Hardware (ESP32-S3 Touch LCD):
- *   RS485 TX -> GPIO44, RS485 RX -> GPIO43, DE/RE -> GPIO21
+ * RS485 Link Test – ESP32 master
+ * ----------------------------------------------
+ * - Sends manifest hash (msg 0x05) to the Arduino.
+ * - Logs echoes and ready-mask responses.
+ * - Uses the onboard RS485 transceiver (GPIO43/44, GPIO21 DE/RE).
  */
 
 namespace {
@@ -26,34 +22,19 @@ HardwareSerial &rs485 = Serial1;
 const char *kManifestHash =
     "sha256:02130f436c4c10a17b353205ffd3c85eafb40d670eb654abf7e03b849557950d";
 
-enum class SyncStage : uint8_t {
-  WaitManifestEcho,
-  SendAssignments,
-  WaitReadyMasks,
-  Done,
-};
-
-SyncStage g_stage = SyncStage::WaitManifestEcho;
-bool g_assignmentsSent = false;
-uint8_t g_nextReadyIndex = 0;
-
 struct FrameBuffer {
+  enum class State : uint8_t { WaitSync, MsgType, Length, Payload, Crc };
+  State state = State::WaitSync;
   uint8_t type = 0;
   uint8_t length = 0;
   uint8_t index = 0;
   uint8_t payload[RS485_MAX_PAYLOAD]{};
-  enum class State : uint8_t { WaitSync, MsgType, Length, Payload, Crc } state =
-      State::WaitSync;
 } g_rx;
 
 uint8_t crc8Update(uint8_t crc, uint8_t byte) {
   crc ^= byte;
   for (uint8_t i = 0; i < 8; ++i) {
-    if (crc & 0x01U) {
-      crc = (crc >> 1) ^ 0x8CU;
-    } else {
-      crc >>= 1;
-    }
+    crc = (crc & 0x01U) ? (crc >> 1) ^ 0x8CU : crc >> 1;
   }
   return crc;
 }
@@ -74,10 +55,9 @@ void setTransmit(bool enable) {
 
 void sendFrame(uint8_t type, const uint8_t *payload, uint8_t length) {
   if (length > RS485_MAX_PAYLOAD) {
-    Serial.printf("[ERR] payload too large (%u bytes)\n", length);
+    Serial.printf("[ESP32] payload too large (%u bytes)\n", length);
     return;
   }
-  uint8_t header[3] = {RS485_SYNC, type, length};
   uint8_t crc = 0;
   crc = crc8Update(crc, type);
   crc = crc8Update(crc, length);
@@ -85,6 +65,7 @@ void sendFrame(uint8_t type, const uint8_t *payload, uint8_t length) {
     crc = crc8Update(crc, payload, length);
   }
 
+  uint8_t header[3] = {RS485_SYNC, type, length};
   setTransmit(true);
   rs485.write(header, sizeof(header));
   if (length > 0 && payload != nullptr) {
@@ -97,9 +78,9 @@ void sendFrame(uint8_t type, const uint8_t *payload, uint8_t length) {
 
 void resetReceiver(bool synced) {
   g_rx.state = synced ? FrameBuffer::State::MsgType : FrameBuffer::State::WaitSync;
-  g_rx.index = 0;
   g_rx.type = 0;
   g_rx.length = 0;
+  g_rx.index = 0;
 }
 
 bool pollFrame(uint8_t &type, uint8_t &length, uint8_t *payload) {
@@ -118,8 +99,7 @@ bool pollFrame(uint8_t &type, uint8_t &length, uint8_t *payload) {
     case FrameBuffer::State::Length:
       g_rx.length = byte;
       if (g_rx.length > RS485_MAX_PAYLOAD) {
-        Serial.printf("[WARN] drop frame len=%u > %u\n", g_rx.length,
-                      RS485_MAX_PAYLOAD);
+        Serial.printf("[ESP32] drop frame len=%u > %u\n", g_rx.length, RS485_MAX_PAYLOAD);
         resetReceiver(false);
       } else if (g_rx.length == 0) {
         g_rx.state = FrameBuffer::State::Crc;
@@ -150,7 +130,7 @@ bool pollFrame(uint8_t &type, uint8_t &length, uint8_t *payload) {
         resetReceiver(false);
         return true;
       }
-      Serial.printf("[WARN] crc mismatch exp=0x%02X got=0x%02X type=0x%02X len=%u\n",
+      Serial.printf("[ESP32] crc mismatch exp=0x%02X got=0x%02X type=0x%02X len=%u\n",
                     crc, byte, g_rx.type, g_rx.length);
       resetReceiver(byteIsSync);
       break;
@@ -165,56 +145,30 @@ void sendManifestHash() {
       reinterpret_cast<const uint8_t *>(kManifestHash);
   uint8_t length = static_cast<uint8_t>(strlen(kManifestHash));
   sendFrame(0x05, payload, length);
-  Serial.printf("[SYNC] manifest hash tx: %s\n", kManifestHash);
-}
-
-void sendDisplayAssignments() {
-  struct Mapping {
-    uint8_t displayId;
-    uint8_t slot;
-  };
-  const Mapping table[6] = {
-      {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6},
-  };
-  uint8_t payload[2];
-  for (const auto &entry : table) {
-    payload[0] = entry.displayId;
-    payload[1] = entry.slot;
-    sendFrame(0x02, payload, sizeof(payload));
-    Serial.printf("[SYNC] display %u -> slot P%u\n", entry.displayId,
-                  entry.slot);
-    delay(50);
-  }
+  Serial.printf("[ESP32] manifest hash tx: %s\n", kManifestHash);
 }
 
 void handleFrame(uint8_t type, uint8_t length, const uint8_t *payload) {
   switch (type) {
-  case 0x05: { // manifest hash echo from Arduino
-    String hash = "";
+  case 0x05: {
+    String hash;
     for (uint8_t i = 0; i < length; ++i) {
       hash += static_cast<char>(payload[i]);
     }
+    Serial.printf("[ESP32] manifest hash rx: %s\n", hash.c_str());
     if (hash.equals(kManifestHash)) {
-      Serial.println("[SYNC] manifest hash ok");
-      g_stage = SyncStage::SendAssignments;
+      Serial.println("[ESP32] manifest hash echo ok");
     } else {
-      Serial.printf("[ERR] manifest hash mismatch: %s\n", hash.c_str());
+      Serial.println("[ESP32] manifest hash mismatch");
     }
     break;
   }
-  case 0x06: { // ready mask from Arduino
-    if (length >= 1 && g_stage == SyncStage::WaitReadyMasks) {
-      uint8_t mask = payload[0];
-      Serial.printf("[SYNC] ready mask 0x%02X\n", mask);
-      if (++g_nextReadyIndex >= 6) {
-        Serial.println("[SYNC] summary complete");
-        g_stage = SyncStage::Done;
-      }
+  case 0x06:
+    if (length >= 1) {
+      Serial.printf("[ESP32] ready mask 0x%02X\n", payload[0]);
     }
     break;
-  }
   default:
-    // Ignore other frames for this test
     break;
   }
 }
@@ -223,9 +177,12 @@ void handleFrame(uint8_t type, uint8_t length, const uint8_t *payload) {
 
 void setup() {
   Serial.begin(115200);
-  delay(200);
+  unsigned long startWait = millis();
+  while (!Serial && (millis() - startWait) < 3000) {
+    delay(10);
+  }
   Serial.println();
-  Serial.println("== Display Sync Test (ESP32) ==");
+  Serial.println("== RS485 Link Test (ESP32) ==");
 
   pinMode(RS485_DE_PIN, OUTPUT);
   digitalWrite(RS485_DE_PIN, LOW);
@@ -242,13 +199,6 @@ void loop() {
 
   if (pollFrame(type, length, payload)) {
     handleFrame(type, length, payload);
-  }
-
-  if (g_stage == SyncStage::SendAssignments && !g_assignmentsSent) {
-    sendDisplayAssignments();
-    g_assignmentsSent = true;
-    g_stage = SyncStage::WaitReadyMasks;
-    g_nextReadyIndex = 0;
   }
 
   delay(10);
