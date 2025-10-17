@@ -1,31 +1,27 @@
 ﻿# led ring test
 
 ## Ziel
-- Mapping der Spiel- und Grenzsegmente fuer 2-6 Spieler bestaetigen.
-- Joker-Gruppe 2 bei fuenf Spielern deaktiviert halten.
-- Helligkeits- und Farbverlauf laut `segment_map.json` pruefen.
+- Sämtliche LEDs des Spiel- und Grenzsegments nacheinander durchschalten.
+- Test bei reduzierter Helligkeit (~10 %) durchführen, um Netzteil und Ring zu schonen.
 
 ## Vorbereitung
-- LED-Ring an den Arduino Mega anschliessen (siehe docs/hardware/pitter-o-mat-setup.md).
-- ESP32-Client fuer LED-Steuerung nach Plan verbinden (RS485, 5 V Versorgung).
-- Firmware flashen:
-  - ESP32-Programm: `tests/led-ring/esp32/`
-  - Arduino-Sketch: `tests/led-ring/arduino/`
-- Manifest aus dem Testpaket mit `python -m firmware.shared.scripts.manifest_tool validate tests/led-ring/assets/manifest.json --root tests/led-ring/assets` pruefen.
+- LED-Ring gemäß `docs/hardware/pitter-o-mat-setup.md` an den Arduino Mega anschließen:
+  - SpielLED-Datenleitung → Pin 12
+  - GrenzLED-Datenleitung → Pin 13
+  - 5 V / GND entsprechend einspeisen
+- Bibliothek `Adafruit NeoPixel` in der Arduino IDE installieren (Werkzeuge → Bibliotheken verwalten).
+- Sketch `tests/led-ring/arduino/led_ring_sequential/led_ring_sequential.ino` öffnen (Board: *Arduino Mega 2560*, 115200 Baud) und flashen.
+- Manifest optional prüfen: `python -m firmware.shared.scripts.manifest_tool validate tests/led-ring/assets/manifest.json --root tests/led-ring/assets`.
 
 ## Ablauf
-1. Testskript startet automatisch nach Reset: Spielerzahl 5, Joker deaktiviert.
-2. ESP32 sendet LED-Mapping (msg 0x02) fuer Slots 1-5.
-3. Arduino rendert Segment-Gruppen:
-   - Grenzsegmente bleiben konstant weiss.
-   - Spieler-Segmente rotieren in einer blau gefaerbten Animation.
-   - Joker-Gruppe 2 bleibt dunkel.
-4. Nach 10 s wechselt der Test auf Spielerzahl 3 mit aktiviertem Joker -> Joker-Segment pulsiert gruen.
+1. Arduino mit USB verbinden und seriellen Monitor (115200 Baud) öffnen.
+2. Nach dem Reset werden zuerst alle SpielLEDs (Pin 12), danach alle GrenzLEDs (Pin 13) in derselben Laufrichtung (Innen → Außen) einzeln in weißer Farbe bei ~10 % Helligkeit angesteuert.
+3. Nach Abschluss meldet der Sketch `[LED] sweep finished` und bleibt im Idle.
 
 ## Erwartete Ausgabe
-- Serielle Logs siehe `expected.log` (Arduino-Seite).
+- Siehe `expected.log` (Serielle Ausgabe des Arduino).
 - Wichtige Marker:
-  - `[LED] boundary check ok`
-  - `[LED] joker group 2 OFF` (Phase 1)
-  - `[LED] joker group 2 pulse` (Phase 2)
-  - `[LED] slot <n> gradient ok`
+  - `== LED Ring Sequential Test ==`
+  - `[LED] sweep game strip (432 LEDs)`
+  - `[LED] sweep border strip (432 LEDs)`
+  - `[LED] sweep finished`
