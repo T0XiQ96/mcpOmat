@@ -17,6 +17,9 @@
   /logos/
   /updates/
 ```
+- Referenzinhalte für Dokumentation & Tests liegen im Repo unter
+  `SDCARD/games/sample-game.json` und `SDCARD/options/sample-options.json`.
+  Das dazugehörige Manifest entsteht mit dem `manifest_tool` als `SDCARD/manifest.json`.
 
 ## Manifest-Überblick (`manifest.json`)
 - `manifestVersion` (Semver) – Schema-Version zwecks Kompatibilitätsprüfung.
@@ -89,9 +92,15 @@ So lässt sich jede fehlende oder geänderte Datei erkennen.
   - Mit `--output` kann ein anderer Pfad gewählt werden; `--notes` fügt Freitext hinzu.
 - Manifest validieren:
   ```bash
-  python -m firmware.shared.scripts.manifest_tool validate manifest.json --root SDCARD
+  python -m firmware.shared.scripts.manifest_tool validate SDCARD/manifest.json --root SDCARD
   ```
   - Prüft Schema, berechnet `bundleHash` neu und vergleicht alle referenzierten Dateien/Hashes.
+  - Funktioniert out of the box mit den beigelegten Demo-Dateien (`sample-game.json`, `sample-options.json`).
+- Testpakete vorbereiten:
+  ```bash
+  python tests/scripts/generate_bundles.py
+  ```
+  - Erzeugt die Referenzordner `tests/rs485-link`, `tests/led-ring` und `tests/display-sync` mitsamt README, Assets und erwarteter Logdatei.
 
 ## Nächste Schritte
 - Autorenguides für Spiele-/Options-Dateien (z.B. `spielEngine`, `optionenEngine`) auf Basis dieser Schemas ausarbeiten.

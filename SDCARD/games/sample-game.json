@@ -1,0 +1,100 @@
+{
+  "id": "sample-rotation",
+  "version": "0.1.0",
+  "title": "Demo-Setup Rotation",
+  "description": "Geführter Demomodus für das Manifest- und RS485-Testen.",
+  "players": {
+    "min": 2,
+    "max": 4,
+    "recommended": [2, 3, 4]
+  },
+  "supportsHighscore": false,
+  "joker": {
+    "optional": true,
+    "defaultColor": "#FFA500"
+  },
+  "requiresHardware": ["encoder", "rs485", "display"],
+  "optionRefs": ["sample-options"],
+  "phases": [
+    {
+      "name": "Setup",
+      "type": "setup",
+      "durationSeconds": 10
+    },
+    {
+      "name": "Countdown",
+      "type": "countdown",
+      "durationSeconds": 5
+    },
+    {
+      "name": "Gameplay",
+      "type": "gameplay",
+      "durationSeconds": 120
+    },
+    {
+      "name": "Results",
+      "type": "results",
+      "durationSeconds": 15
+    }
+  ],
+  "ledProfile": {
+    "segments": [
+      {
+        "group": "spiel-1",
+        "usage": "playfield",
+        "players": [2, 3, 4],
+        "color": "#00A8FF"
+      },
+      {
+        "group": "grenz-1",
+        "usage": "boundary",
+        "players": [2, 3, 4],
+        "color": "#FFFFFF"
+      }
+    ],
+    "animations": [
+      {
+        "id": "setupPulse",
+        "trigger": "onStart"
+      },
+      {
+        "id": "winBurst",
+        "trigger": "onWin"
+      }
+    ]
+  },
+  "displayLayout": {
+    "views": [
+      {
+        "displayId": 1,
+        "viewId": "setup_screen",
+        "role": "player"
+      },
+      {
+        "displayId": 2,
+        "viewId": "score_screen",
+        "role": "player"
+      }
+    ],
+    "assets": [
+      {
+        "id": "background",
+        "file": "ui/setup_background.bin"
+      }
+    ]
+  },
+  "telemetry": [
+    {
+      "event": "session.start",
+      "description": "Session gestartet"
+    },
+    {
+      "event": "session.end",
+      "description": "Session beendet"
+    }
+  ],
+  "metadata": {
+    "demo": true,
+    "notes": "Dient als Referenz für manifest_tool Tests"
+  }
+}

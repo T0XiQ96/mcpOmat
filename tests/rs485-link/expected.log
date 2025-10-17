@@ -1,0 +1,10 @@
+﻿# Erwartete serielle Ausgabe (Auszug)
+[ESP32] boot complete
+[ESP32] manifest hash tx: sha256:02130f436c4c10a17b353205ffd3c85eafb40d670eb654abf7e03b849557950d
+[Arduino] manifest hash rx: sha256:02130f436c4c10a17b353205ffd3c85eafb40d670eb654abf7e03b849557950d
+[Arduino] manifest hash echo
+[ESP32] manifest hash echo ok
+# Fehlerfall (optional)
+[ESP32] crc mismatch, requesting resend
+[Arduino] manifest hash rx: sha256:02130f436c4c10a17b353205ffd3c85eafb40d670eb654abf7e03b849557950d
+[ESP32] manifest hash echo ok

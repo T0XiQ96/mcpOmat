@@ -18,10 +18,13 @@ void session_bus_broadcast_state(uint8_t state, bool joker_enabled)
 
 void session_bus_poll()
 {
-    uint8_t buffer[64];
-    int len = transport_rs485_receive(buffer, sizeof(buffer), pdMS_TO_TICKS(5));
-    if (len > 0) {
-        ESP_LOGI(TAG, "Received %d bytes", len);
-        // TODO: parse frames and notify UI/state machine
+    rs485_frame_t frame;
+    if (transport_rs485_receive(&frame, pdMS_TO_TICKS(5))) {
+        ESP_LOGD(TAG, "Received frame type=0x%02X len=%u", frame.msg_type, frame.length);
+        // TODO: decode payload and feed session state
+        while (transport_rs485_receive(&frame, 0)) {
+            ESP_LOGD(TAG, "Received frame type=0x%02X len=%u", frame.msg_type, frame.length);
+            // TODO: decode payload and feed session state
+        }
     }
 }

@@ -46,7 +46,64 @@
           "uniqueItems": true
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": ["min"],
+            "properties": { "min": { "const": 2 } }
+          },
+          "then": {
+            "properties": {
+              "max": { "minimum": 2 }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["min"],
+            "properties": { "min": { "const": 3 } }
+          },
+          "then": {
+            "properties": {
+              "max": { "minimum": 3 }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["min"],
+            "properties": { "min": { "const": 4 } }
+          },
+          "then": {
+            "properties": {
+              "max": { "minimum": 4 }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["min"],
+            "properties": { "min": { "const": 5 } }
+          },
+          "then": {
+            "properties": {
+              "max": { "minimum": 5 }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["min"],
+            "properties": { "min": { "const": 6 } }
+          },
+          "then": {
+            "properties": {
+              "max": { "minimum": 6 }
+            }
+          }
+        }
+      ]
     },
     "supportsHighscore": { "type": "boolean" },
     "joker": {
@@ -195,21 +252,6 @@
   },
   "additionalProperties": false,
   "allOf": [
-    {
-      "if": {
-        "properties": { "players": { "type": "object" } },
-        "required": ["players"]
-      },
-      "then": {
-        "properties": {
-          "players": {
-            "properties": {
-              "min": { "maximum": { "$data": "1/max" } }
-            }
-          }
-        }
-      }
-    },
     {
       "if": {
         "properties": { "supportsHighscore": { "const": false } }

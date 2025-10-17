@@ -1,0 +1,10 @@
+﻿{
+  "manifestVersion": "1.0.0",
+  "generatedAt": "2025-10-17T09:30:00Z",
+  "masterFirmware": {
+    "version": "0.0.1",
+    "hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "content": [],
+  "bundleHash": "sha256:02130f436c4c10a17b353205ffd3c85eafb40d670eb654abf7e03b849557950d"
+}

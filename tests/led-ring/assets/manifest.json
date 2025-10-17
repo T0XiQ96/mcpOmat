@@ -1,0 +1,10 @@
+{
+  "manifestVersion": "1.0.0",
+  "generatedAt": "TODO",
+  "masterFirmware": {
+    "version": "TODO",
+    "hash": "sha256:TODO"
+  },
+  "content": [],
+  "bundleHash": "sha256:TODO"
+}

@@ -14,5 +14,9 @@ void session_commands_send_config()
 
 void session_commands_process()
 {
-    // TODO: parse incoming frames and forward to controller as needed
+    Rs485Frame frame;
+    while (transport_rs485_pop(frame)) {
+        (void)frame;
+        // TODO: parse incoming frames and forward to controller as needed
+    }
 }

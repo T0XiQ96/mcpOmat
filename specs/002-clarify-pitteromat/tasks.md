@@ -27,18 +27,18 @@
 
 **Ziel**: Manifest-Tooling, RS485-Grundlagen und lauffaehige Testbundles erstellen.
 
-- [ ] T005 Validiere firmware/shared/proto/manifest.schema.json gegen Draft-07
-- [ ] T006 Erzeuge Beispiel-Assets in SDCARD/games/sample-game.json und SDCARD/options/sample-options.json
-- [ ] T007 [P] Fuehre python -m firmware.shared.scripts.manifest_tool generate --root SDCARD --output SDCARD/manifest.json aus
-- [ ] T008 [P] Dokumentiere python -m firmware.shared.scripts.manifest_tool validate SDCARD/manifest.json --root SDCARD in docs/operations/config-manifest.md
-- [ ] T009 Implementiere RS485-Frame-Handling in firmware/esp32/main/transport_rs485.c
-- [ ] T010 Spiegele RS485-Frame-Handling in firmware/arduino/src/transport_rs485.cpp
+- [x] T005 Validiere firmware/shared/proto/manifest.schema.json gegen Draft-07
+- [x] T006 Erzeuge Beispiel-Assets in SDCARD/games/sample-game.json und SDCARD/options/sample-options.json
+- [x] T007 [P] Fuehre python -m firmware.shared.scripts.manifest_tool generate --root SDCARD --output SDCARD/manifest.json aus
+- [x] T008 [P] Dokumentiere python -m firmware.shared.scripts.manifest_tool validate SDCARD/manifest.json --root SDCARD in docs/operations/config-manifest.md
+- [x] T009 Implementiere RS485-Frame-Handling in firmware/esp32/main/transport_rs485.c
+- [x] T010 Spiegele RS485-Frame-Handling in firmware/arduino/src/transport_rs485.cpp
 - [x] T011 Erstelle tests/scripts/generate_bundles.py zum Kopieren der TREIBER-Demos
-- [ ] T012 [P] Fuehre das Skript aus und pruefe tests/rs485-link, tests/led-ring, tests/display-sync
-- [ ] T013 Ueberarbeite tests/rs485-link/README.md und expected.log (Hash-Echo)
-- [ ] T014 [P] Ergaenze tests/led-ring/README.md und expected.log um Joker-/Boundary-Pruefungen
-- [ ] T015 [P] Ergaenze tests/display-sync/README.md und expected.log um Sitzplatz-/Hash-Checks
-- [ ] T016 Aktualisiere docs/operations/config-manifest.md mit Verweis auf das Bundleskript
+- [x] T012 [P] Fuehre das Skript aus und pruefe tests/rs485-link, tests/led-ring, tests/display-sync
+- [x] T013 Ueberarbeite tests/rs485-link/README.md und expected.log (Hash-Echo)
+- [x] T014 [P] Ergaenze tests/led-ring/README.md und expected.log um Joker-/Boundary-Pruefungen
+- [x] T015 [P] Ergaenze tests/display-sync/README.md und expected.log um Sitzplatz-/Hash-Checks
+- [x] T016 Aktualisiere docs/operations/config-manifest.md mit Verweis auf das Bundleskript
 
 ---
 

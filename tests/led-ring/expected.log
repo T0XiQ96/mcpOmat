@@ -1,0 +1,13 @@
+﻿# Erwartete serielle Ausgabe (Arduino)
+[LED] players=5 joker=off
+[LED] boundary check ok (weiss)
+[LED] slot 1 gradient ok
+[LED] slot 2 gradient ok
+[LED] slot 3 gradient ok
+[LED] slot 4 gradient ok
+[LED] slot 5 gradient ok
+[LED] joker group 2 OFF
+--- phase change ---
+[LED] players=3 joker=on
+[LED] boundary check ok (weiss)
+[LED] joker group 2 pulse

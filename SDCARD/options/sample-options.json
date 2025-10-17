@@ -1,0 +1,61 @@
+{
+  "id": "sample-options",
+  "version": "0.1.0",
+  "title": "Demo-Optionen",
+  "description": "Steuert Joker-Standardwerte und Countdown f\u00fcr das Demo-Spiel.",
+  "scope": "user",
+  "appliesTo": ["sample-rotation"],
+  "requiresRestart": false,
+  "sync": "onStart",
+  "fields": [
+    {
+      "key": "joker_enabled",
+      "type": "boolean",
+      "label": "Joker aktivieren",
+      "description": "Aktiviert die Joker-Segmente in der Demo.",
+      "default": true
+    },
+    {
+      "key": "countdown_seconds",
+      "type": "integer",
+      "label": "Countdown (s)",
+      "description": "Vorbereitungszeit bis zum Start.",
+      "default": 5,
+      "min": 3,
+      "max": 15
+    },
+    {
+      "key": "color_theme",
+      "type": "enum",
+      "label": "Farbthema",
+      "description": "LED-Farbmodus f\u00fcr das Demo-Spiel.",
+      "default": "classic",
+      "choices": [
+        { "value": "classic", "label": "Classic Blau" },
+        { "value": "neon", "label": "Neon Gelb" }
+      ]
+    }
+  ],
+  "effects": [
+    {
+      "target": "session",
+      "action": "configureJoker",
+      "params": { "optionKey": "joker_enabled" },
+      "apply": "onStart"
+    },
+    {
+      "target": "session",
+      "action": "setCountdown",
+      "params": { "optionKey": "countdown_seconds" },
+      "apply": "onStart"
+    },
+    {
+      "target": "led",
+      "action": "setTheme",
+      "params": { "optionKey": "color_theme" }
+    }
+  ],
+  "metadata": {
+    "demo": true
+  }
+}

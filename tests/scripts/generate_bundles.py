@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+ï»¿#!/usr/bin/env python3
 """Erzeugt Hardware-Testpakete aus den Waveshare-TREIBER-Demos."""
 
 import shutil
@@ -9,7 +9,7 @@ TREIBER_ROOT = REPO_ROOT / "TREIBER"
 TEST_ROOT = REPO_ROOT / "tests"
 SUCCEEDED_ROOT = TEST_ROOT / "succeeded"
 
-# Bundle-Definitionen: name, mögliche Quellordner innerhalb von TREIBER/
+# Bundle-Definitionen: name, moegliche Quellordner innerhalb von TREIBER/
 BUNDLES = [
     {
         "name": "rs485-link",
@@ -39,16 +39,16 @@ BUNDLES = [
 
 README_TEMPLATE = """# {title}
 
-Dieses Paket basiert auf der Waveshare-Demo "{source}" und wurde für PitterOmat erweitert.
+Dieses Paket basiert auf der Waveshare-Demo "{source}" und wurde fuer PitterOmat erweitert.
 
 ## Zweck
 - {description}
-- Manifest-Hash per `assets/manifest.json` prüfen, bevor auf den Master-ESP32 geflasht wird.
+- Manifest-Hash per `assets/manifest.json` pruefen, bevor auf den Master-ESP32 geflasht wird.
 
 ## Schritte
 1. ESP32-Sketch aus `esp32/` flashen.
 2. Arduino-Sketch (falls vorhanden) aus `arduino/` flashen.
-3. Verdrahtung gemäß Haupt-README (`tests/README.md`) sicherstellen.
+3. Verdrahtung gemaess Haupt-README (`tests/README.md`) sicherstellen.
 4. Serielle Ausgabe mit `expected.log` vergleichen.
 
 ## Hinweise
@@ -114,7 +114,7 @@ def ensure_bundle(bundle):
     else:
         readme = (
             f"# {bundle['name'].replace('-', ' ').title()} Test\n\n"
-            "Keine passende Quelle im TREIBER/-Ordner gefunden. Bitte Dateien manuell hinzufügen.\n"
+            "Keine passende Quelle im TREIBER/-Ordner gefunden. Bitte Dateien manuell hinzufuegen.\n"
         )
 
     (bundle_dir / "README.md").write_text(readme, encoding="utf-8")
@@ -133,5 +133,5 @@ def main():
         print(f"Bundle '{bundle['name']}' vorbereitet.")
 
 
-+if __name__ == "__main__":
-+    main()
+if __name__ == "__main__":
+    main()
