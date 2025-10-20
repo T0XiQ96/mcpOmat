@@ -58,7 +58,7 @@ SpielLED25-36 Spieler3
 Bei 4 Spielern GrenzLED Gruppen 4, 13, 22, 31
 SpielLED 5-13 Spieler1
 SpielLED14-22 Spieler2
-SpielLED13-31 Spieler3
+SpielLED23-31 Spieler3
 SpielLED32-4 Spieler 4
 
 Bei 5 Spielern wird die SpielLED Gruppe 2 aus dem Spiel genommen da man 36 nicht durch 5 teilen kann. Es leuchten GrenzLED 1,2,9,16,23,30
@@ -76,6 +76,7 @@ spielLED 16-21 Spieler3
 SpielLED 22-27 Spieler4
 SpielLED 28-33 Spieler5
 SpielLED 34-3 Spieler 6
+
 
 GrenzLED Zugehörigkeit:
 Die Spiele nutzen die GrenzLED Gruppen nicht für die Spiele, ausser es ist für das Spiel anders gewollt.
@@ -171,7 +172,15 @@ Spieler 5 - Bildschirm 6
 Spieler 6 - Bildschirm 7
 
 
+## Bildschirmzuordnung
 
+| Spielerzahl | Slot 1   | Slot 2   | Slot 3   | Slot 4   | Slot 5   | Slot 6   |
+|-------------|----------|----------|----------|----------|----------|----------|
+| 2           | Display 1 | Display 5 | –        | –        | –        | –        |
+| 3           | Display 8 | Display 3 | Display 6 | –        | –        | –        |
+| 4           | Display 1 | Display 3 | Display 5 | Display 7 | –        | –        |
+| 5           | Display 8 | Display 2 | Display 3 | Display 5 | Display 7 | –        |
+| 6           | Display 8 | Display 2 | Display 3 | Display 4 | Display 6 | Display 7 |
 
 
 Hier ist eine Zusammenfassung der benötigten Hardware für das Projekt:

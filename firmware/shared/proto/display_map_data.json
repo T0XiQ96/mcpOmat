@@ -1,0 +1,34 @@
+{
+  "players": {
+    "2": [
+      { "slot_id": 1, "display_id": 1 },
+      { "slot_id": 2, "display_id": 5 }
+    ],
+    "3": [
+      { "slot_id": 1, "display_id": 8 },
+      { "slot_id": 2, "display_id": 3 },
+      { "slot_id": 3, "display_id": 6 }
+    ],
+    "4": [
+      { "slot_id": 1, "display_id": 1 },
+      { "slot_id": 2, "display_id": 3 },
+      { "slot_id": 3, "display_id": 5 },
+      { "slot_id": 4, "display_id": 7 }
+    ],
+    "5": [
+      { "slot_id": 1, "display_id": 8 },
+      { "slot_id": 2, "display_id": 2 },
+      { "slot_id": 3, "display_id": 3 },
+      { "slot_id": 4, "display_id": 5 },
+      { "slot_id": 5, "display_id": 7 }
+    ],
+    "6": [
+      { "slot_id": 1, "display_id": 8 },
+      { "slot_id": 2, "display_id": 2 },
+      { "slot_id": 3, "display_id": 3 },
+      { "slot_id": 4, "display_id": 4 },
+      { "slot_id": 5, "display_id": 6 },
+      { "slot_id": 6, "display_id": 7 }
+    ]
+  }
+}

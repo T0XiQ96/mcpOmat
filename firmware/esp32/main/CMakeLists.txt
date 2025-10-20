@@ -5,6 +5,7 @@ idf_component_register(
         "session_bus.c"
         "http_status_handler.c"
         "storage_config.c"
+        "ui_menu.c"
     INCLUDE_DIRS
         "."
 )

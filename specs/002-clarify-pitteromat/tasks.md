@@ -1,4 +1,4 @@
-﻿# Aufgaben: PitterOmat Kernerlebnis
+# Aufgaben: PitterOmat Kernerlebnis
 
 **Eingangsdokumente**: Unterlagen aus /specs/002-clarify-pitteromat/
 **Voraussetzungen**: plan.md, spec.md, research.md, data-model.md, contracts/
@@ -9,7 +9,7 @@
 
 ## Format: [ID] [P?] [Story] Beschreibung
 - **[P]**: Aufgabe kann parallel laufen (keine Abhaengigkeiten, andere Dateien)
-- **[Story]**: Label der User Story (US1, US2, US3) – nur in den Story-Phasen erforderlich
+- **[Story]**: Label der User Story (US1, US2, US3) � nur in den Story-Phasen erforderlich
 - Exakte Dateipfade immer angeben
 
 ## Phase 1: Setup (Gemeinsame Infrastruktur)
@@ -42,7 +42,7 @@
 
 ---
 
-## Phase 3: User Story 1 – Gefuehrtes Spiel-Setup (Prioritaet: P1) – MVP
+## Phase 3: User Story 1 � Gefuehrtes Spiel-Setup (Prioritaet: P1) � MVP
 
 **Ziel**: Touch-basiertes Setup vom Idle-Screen bis zum Spielstart mit Ready-Checks fuer 2-6 Spieler.
 
@@ -50,8 +50,9 @@
 
 ### Umsetzung
 
-- [ ] T017 [US1] Pruefe und aktualisiere firmware/shared/proto/segment_map.json bei Bedarf
-- [ ] T018 [US1] Implementiere Spielerzahlauswahl + Spielfilter in firmware/esp32/main/ui_menu.c
+- [x] T017b [US1] Lege firmware/shared/proto/display_map.json samt Daten an (Bildschirmzuordnung f�r 2-6 Spieler)
+- [x] T017 [US1] Pruefe und aktualisiere firmware/shared/proto/segment_map.json bei Bedarf
+- [x] T018 [US1] Implementiere Spielerzahlauswahl + Spielfilter in firmware/esp32/main/ui_menu.c
 - [ ] T019 [US1] Sende Session-Konfiguration (Msg 0x01) in firmware/esp32/main/session_bus.c
 - [ ] T020 [US1] Verarbeite Ready-Button-Maske (Msg 0x06) in firmware/esp32/main/session_bus.c
 - [ ] T021 [US1] Steuere ReadyCheck-Zustaende in firmware/arduino/src/session_controller.cpp
@@ -61,7 +62,7 @@
 
 ---
 
-## Phase 4: User Story 2 – LED- & Display-Orchestrierung (Prioritaet: P2)
+## Phase 4: User Story 2 � LED- & Display-Orchestrierung (Prioritaet: P2)
 
 **Ziel**: LED-Grenzen, Joker-Logik und Sitzanzeigen bleiben konsistent zur Manifest-Zuordnung.
 
@@ -79,7 +80,7 @@
 
 ---
 
-## Phase 5: User Story 3 – Admin-Ueberwachung & Synchronisation (Prioritaet: P3)
+## Phase 5: User Story 3 � Admin-Ueberwachung & Synchronisation (Prioritaet: P3)
 
 **Ziel**: Diagnosen, Manifest-Sync und zeitgesteuerte Admin-Freigabe abbilden.
 
@@ -136,7 +137,7 @@ US2 und US3 koennen parallel umgesetzt werden
 
 ### MVP zuerst (User Story 1)
 1. Phasen 1 und 2 abschliessen.
-2. US1-Aufgaben (T017–T024) erledigen.
+2. US1-Aufgaben (T017�T024) erledigen.
 3. Gefuehrten Setup-Test laut Quickstart ausfuehren.
 
 ### Inkrementelle Lieferung
@@ -148,3 +149,4 @@ US2 und US3 koennen parallel umgesetzt werden
 - Entwickler A: RS485 + Session (Phase 2 + US1)
 - Entwickler B: LED/Display (US2)
 - Entwickler C: Admin/Manifest (US3)
+

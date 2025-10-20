@@ -5,28 +5,26 @@
 **Status**: Draft  
 **Input**: User description: "$ARGUMENTS"
 
+## Vision Alignment *(mandatory)*
+
+- Reference constitution principles addressed by this feature (I-V).
+- Summarize how the work advances the cabinet vision (Idle -> Menu -> Game, 12 displays, LED caps).
+
 ## User Scenarios & Testing *(mandatory)*
 
 <!--
   IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
   Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
   you should still have a viable MVP (Minimum Viable Product) that delivers value.
-  
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
 -->
 
 ### User Story 1 - [Brief Title] (Priority: P1)
 
 [Describe this user journey in plain language]
 
-**Why this priority**: [Explain the value and why it has this priority level]
-
-**Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
+**Principles Covered**: [List relevant constitution principles]  
+**Why this priority**: [Explain the value and why it has this priority level]  
+**Independent Test**: [Describe validation path, e.g., "Run hardware bundle X and verify manifest hash"]
 
 **Acceptance Scenarios**:
 
@@ -39,8 +37,8 @@
 
 [Describe this user journey in plain language]
 
-**Why this priority**: [Explain the value and why it has this priority level]
-
+**Principles Covered**: [List relevant constitution principles]  
+**Why this priority**: [Explain the value and why it has this priority level]  
 **Independent Test**: [Describe how this can be tested independently]
 
 **Acceptance Scenarios**:
@@ -53,8 +51,8 @@
 
 [Describe this user journey in plain language]
 
-**Why this priority**: [Explain the value and why it has this priority level]
-
+**Principles Covered**: [List relevant constitution principles]  
+**Why this priority**: [Explain the value and why it has this priority level]  
 **Independent Test**: [Describe how this can be tested independently]
 
 **Acceptance Scenarios**:
@@ -67,50 +65,44 @@
 
 ### Edge Cases
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right edge cases.
--->
-
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+- Manifest entry missing or hash mismatch (Principle I)
+- Schema-breaking payload submitted (Principle II)
+- Hardware bundle produces unexpected output (Principle III)
+- Seat map or Joker flow conflicts (Principle IV)
+- Sync handshake fails or admin lockout not enforced (Principle V)
 
 ## Requirements *(mandatory)*
 
-<!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right functional requirements.
--->
-
 ### Functional Requirements
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **FR-001**: System MUST maintain manifest coverage and hash verification for new assets (Principle I)
+- **FR-002**: Definitions MUST conform to shared schemas and declare compatibility flags (Principle II)
+- **FR-003**: Hardware validation packages MUST be updated or extended with reproducible logs (Principle III)
+- **FR-004**: UI, LED, and seat mapping MUST respect documented topology and brightness clamps (Principle IV)
+- **FR-005**: Update flows MUST preserve synchronization guarantees and admin safeguards (Principle V)
+- **FR-00X**: [Add additional requirements as needed; mark NEEDS CLARIFICATION when blocked]
 
-*Example of marking unclear requirements:*
+### Non-Functional Requirements
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **NFR-001**: Adhere to System Architecture Directives (transport choices, directory layout).
+- **NFR-002**: Document idle mode, energy saver, or Joker impacts in quickstart and tasks.
+- **NFR-003**: Log retention and archive strategy for `tests/succeeded/` bundles.
 
 ### Key Entities *(include if feature involves data)*
 
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
+- **[Entity 1]**: [What it represents; list schema references or manifest fields]
+- **[Entity 2]**: [Relationships to other entities, seat IDs, or hardware channels]
 
 ## Success Criteria *(mandatory)*
 
-<!--
-  ACTION REQUIRED: Define measurable success criteria.
-  These must be technology-agnostic and measurable.
--->
-
 ### Measurable Outcomes
 
-- **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
-- **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
-- **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
-- **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **SC-001**: [Metric tied to manifest validation, e.g., "manifest_tool validate passes with 0 warnings"]
+- **SC-002**: [Metric for schema compliance or automated tests]
+- **SC-003**: [Hardware validation coverage, e.g., "RS485 loop passes TREIBER bundle 3 times consecutively"]
+- **SC-004**: [Sync/UX metric, e.g., "Admin menu reports sync status within 3 seconds of change"]
 
+### Governance & Compliance
+
+- Amendments required? [Yes/No + link to approval]
+- Exceptions recorded in plan.md Complexity Tracking? [Yes/No + reference]
