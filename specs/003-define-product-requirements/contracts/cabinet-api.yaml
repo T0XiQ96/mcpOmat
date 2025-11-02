@@ -1,0 +1,299 @@
+openapi: 3.1.0
+info:
+  title: PitterOmat Cabinet Control API
+  version: 0.1.0
+  description: >
+    Logical control surface exposed by the master ESP32 for coordinating displays,
+    LED effects, and admin configuration. Consumed by on-device UI flows.
+servers:
+  - url: http://cabinet.local/api
+paths:
+  /state:
+    get:
+      summary: Retrieve current cabinet render state snapshot
+      operationId: getCabinetState
+      responses:
+        "200":
+          description: Current state for all displays and session profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CabinetState"
+  /sessions:
+    post:
+      summary: Start a new LichtLoser session
+      operationId: createSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SessionCreate"
+      responses:
+        "201":
+          description: Session created and broadcast to displays
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameSessionProfile"
+        "409":
+          description: A session is already active
+  /sessions/{sessionId}:
+    patch:
+      summary: Update session options before gameplay begins
+      operationId: updateSession
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SessionUpdate"
+      responses:
+        "200":
+          description: Session updated and rebroadcast
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GameSessionProfile"
+        "404":
+          description: Session not found
+  /sessions/{sessionId}/spin:
+    post:
+      summary: Trigger LichtLoser spin and resolve loser seat
+      operationId: triggerSpin
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "202":
+          description: Spin initiated; result will be broadcast
+        "409":
+          description: Spin already in progress
+  /admin/ticker:
+    post:
+      summary: Update news ticker content
+      operationId: updateTicker
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  maxLength: 280
+              required:
+                - text
+      responses:
+        "204":
+          description: Ticker saved to configuration bundle
+  /admin/settings:
+    patch:
+      summary: Update cabinet ambience and safety settings
+      operationId: updateSettings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminSettingsPatch"
+      responses:
+        "200":
+          description: Settings applied and persisted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CabinetConfigurationBundle"
+components:
+  schemas:
+    CabinetState:
+      type: object
+      properties:
+        session:
+          $ref: "#/components/schemas/GameSessionProfile"
+        displays:
+          type: array
+          items:
+            $ref: "#/components/schemas/DisplayRoleState"
+        debugOverlay:
+          $ref: "#/components/schemas/DebugOverlayState"
+      required:
+        - session
+        - displays
+        - debugOverlay
+    GameSessionProfile:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          format: uuid
+        playerCount:
+          type: integer
+          minimum: 2
+          maximum: 6
+        rounds:
+          type: integer
+          minimum: 1
+          maximum: 10
+        spinSpeedPreset:
+          type: string
+          enum: [SLOW, MEDIUM, FAST]
+        jokerEnabled:
+          type: boolean
+        jokerColor:
+          type: string
+          enum: [GOLD, RAINBOW]
+        lastLoserSeat:
+          type: string
+          enum: [P1, P2, P3, P4, P5, P6, NONE]
+        completedAt:
+          type: integer
+          format: int64
+      required:
+        - sessionId
+        - playerCount
+        - rounds
+        - spinSpeedPreset
+        - jokerEnabled
+        - jokerColor
+    DisplayRoleState:
+      type: object
+      properties:
+        displayId:
+          type: integer
+          minimum: 1
+          maximum: 12
+        seatAssignment:
+          type: string
+          enum: [P1, P2, P3, P4, P5, P6, Idle]
+        mode:
+          type: string
+          enum: [IDLE, MENU, GAME, SCORE, ADMIN, DEBUG]
+        brightness:
+          type: integer
+          minimum: 0
+          maximum: 100
+        lastSyncTs:
+          type: integer
+          format: int64
+        inactiveDisplayAsset:
+          type: string
+      required:
+        - displayId
+        - seatAssignment
+        - mode
+        - brightness
+        - lastSyncTs
+    DebugOverlayState:
+      type: object
+      properties:
+        isVisible:
+          type: boolean
+        metricsShown:
+          type: array
+          items:
+            type: string
+            enum: [FPS, CPU, HEAP, LATENCY]
+        autoHideOnGameStart:
+          type: boolean
+      required:
+        - isVisible
+        - metricsShown
+        - autoHideOnGameStart
+    SessionCreate:
+      type: object
+      properties:
+        playerCount:
+          type: integer
+          minimum: 2
+          maximum: 6
+        rounds:
+          type: integer
+          minimum: 1
+          maximum: 10
+        spinSpeedPreset:
+          type: string
+          enum: [SLOW, MEDIUM, FAST]
+        jokerEnabled:
+          type: boolean
+        jokerColor:
+          type: string
+          enum: [GOLD, RAINBOW]
+      required:
+        - playerCount
+        - rounds
+        - spinSpeedPreset
+        - jokerEnabled
+        - jokerColor
+    SessionUpdate:
+      type: object
+      properties:
+        playerCount:
+          type: integer
+          minimum: 2
+          maximum: 6
+        rounds:
+          type: integer
+          minimum: 1
+          maximum: 10
+        spinSpeedPreset:
+          type: string
+          enum: [SLOW, MEDIUM, FAST]
+        jokerEnabled:
+          type: boolean
+        jokerColor:
+          type: string
+          enum: [GOLD, RAINBOW]
+      additionalProperties: false
+    CabinetConfigurationBundle:
+      type: object
+      properties:
+        newsTickerText:
+          type: string
+        winPalette:
+          type: string
+        losePalette:
+          type: string
+        neutralPalette:
+          type: string
+        inactiveDisplayMode:
+          type: string
+          enum: [OFF, DIM, LOGO_LOOP]
+        ledBrightnessCap:
+          type: integer
+          minimum: 10
+          maximum: 55
+        borderBrightnessCap:
+          type: integer
+          minimum: 10
+          maximum: 55
+        displayBrightness:
+          type: integer
+          minimum: 10
+          maximum: 100
+        idleTimeoutSeconds:
+          type: integer
+          enum: [5, 10, 15, 30, 60]
+        energySaverEnabled:
+          type: boolean
+        updatedAt:
+          type: integer
+          format: int64
+      required:
+        - newsTickerText
+        - ledBrightnessCap
+        - borderBrightnessCap
+        - displayBrightness
+        - idleTimeoutSeconds
+        - energySaverEnabled
+*** End Patch

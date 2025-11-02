@@ -23,7 +23,7 @@
 
 ### Session 2025-10-20
 
-- Q: How is the news ticker content updated day-to-day? → A: Editable directly from the cabinet's admin options menu.
+- Q: How is the news ticker content updated day-to-day? -> A: Editable directly from the cabinet's admin options menu.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -83,6 +83,10 @@ An administrator authenticates to tune lighting, colors, and energy-saving behav
 - Joker enabled with fewer than five players must produce a validation warning and block launch until corrected.
 - Debug overlay left on during live play must not obstruct scoring or confuse players.
 
+### Out of scope / deferred
+
+- Dedicated network information dashboards and sync preset visualizations beyond basic connectivity checks.
+
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
@@ -97,14 +101,13 @@ An administrator authenticates to tune lighting, colors, and energy-saving behav
 - **FR-008**: Quickstart MUST relaunch the most recent mode with preserved options while allowing player count adjustments before confirmation.
 - **FR-009**: The options menu MUST include controls for rounds (1-10), spin speed presets, Joker toggle, and Joker color selection with live feedback.
 - **FR-010**: Admin options MUST be gated by a PIN, auto-lock after 10 seconds, and include color/effect presets, LED brightness (10-55%), display brightness (10-100%), idle timeouts, and reset utilities with confirmation prompts.
-- **FR-011**: Network information views MUST outline WiFi and RS485 topology, sync timing presets (0/10/20/40/70/100 ms), and clearly mark update-related items as placeholders.
-- **FR-012**: Debug tools MUST allow toggling performance overlays, communication latency checks, LED ring tests, and SD log exports without impacting live play.
+- **FR-011**: Debug tools MUST allow toggling performance overlays, communication latency checks, LED ring tests, and SD log exports without impacting live play.
 
 ### Non-Functional Requirements
 
 - **NFR-001**: Brightness clamps and Joker safeguards MUST fail safe, never allowing settings beyond documented limits.
 - **NFR-002**: Display transitions MUST appear smooth, with no perceptible desynchronization exceeding 100 ms between any two displays during menu or game updates.
-- **NFR-003**: Admin and debug messaging MUST be understandable by venue staff without referencing engineering manuals.
+- **NFR-003**: Admin and debug messaging MUST achieve a Flesch-Kincaid Grade Level of 8 or lower and receive approval from at least two venue operators during copy review.
 - **NFR-004**: Idle energy saver MUST reduce display brightness according to configuration within 10 seconds of the timeout firing.
 
 ### Key Entities *(include if feature involves data)*
@@ -127,3 +130,5 @@ An administrator authenticates to tune lighting, colors, and energy-saving behav
 
 - Amendments required? No - behaviour aligns with constitution v1.1.0 and existing governance.
 - Exceptions recorded in plan.md Complexity Tracking? No - all flows comply with documented principles.
+
+

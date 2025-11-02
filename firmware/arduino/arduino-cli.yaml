@@ -1,0 +1,9 @@
+board_manager:
+  additional_urls:
+    - https://espressif.github.io/arduino-esp32/package_esp32_index.json
+sketchbook_path: ./firmware
+directories:
+  data: ./firmware/.arduino/data
+  downloads: ./firmware/.arduino/staging
+  user: ./firmware
+default_fqbn: esp32:esp32:esp32s3touch
