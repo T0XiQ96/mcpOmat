@@ -1,0 +1,6 @@
+model = "gpt-5-codex"
+model_reasoning_effort = "high"
+windows_wsl_setup_acknowledged = true
+
+[projects.'\\?\C:\Users\tommy\PROJEKTE\mcpOmat']
+trust_level = "trusted"
