@@ -205,3 +205,6 @@
 {"session_id":"019a036e-61ef-7d61-b102-bf18d520d67b","ts":1761066300,"text":"go"}
 {"session_id":"019a036e-61ef-7d61-b102-bf18d520d67b","ts":1761152798,"text":"Womit sollte ich anfangen mit logik einfüllen und wo sehe ich die aufgaben die ich zutun habe ?"}
 {"session_id":"019a036e-61ef-7d61-b102-bf18d520d67b","ts":1762091599,"text":"Also ist das alles für Arduino IDE nur? Das Ganze Projekt soll nur mit Arduino IDE hochgeladen werden."}
+{"session_id":"019a5c2e-d4d9-7db2-9cfe-0d2adfa1a63f","ts":1762483164,"text":"new"}
+{"session_id":"019a5c2e-d4d9-7db2-9cfe-0d2adfa1a63f","ts":1762483327,"text":"Also das ist ein neuer Branch in Github und ich kann hier einfach mit specify arbeiten? Was mache ich von Beginn an?"}
+{"session_id":"019a5c2e-d4d9-7db2-9cfe-0d2adfa1a63f","ts":1762483386,"text":"Es soll kein Feature sein sondern ein eigenständiger Branch, hier machen wir den Pitteromat von neu selbst und anders."}

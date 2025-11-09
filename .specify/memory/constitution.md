@@ -1,122 +1,50 @@
-<!--
-Sync Impact Report
-Version change: 1.0.0 -> 1.1.0
-Modified principles: I. Manifest Integrity Is Non-Negotiable, II. Schema-Driven Modularity, III. Hardware Validation with Official Drivers, IV. LED and Seat Mapping Fidelity, V. Coordinated Update and Sync Discipline
-Added sections: Vision
-Removed sections: none
-Templates requiring updates:
-- done: .specify/templates/plan-template.md
-- done: .specify/templates/spec-template.md
-- done: .specify/templates/tasks-template.md
-Follow-up TODOs: none
--->
-
-# PitterOmat Constitution
-
-## Vision
-
-Deliver a bar-ready multiplayer light game cabinet with twelve ESP32 touch displays and an Arduino
-Mega driving LEDs and buttons. The platform must move deterministically through Idle, Menu, and
-Game states, launch the first playable experience "LichtLoser," and enforce LED brightness caps that
-protect hardware and players while keeping the machine venue friendly.
+# [PROJECT_NAME] Constitution
+<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
 
 ## Core Principles
 
-### I. Manifest Integrity Is Non-Negotiable
-- All SD-card content (games, options, themes, profiles, media) MUST be declared in `manifest.json`
-  generated with `python -m firmware.shared.scripts.manifest_tool`.
-- Every manifest entry MUST include a `sha256:` hash, and bundle hashes MUST be verified before
-  updates or deployments.
-- Firmware drops MUST ship with matching manifest metadata; mismatches block release until resolved.
+### [PRINCIPLE_1_NAME]
+<!-- Example: I. Library-First -->
+[PRINCIPLE_1_DESCRIPTION]
+<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
 
-**Rationale**: Deterministic manifests keep every ESP and Arduino node in lockstep and prevent stale
-assets from entering play.
+### [PRINCIPLE_2_NAME]
+<!-- Example: II. CLI Interface -->
+[PRINCIPLE_2_DESCRIPTION]
+<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
 
-### II. Schema-Driven Modularity
-- Game and option definitions MUST conform to `firmware/shared/proto/game.schema.json` and
-  `options.schema.json`; ad-hoc JSON is prohibited.
-- New modes or option bundles MUST declare compatibility (player counts, Joker usage, hardware
-  dependencies) so the UI and LED engine can enforce constraints.
-- Modular assets belong on the SD card; firmware only contains runtime engines and shared protocols.
+### [PRINCIPLE_3_NAME]
+<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
+[PRINCIPLE_3_DESCRIPTION]
+<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
 
-**Rationale**: Enforced schemas keep gameplay modular, enable dynamic loading, and let future chats
-extend content safely.
+### [PRINCIPLE_4_NAME]
+<!-- Example: IV. Integration Testing -->
+[PRINCIPLE_4_DESCRIPTION]
+<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
 
-### III. Hardware Validation with Official Drivers
-- Waveshare demo packages in `TREIBER/` MUST seed every hardware test bundle; deviations require
-  written justification.
-- Each subsystem (RS485 link, LED ring, displays, CAN, SD, RTC) MUST have a self-contained test
-  package with wiring notes, expected serial output, and manifest snapshot.
-- Successful tests MUST be archived under `tests/succeeded/` with captured logs before composite
-  firmware is produced.
+### [PRINCIPLE_5_NAME]
+<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
+[PRINCIPLE_5_DESCRIPTION]
+<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
 
-**Rationale**: Reusing vendor-proven drivers accelerates bring-up and ensures failures surface before
-integration builds.
+## [SECTION_2_NAME]
+<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
 
-### IV. LED and Seat Mapping Fidelity
-- LED group allocations, boundary markers, and Joker behavior MUST match
-  `firmware/shared/proto/segment_map.json` and the mappings set out in `pitteromat.txt`.
-- Display-seat assignments (per player count) MUST remain consistent with the documented seat map;
-  UI variations require simultaneous LED updates.
-- Joker-disabled flows MUST skip SpielLED group 2 in five-player mode; Joker-enabled flows MUST
-  render the group with the configured highlight color.
-- Global LED brightness MUST clamp to 55 percent unless a governance-approved exception is recorded.
+[SECTION_2_CONTENT]
+<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
 
-**Rationale**: Consistent spatial mapping preserves player orientation, meets thermal constraints, and
-prevents gameplay imbalance.
+## [SECTION_3_NAME]
+<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
 
-### V. Coordinated Update and Sync Discipline
-- The Waveshare ESP32-S3 designated as master MUST orchestrate firmware and asset distribution,
-  announcing bundle hashes over RS485 or WiFi before clients update.
-- Client devices MUST refuse gameplay when their local hash diverges from the master's `bundleHash`
-  until synchronization completes.
-- Update controls in the admin menu MUST wire to manifest validation and provide clear status
-  (pending, syncing, succeeded, failed).
-- Admin PIN workflows MUST guard maintenance actions and automatically relock after the configured
-  timeout.
-
-**Rationale**: Centralized coordination avoids desynchronized gameplay logic across displays, LEDs,
-and control surfaces.
-
-## System Architecture Directives
-- Hardware baseline consists of the Waveshare ESP32-S3-Touch-LCD-4 (UART2 on GPIO44/43) linked via
-  RS485 to an Arduino Mega 2560 that drives SpielLED (pin 12) and GrenzLED (pin 13).
-- Touch interaction on the ESP32S3 is mandatory for menu navigation; rotary encoders remain reserved
-  for in-game mechanics.
-- LED ring wiring follows the documented 72-group structure (36 SpielLED and 36 GrenzLED) with power
-  injection every 144 LEDs; Joker logic remains configurable via admin options.
-- SD-card hierarchy MUST match the manifest conventions (`/games`, `/options`, `/themes`,
-  `/profiles`, `/music`, `/logos`, `/updates`).
-- LVGL UI exports from EEZ Studio belong under `firmware/esp32/ui/`; runtime code MUST bridge UI
-  events to manifest-backed gameplay data.
-- WiFi is the only allowed inter-ESP transport; RS485 links the master ESP to the Arduino. ESP-NOW
-  and ESP-to-ESP RS485 are explicitly out of scope for v2.
-
-## Development Workflow and Test Lifecycle
-- Before planning (Phase 0), teams MUST confirm a manifest generation strategy, schema-compliant
-  asset plan, and hardware test bundles covering new functionality.
-- Implementation phases MUST run hardware smoke tests from `TREIBER/`-based packages before
-  combining firmware; failures block progression.
-- After validating a subsystem, the corresponding bundle MUST move to `tests/succeeded/` with serial
-  logs and hash snapshot to create an auditable trail.
-- Final integration releases require a regenerated manifest, `manifest_tool validate` run against
-  deployment assets, and confirmation that all mandatory bundles sit in `tests/succeeded/`.
-- Plans and tasks MUST cite which principle(s) they satisfy within the Constitution Check and record
-  any required exceptions under Complexity Tracking.
-- Idle mode, energy saver dimming, and Joker workflows MUST be exercised in smoke tests before
-  release candidates are approved.
+[SECTION_3_CONTENT]
+<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
 
 ## Governance
-- This constitution supersedes conflicting guidance; deviations require prior approval documented in
-  specs and tracked to resolution.
-- Amendments demand: (1) drafted updates referencing impacted manifests or tests, (2) review
-  alignment with `pitteromat.txt`, (3) updated version tag, (4) announcement in the next plan or
-  spec cycle.
-- Versioning follows SemVer: MAJOR for principle changes or removals, MINOR for new principles or
-  sections, PATCH for clarifications; amend the header comment and metadata accordingly.
-- Every `/speckit.plan` output MUST document how the feature honors Principles I through V and list
-  pertinent hardware bundles.
-- Compliance reviews occur at plan approval, pre-merge code review, and release candidate validation.
-  Non-compliance blocks progression until remedied.
+<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-**Version**: 1.1.0 | **Ratified**: 2025-10-17 | **Last Amended**: 2025-10-20
+[GOVERNANCE_RULES]
+<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+
+**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
+<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
