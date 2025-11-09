@@ -1,4 +1,4 @@
-// ESP32_PitterOmat_RS485.ino
+﻿// ESP32_PitterOmat_RS485.ino
 // ESP32-S3 Touch LCD 4 (480x480) + LVGL + EEZ Flow + RS485 Master
 // Backlight: Board-Hardware (keine explizite TCA9554-Steuerung).
 // LVGL: Single-Buffer, damit keine "LVGL buffer alloc failed" Fehler auftreten.
@@ -9,7 +9,17 @@
 #include <Wire.h>
 #include "esp_timer.h"
 
+#if defined(ARDUINO_USB_MODE) && (ARDUINO_USB_MODE == 1)
+#include "HWCDC.h"
+#define USBSerial HWCDCSerial
+#define USE_NATIVE_USB 1
+#elif defined(ARDUINO_USB_MODE) && (ARDUINO_USB_MODE == 0)
+#include "USB.h"
+#define USE_NATIVE_USB 1
+#else
 #define USBSerial Serial
+#define USE_NATIVE_USB 0
+#endif
 
 #if LV_USE_LOG
 static void lvlog_cb(const char *s) { USBSerial.printf("%s", s); USBSerial.flush(); }
@@ -58,6 +68,30 @@ static lv_disp_draw_buf_t draw_buf;
 static lv_color_t *buf1 = nullptr;
 static uint32_t screenWidth  = 0;
 static uint32_t screenHeight = 0;
+
+static String usbIn;
+
+static void usbPoll() {
+  while (USBSerial.available()) {
+    char c = (char)USBSerial.read();
+    if (c == '\r' || c == '\n') {
+      if (usbIn.length()) {
+        if (usbIn.equalsIgnoreCase("ping")) {
+          USBSerial.println("pong");
+        } else if (usbIn.equalsIgnoreCase("heap")) {
+          USBSerial.printf("heap=%u psram=%u\n",
+              heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+              heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+        } else if (usbIn.equalsIgnoreCase("info")) {
+          USBSerial.printf("IDF=%s, core freq=%uMHz\n", IDF_VER, F_CPU/1000000);
+        }
+      }
+      usbIn = "";
+    } else {
+      if (usbIn.length() < 80) usbIn += c;
+    }
+  }
+}
 
 // --- LVGL flush ---
 static void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
@@ -125,7 +159,32 @@ static inline void rs485SendRaw(const uint8_t *data, size_t len) {
   delayMicroseconds(20);
   digitalWrite(RS485_DE_PIN, LOW);
 }
+
+static void logRs485Line(const char *prefix, const char *line, size_t len = 0) {
+  if (!line) {
+    return;
+  }
+  if (len == 0) {
+    len = strlen(line);
+  }
+  while (len && (line[len - 1] == '\r' || line[len - 1] == '\n')) {
+    --len;
+  }
+  USBSerial.print(prefix);
+  if (len) {
+    USBSerial.write(reinterpret_cast<const uint8_t *>(line), len);
+  }
+  USBSerial.println();
+}
+static void logRs485Line(const char *prefix, const String &line) {
+  logRs485Line(prefix, line.c_str(), line.length());
+}
+
 void rs485SendLine(const char *line) {
+  if (!line) {
+    return;
+  }
+  logRs485Line("[RS485-TX] ", line);
   rs485SendRaw((const uint8_t*)line, strlen(line));
 }
 
@@ -138,6 +197,7 @@ static void rs485Poll() {
     char c = (char)RS485.read();
     if (c == '\n') {
       if (rsInLine.length() > 0) {
+        logRs485Line("[RS485-RX] ", rsInLine);
         handleRs485Line(rsInLine);
       }
       rsInLine = "";
@@ -150,7 +210,7 @@ static void rs485Poll() {
   }
 }
 
-// === Helper für EEZ Globals ==================================================
+// === Helper fÃ¼r EEZ Globals ==================================================
 static inline int32_t gv_i(unsigned idx) {
   int err = 0;
   eez::Value v = eez::flow::getGlobalVariable(idx);
@@ -195,7 +255,7 @@ extern "C" void action_cmd_send_joker_preview(lv_event_t *e) {
 
 extern "C" void action_cmd_send_player_colors_preview(lv_event_t *e) {
   (void)e;
-  // Korrigiert: verwende INDEX-Variablen für Modus und Farbe
+  // Korrigiert: verwende INDEX-Variablen fÃ¼r Modus und Farbe
   int mode        = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_COLOR_MODE_INDEX);
   int singleIndex = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_SINGLE_COLOR_INDEX);
   int ownRandom   = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_OWN_COLOR_FLAG);
@@ -208,7 +268,7 @@ extern "C" void action_cmd_send_player_colors_preview(lv_event_t *e) {
 
 extern "C" void action_cmd_send_border_colors_preview(lv_event_t *e) {
   (void)e;
-  // Korrigiert: verwende INDEX-Variablen für Grenzmodus und -farbe
+  // Korrigiert: verwende INDEX-Variablen fÃ¼r Grenzmodus und -farbe
   int mode        = gv_i(FLOW_GLOBAL_VARIABLE_BORDER_COLOR_MODE_INDEX);
   int singleIndex = gv_i(FLOW_GLOBAL_VARIABLE_BORDER_SINGLE_COLOR_INDEX);
   char buf[64];
@@ -286,29 +346,32 @@ static void init_lvgl() {
   lv_log_register_print_cb(lvlog_cb);
 #endif
 
-  screenWidth  = gfx->width();
-  screenHeight = gfx->height();
+screenWidth  = gfx->width();
+screenHeight = gfx->height();
 
-  // Single Buffer: ca. 1/10 Frame
-  size_t px_cnt = (screenWidth * screenHeight) / 10;
+/* statt 1/10 Frame: ~80 Zeilen */
+size_t px_cnt = screenWidth * 80;  // 480 * 80 = 38.4k Pixel -> 76.8 kB
   buf1 = (lv_color_t *)heap_caps_malloc(px_cnt * sizeof(lv_color_t), MALLOC_CAP_DMA);
   if (!buf1) {
-    while (true) {
-      USBSerial.println("LVGL buffer alloc failed");
-      delay(1000);
-    }
+    USBSerial.println("LVGL DMA buffer alloc failed, fallback to smaller");
+    px_cnt = screenWidth * 40;
+    buf1 = (lv_color_t *)heap_caps_malloc(px_cnt * sizeof(lv_color_t), MALLOC_CAP_DMA);
   }
-  lv_disp_draw_buf_init(&draw_buf, buf1, NULL, px_cnt);
+  if (!buf1) {
+    while (true) { USBSerial.println("LVGL buffer alloc failed"); delay(1000); }
+  }
+  
+lv_disp_draw_buf_init(&draw_buf, buf1, NULL, px_cnt);
 
-  static lv_disp_drv_t disp_drv;
+static lv_disp_drv_t disp_drv;
   lv_disp_drv_init(&disp_drv);
   disp_drv.hor_res   = screenWidth;
   disp_drv.ver_res   = screenHeight;
   disp_drv.flush_cb  = my_disp_flush;
   disp_drv.draw_buf  = &draw_buf;
+  disp_drv.full_refresh = 1;   // kompletter Frame â†’ weniger sichtbare Tearing/Jitter
   disp_drv.sw_rotate = 1;
   lv_disp_drv_register(&disp_drv);
-
   static lv_indev_drv_t indev_drv;
   lv_indev_drv_init(&indev_drv);
   indev_drv.type    = LV_INDEV_TYPE_POINTER;
@@ -328,10 +391,7 @@ static void init_lvgl() {
 
 // === RS485 RX Line Handler ===================================================
 static void handleRs485Line(const String &line) {
-  USBSerial.print("RS485 RX: ");
-  USBSerial.println(line);
-
-  // HIT n -> hitGroup setzen + hitTrigger++ für EEZ-Flow
+  // HIT n -> hitGroup setzen + hitTrigger++ fÃ¼r EEZ-Flow
   if (line.startsWith("HIT ")) {
     int grp = atoi(line.c_str() + 4);
     if (grp < 1) grp = 1;
@@ -343,7 +403,7 @@ static void handleRs485Line(const String &line) {
         eez::IntegerValue(grp)
     );
 
-    // hitTrigger inkrementieren (für Poll-Flow in EEZ)
+    // hitTrigger inkrementieren (fÃ¼r Poll-Flow in EEZ)
     int err = 0;
     int32_t oldTrig = eez::flow::getGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_TRIGGER).toInt32(&err);
     if (err != 0) oldTrig = 0;
@@ -356,13 +416,19 @@ static void handleRs485Line(const String &line) {
     return;
   }
 
-  // weitere Rückmeldungen kannst du hier später auswerten
+  // weitere RÃ¼ckmeldungen kannst du hier spÃ¤ter auswerten
 }
 
 // === setup / loop ============================================================
 void setup() {
   USBSerial.begin(115200);
-  delay(50);
+  uint32_t waitStart = millis();
+#if USE_NATIVE_USB
+  while (!USBSerial && millis() - waitStart < 2000) {
+    delay(10);
+  }
+#endif
+  delay(300);
   USBSerial.println("PitterOmat ESP32-S3 + EEZ + RS485 (single buffer, no TCA BL) boot");
 
   // Touch I2C0 (GT911)
@@ -393,5 +459,7 @@ void loop() {
   eez_flow_tick();
   ui_tick();
   rs485Poll();
+  usbPoll();
   delay(5);
 }
+
