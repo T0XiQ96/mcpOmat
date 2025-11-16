@@ -8,8 +8,8 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "c:/Users/tommy/PROJEKTE/mcpOmat/include",
                 "c:/Users/tommy/PROJEKTE/mcpOmat/src",
+                "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/Preferences/src",
                 "c:/Users/tommy/PROJEKTE/mcpOmat/lib/ui",
                 "c:/Users/tommy/PROJEKTE/mcpOmat/lib/lvgl",
                 "c:/Users/tommy/PROJEKTE/mcpOmat/lib/lvgl/src",
@@ -380,7 +380,6 @@
                 "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/NetworkClientSecure/src",
                 "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/OpenThread/src",
                 "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/PPP/src",
-                "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/Preferences/src",
                 "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/RainMaker/src",
                 "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/SD/src",
                 "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/SD_MMC/src",
@@ -399,8 +398,8 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "c:/Users/tommy/PROJEKTE/mcpOmat/include",
                     "c:/Users/tommy/PROJEKTE/mcpOmat/src",
+                    "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/Preferences/src",
                     "c:/Users/tommy/PROJEKTE/mcpOmat/lib/ui",
                     "c:/Users/tommy/PROJEKTE/mcpOmat/lib/lvgl",
                     "c:/Users/tommy/PROJEKTE/mcpOmat/lib/lvgl/src",
@@ -771,7 +770,6 @@
                     "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/NetworkClientSecure/src",
                     "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/OpenThread/src",
                     "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/PPP/src",
-                    "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/Preferences/src",
                     "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/RainMaker/src",
                     "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/SD/src",
                     "C:/Users/tommy/.platformio/packages/framework-arduinoespressif32/libraries/SD_MMC/src",

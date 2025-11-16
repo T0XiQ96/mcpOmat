@@ -1,8 +1,43 @@
 // MEGA_RS485_PitterOmat.ino
-// Arduino Mega RS485 SLAVE + Adafruit NeoPixel control für Spiel + Grenzen
+// Arduino Mega RS485 SLAVE + Adafruit NeoPixel control fuer Spiel + Grenzen
 
 #include <Arduino.h>
 #include <Adafruit_NeoPixel.h>
+#include <stdint.h>
+
+struct PlayerStateSettings {
+  uint8_t playerCount;
+  uint8_t mode;
+  uint8_t singleColor;
+  uint8_t ownRandom;
+  uint8_t inactiveMode;
+};
+
+struct BorderStateSettings {
+  uint8_t mode;
+  uint8_t singleColor;
+};
+
+struct BrightnessSettings {
+  uint8_t game;
+  uint8_t border;
+};
+
+static PlayerStateSettings runtimePlayerState = {6, 1, 3, 0, 0};
+static BorderStateSettings runtimeBorderState = {0, 0};
+static BrightnessSettings runtimeBrightness = {25, 25};
+static bool runtimeShowBorders = false;
+static bool runtimeJokerEnabled = false;
+static uint32_t runtimePlayerPalette[6];
+static uint32_t runtimeSingleColor = 0;
+static uint32_t runtimeLastHitColor = 0;
+static bool hitBlinkActive = false;
+static bool hitBlinkState = false;
+static uint8_t hitBlinkGroup = 0;
+static uint32_t hitBlinkColor = 0;
+static unsigned long hitBlinkToggleMs = 0;
+static unsigned long hitBlinkStartMs = 0;
+static bool hitBlinkReadySent = false;
 
 // ===================== RS485 =====================
 constexpr uint32_t BAUD = 115200;
@@ -57,6 +92,10 @@ static uint8_t spinOneRound();
 static uint8_t playerIndexFromGroup(uint8_t group, uint8_t pc);
 static void blinkGroupColor(uint8_t group, uint32_t color, uint8_t cycles, uint16_t onMs, uint16_t offMs);
 
+static void stopHitBlink();
+static void startHitBlink(uint8_t group, uint32_t color);
+static void updateHitBlink();
+
 static void handleLine(const char *line);
 static void rs485Poll();
 
@@ -76,8 +115,17 @@ static void clearBorder() {
   borderStrip.show();
 }
 static void clearAll() {
+  hitBlinkActive = false;
   clearGame();
   clearBorder();
+}
+
+static uint32_t runtimeBorderColor() {
+  if (runtimeBorderState.mode == 0) {
+    return runtimeBorderState.singleColor == 0 ? borderStrip.Color(120, 30, 0)
+                                               : borderStrip.Color(80, 80, 80);
+  }
+  return borderStrip.Color(128, 128, 128);
 }
 
 // Mapping Border: kehrt die physische Reihenfolge der 36er Segmente um
@@ -135,8 +183,8 @@ static uint32_t borderPreviewToColor() {
 
 static void setBordersForPlayers(uint8_t pc, bool on) {
   currentPlayerCount = pc;
-  const uint32_t colorOn  = borderPreviewToColor();
-  const uint32_t colorDim = borderStrip.Color(8,8,8);
+  const uint32_t colorOn  = runtimeBorderColor();
+  const uint32_t colorDim = borderStrip.Color(0,0,0);
 
   // Hintergrund: alle leicht grau oder aus
   for (uint16_t i = 0; i < BORDER_LED_COUNT; ++i)
@@ -150,11 +198,40 @@ static void setBordersForPlayers(uint8_t pc, bool on) {
   };
 
   if (on) {
+    // If border mode is not single-color, paint groups in static rainbow
+    if (runtimeBorderState.mode != 0) {
+      // choose groups per player count
+      const uint8_t *groups = nullptr;
+      uint8_t groupCount = 0;
+      static const uint8_t g2[] = {18, 36};
+      static const uint8_t g3[] = {12, 24, 36};
+      static const uint8_t g4[] = {4, 13, 22, 31};
+      static const uint8_t g5[] = {2, 9, 16, 23, 30, 1};
+      static const uint8_t g6[] = {3, 9, 15, 21, 27, 33};
+      switch (pc) {
+        case 2: groups = g2; groupCount = 2; break;
+        case 3: groups = g3; groupCount = 3; break;
+        case 4: groups = g4; groupCount = 4; break;
+        case 5: groups = g5; groupCount = 5; break;
+        case 6: groups = g6; groupCount = 6; break;
+        default: break;
+      }
+      if (groups && groupCount > 0) {
+        for (uint8_t i = 0; i < groupCount; ++i) {
+          uint16_t hue = (uint32_t)i * 65536 / groupCount;
+          uint32_t col = borderStrip.gamma32(borderStrip.ColorHSV(hue));
+          setGroup(groups[i], col);
+        }
+        borderStrip.show();
+        return;
+      }
+    }
+
     switch (pc) {
-      case 2: { const uint8_t g[] = {18, 36};             for (uint8_t i : g) setGroup(i, colorOn); } break;
-      case 3: { const uint8_t g[] = {12, 24, 36};         for (uint8_t i : g) setGroup(i, colorOn); } break;
-      case 4: { const uint8_t g[] = {4, 13, 22, 31};      for (uint8_t i : g) setGroup(i, colorOn); } break;
-      case 5: { const uint8_t g[] = {2, 9, 16, 23, 30, 1};for (uint8_t i : g) setGroup(i, colorOn); } break;
+      case 2: { const uint8_t g[] = {18, 36};              for (uint8_t i : g) setGroup(i, colorOn); } break;
+      case 3: { const uint8_t g[] = {12, 24, 36};          for (uint8_t i : g) setGroup(i, colorOn); } break;
+      case 4: { const uint8_t g[] = {4, 13, 22, 31};       for (uint8_t i : g) setGroup(i, colorOn); } break;
+      case 5: { const uint8_t g[] = {3, 10, 17, 24, 31};   for (uint8_t i : g) setGroup(i, colorOn); } break;
       case 6: { const uint8_t g[] = {3, 9, 15, 21, 27, 33};for (uint8_t i : g) setGroup(i, colorOn);} break;
       default: break;
     }
@@ -164,6 +241,7 @@ static void setBordersForPlayers(uint8_t pc, bool on) {
 
 // 2s Brightness-Vorschau: markiert exemplarisch Gruppen 1,9,18,24
 static void brightnessPreview(Adafruit_NeoPixel &strip, bool isBorder) {
+  stopHitBlink();
   const uint32_t col = strip.Color(255,255,255);
   auto setGroup = [&](uint8_t group, uint32_t c) {
     if (group < 1 || group > 36) return;
@@ -195,7 +273,205 @@ static uint8_t previewPlayerSingleColor = 0;
 static uint8_t previewPlayerOwnRandom = 0;
 static uint8_t previewInactiveMode = 0;
 
+static uint32_t randomWheelColor() {
+  uint16_t hue = random(0, 65536);
+  return gameStrip.gamma32(gameStrip.ColorHSV(hue));
+}
+
+static void refreshRuntimePalette(bool randomize) {
+  const uint32_t defaults[6] = {
+    gameStrip.Color(255, 0, 0),
+    gameStrip.Color(0, 255, 0),
+    gameStrip.Color(0, 0, 255),
+    gameStrip.Color(255, 255, 0),
+    gameStrip.Color(255, 0, 255),
+    gameStrip.Color(0, 255, 255)
+  };
+
+  if (!randomize) {
+    for (int i = 0; i < 6; ++i) {
+      runtimePlayerPalette[i] = defaults[i];
+    }
+    return;
+  }
+
+  // Generate six well-separated hues with slight jitter
+  const uint16_t step = 65536 / 6;
+  uint16_t base = (uint16_t)random(0, 65536);
+  for (int i = 0; i < 6; ++i) {
+    int16_t jitter = (int16_t)random(0, step/3 + 1) - (int16_t)(step/6);
+    uint16_t hue = (uint16_t)(base + i * step + jitter);
+    runtimePlayerPalette[i] = gameStrip.gamma32(gameStrip.ColorHSV(hue));
+  }
+}
+
+static uint8_t seatIndexFromGroup(uint8_t group) {
+  uint8_t seat = playerIndexFromGroup(group, runtimePlayerState.playerCount);
+  return seat;
+}
+
+static bool seatInactive(uint8_t seat) {
+  if (seat == 0) {
+    return false;
+  }
+  return seat > runtimePlayerState.playerCount;
+}
+
+static uint32_t dimColor(uint32_t color, float factor) {
+  uint8_t r = (color >> 16) & 0xFF;
+  uint8_t g = (color >> 8) & 0xFF;
+  uint8_t b = color & 0xFF;
+  r = (uint8_t)(r * factor);
+  g = (uint8_t)(g * factor);
+  b = (uint8_t)(b * factor);
+  return gameStrip.Color(r, g, b);
+}
+
+static uint32_t colorFromSingleIndex(uint8_t idx, uint8_t group) {
+  switch (idx) {
+    case 1: return gameStrip.Color(0, 0, 255);
+    case 2: return gameStrip.Color(0, 255, 0);
+    case 3: return gameStrip.Color(255, 0, 0);
+    case 4: {
+      uint16_t hue = (uint32_t)(group - 1) * 65536 / 36;
+      return gameStrip.gamma32(gameStrip.ColorHSV(hue));
+    }
+    case 0:
+    default:
+      return runtimeSingleColor ? runtimeSingleColor : gameStrip.Color(255, 255, 255);
+  }
+}
+
+static void prepareSpinColorsForSpin() {
+  if (runtimePlayerState.mode == 0 && runtimePlayerState.singleColor == 0) {
+    runtimeSingleColor = randomWheelColor();
+  }
+  refreshRuntimePalette(runtimePlayerState.mode == 1 && runtimePlayerState.ownRandom != 0);
+}
+
+static uint32_t resolveSpinColor(uint8_t group) {
+  // Joker-Farbe während des Spins: bei 5 Spielern ist Gruppe 2 Joker
+  if (runtimePlayerState.playerCount == 5 && group == 2 && runtimeJokerEnabled) {
+    return gameStrip.Color(255, 180, 0);
+  }
+
+  uint32_t color = 0;
+  switch (runtimePlayerState.mode) {
+    case 0:
+      color = colorFromSingleIndex(runtimePlayerState.singleColor, group);
+      break;
+    case 1: {
+      uint8_t seat = seatIndexFromGroup(group);
+      if (seat >= 1 && seat <= 6) {
+        color = runtimePlayerPalette[seat - 1];
+        if (seatInactive(seat)) {
+          switch (runtimePlayerState.inactiveMode) {
+            case 0: color = 0; break;
+            case 1: color = gameStrip.Color(32, 32, 32); break;
+            case 2: color = dimColor(color, 0.1f); break;
+            default: break;
+          }
+        }
+      } else {
+        color = gameStrip.Color(255, 180, 0);
+      }
+      break;
+    }
+    case 2:
+    default:
+      color = randomWheelColor();
+      break;
+  }
+  return color;
+}
+
+static void showGroupColor(uint8_t group, uint32_t color) {
+  clearGame();
+  uint16_t base = groupBase(group);
+  for (uint8_t i = 0; i < 12; ++i) {
+    gameStrip.setPixelColor(base + i, color);
+  }
+  gameStrip.show();
+}
+
+static void stopHitBlink() {
+  hitBlinkActive = false;
+  hitBlinkReadySent = false;
+}
+
+static void startHitBlink(uint8_t group, uint32_t color) {
+  hitBlinkGroup = group;
+  hitBlinkColor = color;
+  hitBlinkToggleMs = 0;
+  hitBlinkState = false;
+  hitBlinkStartMs = millis();
+  hitBlinkReadySent = false;
+  hitBlinkActive = true;
+}
+
+static void updateHitBlink() {
+  if (!hitBlinkActive) {
+    return;
+  }
+  unsigned long now = millis();
+  if (hitBlinkToggleMs == 0 || now - hitBlinkToggleMs >= 200) {
+    hitBlinkToggleMs = now;
+    hitBlinkState = !hitBlinkState;
+    clearGame();
+    if (hitBlinkState) {
+      uint16_t base = groupBase(hitBlinkGroup);
+      for (uint8_t i = 0; i < 12; ++i) {
+        gameStrip.setPixelColor(base + i, hitBlinkColor);
+      }
+    }
+    gameStrip.show();
+  }
+
+  if (!hitBlinkReadySent && millis() - hitBlinkStartMs >= 3000) {
+    rs485SendLine("SPIN_READY\n");
+    hitBlinkReadySent = true;
+  }
+}
+
+static void applyBrightness(const BrightnessSettings &state) {
+  runtimeBrightness = state;
+  BRIGHT_GAME = runtimeBrightness.game;
+  BRIGHT_BORD = runtimeBrightness.border;
+  gameStrip.setBrightness(BRIGHT_GAME);
+  borderStrip.setBrightness(BRIGHT_BORD);
+  gameStrip.show();
+  borderStrip.show();
+}
+
+static void applyBorderState(const BorderStateSettings &state) {
+  runtimeBorderState = state;
+  previewBorderMode = runtimeBorderState.mode;
+  previewBorderSingleColor = runtimeBorderState.singleColor;
+  if (runtimeShowBorders) {
+    setBordersForPlayers(currentPlayerCount, true);
+  } else {
+    clearBorder();
+  }
+}
+
+static void applyPlayerState(const PlayerStateSettings &state) {
+  runtimePlayerState = state;
+  if (runtimePlayerState.playerCount < 2 || runtimePlayerState.playerCount > 6) {
+    runtimePlayerState.playerCount = 6;
+  }
+  currentPlayerCount = runtimePlayerState.playerCount;
+  refreshRuntimePalette(false);
+  if (runtimeShowBorders) {
+    setBordersForPlayers(currentPlayerCount, true);
+  } else {
+    clearBorder();
+  }
+  clearGame();
+  gameStrip.show();
+}
+
 static void runPlayerPreview() {
+  stopHitBlink();
   clearGame();
   uint8_t pc = currentPlayerCount;
   if (pc < 2 || pc > 6) pc = 6;
@@ -302,6 +578,7 @@ static void runPlayerPreview() {
 
 // ===================== Border Preview ===========
 static void runBorderPreview() {
+  stopHitBlink();
   for (uint16_t i = 0; i < BORDER_LED_COUNT; ++i) borderStrip.setPixelColor(i, 0);
 
   auto setGroup = [&](uint8_t group, uint32_t col) {
@@ -336,10 +613,8 @@ static bool jokerActive = false;
 
 static void clearJoker() {
   uint16_t base2  = groupBase(2);
-  uint16_t base19 = groupBase(19);
   for (uint8_t i = 0; i < 12; ++i) {
     gameStrip.setPixelColor(base2 + i, 0);
-    gameStrip.setPixelColor(base19 + i, 0);
   }
   gameStrip.show();
 }
@@ -347,44 +622,40 @@ static void clearJoker() {
 static void updateJokerAnimation() {
   if (!jokerActive) return;
   unsigned long now = millis();
-  if (now - jokerLastStepMs < 30) return;
+  if (now - jokerLastStepMs < 30) return; // ~33fps
   jokerLastStepMs = now;
-  unsigned long phaseMs = now - jokerPhaseStartMs;
 
-  const uint32_t gold = gameStrip.Color(255, 180, 0);
-  uint16_t base2  = groupBase(2);
-  uint16_t base19 = groupBase(19);
+  uint16_t base2 = groupBase(2);
 
-  if (jokerMode == 1 && phaseMs >= 6000) {
+  if (jokerMode == 1) {
+    // Continuous rainbow across 12 LEDs, hue shifts over time
+    static uint16_t hueBase = 0;
+    hueBase += 64; // speed of hue shift
     for (uint8_t i = 0; i < 12; ++i) {
-      gameStrip.setPixelColor(base2  + i, gold);
-      gameStrip.setPixelColor(base19 + i, gold);
+      uint32_t c = gameStrip.gamma32(gameStrip.ColorHSV(hueBase + i * (65536 / 12)));
+      gameStrip.setPixelColor(base2 + i, c);
     }
-    for (uint8_t g = 1; g <= 36; ++g) {
-      if (g == 2 || g == 19) continue;
-      uint16_t base = groupBase(g);
-      uint16_t hue = (uint16_t)((phaseMs / 10) + g * (65536/36));
-      for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base + i, gameStrip.ColorHSV(hue));
-    }
-  } else if (phaseMs < 3000) {
-    for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base19 + i, gold);
-    for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base2 + i, 0);
-    gameStrip.setPixelColor(base2 + jokerPos, gold);
-    if (jokerPos == 0 || jokerPos == 11) jokerDir = -jokerDir;
-  } else if (phaseMs < 6000) {
-    bool on = ((phaseMs / 250) % 2) == 0;
-    uint32_t c = on ? gold : 0;
-    for (uint8_t i = 0; i < 12; ++i) {
-      gameStrip.setPixelColor(base2  + i, c);
-      gameStrip.setPixelColor(base19 + i, c);
-    }
-  } else {
-    for (uint8_t i = 0; i < 12; ++i) {
-      gameStrip.setPixelColor(base2 + i, gold);
-      gameStrip.setPixelColor(base19 + i, gold);
-    }
+    gameStrip.show();
+    return;
   }
-  jokerPos += jokerDir;
+
+  // Gold sweep back and forth
+  const uint32_t gold = gameStrip.Color(255, 180, 0);
+  // clear group 2
+  for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base2 + i, 0);
+  // draw head and small tail
+  uint8_t head = jokerPos % 12;
+  gameStrip.setPixelColor(base2 + head, gold);
+  if (head > 0) gameStrip.setPixelColor(base2 + head - 1, gameStrip.Color(120, 85, 0));
+  if (head < 11) gameStrip.setPixelColor(base2 + head + 1, gameStrip.Color(120, 85, 0));
+
+  // advance
+  if (jokerDir > 0) {
+    if (jokerPos >= 11) { jokerDir = -1; } else { jokerPos++; }
+  } else {
+    if (jokerPos == 0) { jokerDir = 1; } else { jokerPos--; }
+  }
+
   gameStrip.show();
 }
 
@@ -406,59 +677,104 @@ static void handleSpinParams(int aMin,int aMax,int mMin,int mMax,int dMin,int dM
 }
 
 static void showGroupWhite(uint8_t g) {
-  clearGame();
-  uint16_t base = groupBase(g);
-  for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base + i, gameStrip.Color(255,255,255));
-  gameStrip.show();
+  showGroupColor(g, gameStrip.Color(255,255,255));
+}
+
+static float randomTurns(int16_t min10, int16_t max10) {
+  if (max10 < min10) {
+    max10 = min10;
+  }
+  int16_t value = random(min10, max10 + 1);
+  return value / 10.0f;
+}
+
+static uint16_t turnsToSteps(float turns) {
+  if (turns <= 0.01f) {
+    return 0;
+  }
+  return (uint16_t)roundf(turns * 36.0f);
 }
 
 static uint8_t spinOneRound() {
   if (spinInProgress) return 1;
   spinInProgress = true;
+  prepareSpinColorsForSpin();
 
   randomSeed(micros());
-  auto randIn10 = [](int16_t mi, int16_t ma) -> float {
-    if (ma < mi) ma = mi;
-    int16_t r = random(mi, ma + 1);
-    return r / 10.0f;
-  };
 
-  float accelTurns = randIn10(spinAccelMin10, spinAccelMax10);
-  float maxTurns   = randIn10(spinMaxSpdMin10, spinMaxSpdMax10);
-  float decelTurns = randIn10(spinDecelMin10, spinDecelMax10);
+  float accelTurns = randomTurns(spinAccelMin10, spinAccelMax10);
+  float cruiseTurns = randomTurns(spinMaxSpdMin10, spinMaxSpdMax10);
+  float decelTurns = randomTurns(spinDecelMin10, spinDecelMax10);
 
   if (accelTurns < 0.1f) accelTurns = 0.1f;
-  if (maxTurns   < 0.1f) maxTurns   = 0.1f;
+  if (cruiseTurns < 0.1f) cruiseTurns = 0.1f;
   if (decelTurns < 0.1f) decelTurns = 0.1f;
 
-  uint16_t accelSteps = (uint16_t)(accelTurns * 36.0f);
-  uint16_t maxSteps   = (uint16_t)(maxTurns   * 36.0f);
-  uint16_t decelSteps = (uint16_t)(decelTurns * 36.0f);
+  uint16_t accelSteps = turnsToSteps(accelTurns);
+  uint16_t cruiseSteps = turnsToSteps(cruiseTurns);
+  uint16_t decelSteps = turnsToSteps(decelTurns);
 
-  uint32_t totalSteps = (uint32_t)accelSteps + maxSteps + decelSteps;
-  if (totalSteps == 0) totalSteps = 36;
-
-  uint8_t currentGroup = random(0, 36); // 0..35 intern
-  int dir = random(0, 2) ? 1 : -1;
-
-  for (uint32_t step = 0; step < totalSteps; ++step) {
-    float fDelay;
-    if (step < accelSteps) {
-      float k = (float)step / (float)accelSteps;
-      fDelay = 1.5f - k;
-    } else if (step < accelSteps + maxSteps) {
-      fDelay = 0.5f;
-    } else {
-      float k = (float)(step - accelSteps - maxSteps) / (float)decelSteps;
-      fDelay = 0.5f + k * 1.5f;
-    }
-    currentGroup = (uint8_t)((currentGroup + dir + 36) % 36);
-    showGroupWhite((uint8_t)(currentGroup + 1));
-    delay((uint16_t)(spinStepBaseMs * fDelay));
+  uint32_t totalSteps = (uint32_t)accelSteps + cruiseSteps + decelSteps;
+  if (totalSteps == 0) {
+    totalSteps = 36;
+    cruiseSteps = totalSteps;
+    accelSteps = decelSteps = 0;
   }
 
+  uint8_t currentGroup = random(0, 36);
+  int dir = random(0, 2) ? 1 : -1;
+  uint32_t lastColor = 0;
+
+  auto advanceStep = [&](void) {
+    currentGroup = (uint8_t)((currentGroup + dir + 36) % 36);
+    uint8_t groupNumber = (uint8_t)(currentGroup + 1);
+    
+    // Skip Joker group 2 in 5-player mode when Joker is disabled
+    if (runtimePlayerState.playerCount == 5 && !runtimeJokerEnabled && groupNumber == 2) {
+      currentGroup = (uint8_t)((currentGroup + dir + 36) % 36);
+      groupNumber = (uint8_t)(currentGroup + 1);
+      if (groupNumber == 2) { // double-skip safety
+        currentGroup = (uint8_t)((currentGroup + dir + 36) % 36);
+        groupNumber = (uint8_t)(currentGroup + 1);
+      }
+    }
+
+    uint32_t color = resolveSpinColor(groupNumber);
+    showGroupColor(groupNumber, color);
+    lastColor = color;
+  };
+
+  auto runPhase = [&](uint16_t steps, float startDelay, float endDelay, bool easeIn) {
+    if (steps == 0) {
+      return;
+    }
+    for (uint16_t i = 0; i < steps; ++i) {
+      float progress = (steps == 1) ? 1.0f : (float)i / (float)(steps - 1);
+      float eased = easeIn ? 1.0f - (1.0f - progress) * (1.0f - progress)
+                           : progress * progress;
+      float delayMs = startDelay + (endDelay - startDelay) * eased;
+      advanceStep();
+      delay((uint16_t)delayMs);
+    }
+  };
+
+  uint16_t minStepMs = spinStepBaseMs < 5 ? 5 : spinStepBaseMs;
+  float cruiseDelay = (float)minStepMs;
+  float slowDelay = cruiseDelay * 4.0f;
+
+  runPhase(accelSteps, slowDelay, cruiseDelay, true);
+  runPhase(cruiseSteps, cruiseDelay, cruiseDelay, false);
+  runPhase(decelSteps, cruiseDelay, slowDelay, false);
+
   spinInProgress = false;
-  return (uint8_t)(currentGroup + 1); // 1..36
+  uint8_t winner = (uint8_t)(currentGroup + 1);
+  if (runtimePlayerState.playerCount == 5 && !runtimeJokerEnabled && winner == 2) {
+    winner = (uint8_t)(((currentGroup + dir + 36) % 36) + 1);
+    if (winner == 2) winner = (uint8_t)(((currentGroup + 2*dir + 36) % 36) + 1);
+  }
+  runtimeLastHitColor = lastColor ? lastColor : resolveSpinColor(winner);
+  startHitBlink(winner, runtimeLastHitColor);
+  return winner;
 }
 
 // Spielerindex aus Gruppe je nach Playercount
@@ -474,12 +790,11 @@ static uint8_t playerIndexFromGroup(uint8_t g, uint8_t pc) {
       // 32..36 oder 1..4 -> P4
       return 4;
     case 5:
-      if (g == 2) return 0; // Joker
+      if (g == 2) return 0; // Joker slot always reserved in 5-player mode
       if (g >= 3  && g <= 9 ) return 1;
       if (g >= 10 && g <= 16) return 2;
       if (g >= 17 && g <= 23) return 3;
       if (g >= 24 && g <= 30) return 4;
-      // 31..36,1 -> P5
       return 5;
     case 6:
       if (g >= 4  && g <= 9 ) return 1;
@@ -517,27 +832,80 @@ static void handleLine(const char *line) {
     if (sscanf(line + 15, "%c %d", &which, &val) == 2) {
       val = constrain(val, 1, 255);
       if (which == 'G') {
-        BRIGHT_GAME = val; gameStrip.setBrightness(BRIGHT_GAME); brightnessPreview(gameStrip, false);
+        runtimeBrightness.game = val;
+        applyBrightness(runtimeBrightness);
+        brightnessPreview(gameStrip, false);
       } else if (which == 'B') {
-        BRIGHT_BORD = val; borderStrip.setBrightness(BRIGHT_BORD); brightnessPreview(borderStrip, true);
+        runtimeBrightness.border = val;
+        applyBrightness(runtimeBrightness);
+        brightnessPreview(borderStrip, true);
       }
     }
     return;
   }
 
+  if (strncmp(line, "PLAYER_STATE ", 13) == 0) {
+    PlayerStateSettings st = runtimePlayerState;
+    int pc, mode, singleCol, ownRnd, inactive;
+    if (sscanf(line + 13, "%d %d %d %d %d", &pc, &mode, &singleCol, &ownRnd, &inactive) == 5) {
+      st.playerCount = constrain(pc, 2, 6);
+      st.mode = constrain(mode, 0, 3);
+      st.singleColor = constrain(singleCol, 0, 5);
+      st.ownRandom = ownRnd ? 1 : 0;
+      st.inactiveMode = constrain(inactive, 0, 2);
+      applyPlayerState(st);
+    }
+    return;
+  }
+
+  if (strncmp(line, "BORDER_STATE ", 13) == 0) {
+    BorderStateSettings st = runtimeBorderState;
+    int mode, singleCol;
+    if (sscanf(line + 13, "%d %d", &mode, &singleCol) == 2) {
+      st.mode = constrain(mode, 0, 2);
+      st.singleColor = constrain(singleCol, 0, 5);
+      applyBorderState(st);
+    }
+    return;
+  }
+
+  if (strncmp(line, "BRIGHT_STATE ", 13) == 0) {
+    BrightnessSettings st = runtimeBrightness;
+    int g, b;
+    if (sscanf(line + 13, "%d %d", &g, &b) == 2) {
+      st.game = constrain(g, 1, 255);
+      st.border = constrain(b, 1, 255);
+      applyBrightness(st);
+    }
+    return;
+  }
+
   if (strncmp(line, "CFG_PLAYERS ", 12) == 0) {
-    int pc = 0; if (sscanf(line + 12, "%d", &pc) == 1) currentPlayerCount = (uint8_t)pc;
+    int pc = 0; if (sscanf(line + 12, "%d", &pc) == 1) {
+      PlayerStateSettings st = runtimePlayerState;
+      st.playerCount = constrain(pc, 2, 6);
+      applyPlayerState(st);
+    }
     return;
   }
 
   if (strncmp(line, "CFG_JOKER ", 10) == 0) {
-    int en = 0; if (sscanf(line + 10, "%d", &en) == 1) { /* optional persist */ }
+    int en = 0;
+    if (sscanf(line + 10, "%d", &en) == 1) {
+      runtimeJokerEnabled = (en != 0);
+    }
     return;
   }
 
   if (strncmp(line, "BORDERS_STATE ", 14) == 0) {
     int on, pc;
-    if (sscanf(line + 14, "%d %d", &on, &pc) == 2) setBordersForPlayers((uint8_t)pc, on != 0);
+    if (sscanf(line + 14, "%d %d", &on, &pc) == 2) {
+      runtimeShowBorders = on != 0;
+      PlayerStateSettings st = runtimePlayerState;
+      st.playerCount = constrain(pc, 2, 6);
+      applyPlayerState(st);
+      applyBorderState(runtimeBorderState);
+    }
     return;
   }
 
@@ -588,15 +956,13 @@ static void handleLine(const char *line) {
 
   if (strcmp(line, "SPIN_START") == 0) {
     if (!spinInProgress) {
+      stopHitBlink();
+      clearGame();
+      gameStrip.show();
       uint8_t hitGroup = spinOneRound();
-      // kurzes Blink in Spielerfarbe
-      uint8_t pidx = playerIndexFromGroup(hitGroup, currentPlayerCount);
-      uint32_t col = (pidx >= 1 && pidx <= 6) ? playerColors[pidx - 1] : gameStrip.Color(255,180,0); // Joker→Gold
-      blinkGroupColor(hitGroup, col, 5, 80, 80);
-
       char buf[16];
       snprintf(buf, sizeof(buf), "HIT %u\n", hitGroup);
-      rs485SendLine(buf);
+      rs485SendLine(buf);   // über RS485 senden
     }
     return;
   }
@@ -631,10 +997,12 @@ void setup() {
 
   gameStrip.begin();
   borderStrip.begin();
-  gameStrip.setBrightness(BRIGHT_GAME);
-  borderStrip.setBrightness(BRIGHT_BORD);
+  applyBrightness(runtimeBrightness);
   clearAll();
   initPlayerColors();
+  refreshRuntimePalette(false);
+  applyPlayerState(runtimePlayerState);
+  applyBorderState(runtimeBorderState);
 
   Serial.println(F("MEGA RS485 PitterOmat ready."));
 }
@@ -642,5 +1010,6 @@ void setup() {
 void loop() {
   rs485Poll();
   updateJokerAnimation();
+  updateHitBlink();
   delay(2);
 }

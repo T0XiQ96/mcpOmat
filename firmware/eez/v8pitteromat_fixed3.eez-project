@@ -933,7 +933,7 @@
         {
           "objID": "7b1a15b8-3c19-4ea3-8c95-797f423d98af",
           "type": "EndActionComponent",
-          "left": 1029,
+          "left": 1240,
           "top": -244,
           "width": 87,
           "height": 24,
@@ -943,7 +943,7 @@
         {
           "objID": "ac69a439-714d-4523-c4b6-d0186ce9d6c3",
           "type": "CallActionActionComponent",
-          "left": 403,
+          "left": 538,
           "top": -244,
           "width": 100,
           "height": 24,
@@ -958,8 +958,8 @@
         {
           "objID": "9cb919e2-cac1-4e5c-fcf3-d1555a0f145e",
           "type": "CallActionActionComponent",
-          "left": 403,
-          "top": -211,
+          "left": 666,
+          "top": -244,
           "width": 103,
           "height": 24,
           "customInputs": [],
@@ -973,7 +973,7 @@
         {
           "objID": "3b9555a4-37a5-433e-c911-5fbf597c4c17",
           "type": "SetVariableActionComponent",
-          "left": 575,
+          "left": 798,
           "top": -244,
           "width": 177,
           "height": 79,
@@ -993,9 +993,24 @@
           ]
         },
         {
-          "objID": "ede5f968-efd8-48fb-b680-ca727930e45f",
+          "objID": "45a8f770-0ecd-48ef-d92c-e7defb76c112",
           "type": "CallActionActionComponent",
-          "left": 782,
+          "left": 386,
+          "top": -244,
+          "width": 123,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "sendCfgPlayers",
+          "userPropertyValues": {
+            "objID": "06da7b8b-a7a3-4896-b695-450a2e67a284",
+            "values": {}
+          }
+        },
+        {
+          "objID": "ffcf685d-63b7-45e9-ed5b-add0223172cc",
+          "type": "CallActionActionComponent",
+          "left": 995,
           "top": -244,
           "width": 226,
           "height": 24,
@@ -1003,7 +1018,7 @@
           "customOutputs": [],
           "action": "cmd_SendBordersStateToArduino",
           "userPropertyValues": {
-            "objID": "275c6cd5-c822-4c45-a10b-8de83c44d79b",
+            "objID": "43155dc1-f957-49dc-da58-0b01cee356f5",
             "values": {}
           }
         }
@@ -1024,13 +1039,6 @@
           "input": "@seqin"
         },
         {
-          "objID": "9fbfd74c-5f21-4d2e-d549-b67180063152",
-          "source": "5cb686c0-7712-4b43-a034-c718a3133f86",
-          "output": "@seqout",
-          "target": "ac69a439-714d-4523-c4b6-d0186ce9d6c3",
-          "input": "@seqin"
-        },
-        {
           "objID": "f3314c21-9cb1-4ac5-bcc5-d9a7bee6b447",
           "source": "9cb919e2-cac1-4e5c-fcf3-d1555a0f145e",
           "output": "@seqout",
@@ -1038,15 +1046,29 @@
           "input": "@seqin"
         },
         {
-          "objID": "3da35980-38d6-4ba6-a9fb-bcf1d0c04778",
-          "source": "3b9555a4-37a5-433e-c911-5fbf597c4c17",
+          "objID": "199d23c2-4ec7-4527-b169-846070d09a5a",
+          "source": "5cb686c0-7712-4b43-a034-c718a3133f86",
           "output": "@seqout",
-          "target": "ede5f968-efd8-48fb-b680-ca727930e45f",
+          "target": "45a8f770-0ecd-48ef-d92c-e7defb76c112",
           "input": "@seqin"
         },
         {
-          "objID": "ebb5dd0a-1661-46a8-f468-48901c6d78fc",
-          "source": "ede5f968-efd8-48fb-b680-ca727930e45f",
+          "objID": "41fc251a-5bdd-48a0-d3d5-8adb4af1942a",
+          "source": "45a8f770-0ecd-48ef-d92c-e7defb76c112",
+          "output": "@seqout",
+          "target": "ac69a439-714d-4523-c4b6-d0186ce9d6c3",
+          "input": "@seqin"
+        },
+        {
+          "objID": "c8732e67-f934-47a6-fef5-27a8eb3426fe",
+          "source": "3b9555a4-37a5-433e-c911-5fbf597c4c17",
+          "output": "@seqout",
+          "target": "ffcf685d-63b7-45e9-ed5b-add0223172cc",
+          "input": "@seqin"
+        },
+        {
+          "objID": "5b403916-59c3-4d00-c1ca-386ae6499260",
+          "source": "ffcf685d-63b7-45e9-ed5b-add0223172cc",
           "output": "@seqout",
           "target": "7b1a15b8-3c19-4ea3-8c95-797f423d98af",
           "input": "@seqin"
@@ -1055,7 +1077,7 @@
       "localVariables": [],
       "userProperties": [],
       "name": "actPlayerRoller_ValueChanged",
-      "implementationType": "flow"
+      "implementationType": "native"
     },
     {
       "objID": "72e51556-41e7-4b64-e41d-d1d0bf6cbe9d",
@@ -4710,7 +4732,7 @@
           "left": 378,
           "top": 138,
           "width": 221,
-          "height": 73,
+          "height": 72,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -4763,8 +4785,8 @@
           "type": "SwitchActionComponent",
           "left": 672,
           "top": 65,
-          "width": 264,
-          "height": 73,
+          "width": 265,
+          "height": 72,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -4786,7 +4808,7 @@
           "left": 1076,
           "top": -15,
           "width": 311,
-          "height": 73,
+          "height": 72,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -4831,7 +4853,7 @@
           "left": 1019,
           "top": 102,
           "width": 165,
-          "height": 73,
+          "height": 72,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -4853,7 +4875,7 @@
           "left": 1231,
           "top": 75,
           "width": 305,
-          "height": 54,
+          "height": 53,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -4879,7 +4901,7 @@
           "left": 1231,
           "top": 157,
           "width": 305,
-          "height": 73,
+          "height": 72,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -4913,7 +4935,7 @@
           "left": 672,
           "top": 281,
           "width": 259,
-          "height": 73,
+          "height": 72,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -4935,7 +4957,7 @@
           "left": 1003,
           "top": 245,
           "width": 305,
-          "height": 73,
+          "height": 72,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -4980,7 +5002,7 @@
           "left": 1019,
           "top": 354,
           "width": 165,
-          "height": 73,
+          "height": 72,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -5002,7 +5024,7 @@
           "left": 1231,
           "top": 337,
           "width": 305,
-          "height": 54,
+          "height": 53,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -5028,7 +5050,7 @@
           "left": 1231,
           "top": 427,
           "width": 311,
-          "height": 73,
+          "height": 72,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -5062,7 +5084,7 @@
           "left": -61,
           "top": -54,
           "width": 177,
-          "height": 79,
+          "height": 80,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -5256,1235 +5278,6 @@
       "implementationType": "flow"
     },
     {
-      "objID": "633b9c3b-c8cc-45f6-a3c7-89ce0b357b35",
-      "components": [
-        {
-          "objID": "8c00e55d-8764-43f7-a220-ae36f7dab328",
-          "type": "StartActionComponent",
-          "left": -421,
-          "top": -143,
-          "width": 87,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": []
-        },
-        {
-          "objID": "1d940d35-4268-4ab4-eb27-cc973cd04da7",
-          "type": "SwitchActionComponent",
-          "left": -63,
-          "top": -143,
-          "width": 159,
-          "height": 126,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "45978302-7ff5-447f-89d1-43c8d7a3ac34",
-              "condition": "playerCount == 2",
-              "outputName": "_2"
-            },
-            {
-              "objID": "b6540a92-4880-438c-9d20-8134a2eb85ea",
-              "condition": "playerCount == 3",
-              "outputName": "_3"
-            },
-            {
-              "objID": "6ef2e2cd-1473-4aa3-b0ae-0e058bb5d600",
-              "condition": "playerCount == 4",
-              "outputName": "_4"
-            },
-            {
-              "objID": "dee0f48e-b60b-40e2-a4e9-1e81887a63d4",
-              "condition": "playerCount == 5",
-              "outputName": "_5"
-            },
-            {
-              "objID": "bf4b2d6b-1721-430b-8357-522b027d2fd2",
-              "condition": "playerCount == 6",
-              "outputName": "_6"
-            }
-          ]
-        },
-        {
-          "objID": "7b84f227-c307-45cf-990e-257897c79eca",
-          "type": "SetVariableActionComponent",
-          "left": -303,
-          "top": -143,
-          "width": 171,
-          "height": 102,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "7182e4eb-27b9-4cfe-bdfb-63e9566a3adf",
-              "variable": "hitPlayerIndex",
-              "value": "-1"
-            },
-            {
-              "objID": "bad13fb8-a89d-4089-9f20-0b3c7eed1c57",
-              "variable": "jokerHit",
-              "value": "false"
-            },
-            {
-              "objID": "ad921819-39ee-4140-b8d3-dfd40b7e77c7",
-              "variable": "canStartSpin",
-              "value": "false"
-            }
-          ]
-        },
-        {
-          "objID": "96ff57ba-2a37-419a-fb51-72e472883f10",
-          "type": "SetVariableActionComponent",
-          "left": 267,
-          "top": -339,
-          "width": 343,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "942c670a-57da-463d-de9e-7bb540f4d577",
-              "variable": "hitPlayerIndex",
-              "value": "(hitGroup>=1&&hitGroup<=18)?0:1\n"
-            }
-          ]
-        },
-        {
-          "objID": "0c08c84c-9dc3-4441-c8db-a8dc06a26aba",
-          "type": "SetVariableActionComponent",
-          "left": 267,
-          "top": -264,
-          "width": 534,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "6e80cd64-65ce-42a4-9355-71cda7ec5296",
-              "variable": "hitPlayerIndex",
-              "value": "(hitGroup>=1&&hitGroup<=12)?0:(hitGroup>=13&&hitGroup<=24)?1:2"
-            }
-          ]
-        },
-        {
-          "objID": "a381b77a-b987-41d0-fc94-b185600b7439",
-          "type": "SetVariableActionComponent",
-          "left": 267,
-          "top": -188,
-          "width": 724,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "cbce639e-ac8e-4ffe-bd74-94bf9aa0f4c7",
-              "variable": "hitPlayerIndex",
-              "value": "(hitGroup>=5&&hitGroup<=13)?0:(hitGroup>=14&&hitGroup<=22)?1:(hitGroup>=23&&hitGroup<=31)?2:3\n"
-            }
-          ]
-        },
-        {
-          "objID": "11f3df45-cde5-4ca1-828e-ff56fa7fc329",
-          "type": "SetVariableActionComponent",
-          "left": 267,
-          "top": -110,
-          "width": 1013,
-          "height": 80,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "4fc2dc56-f743-4084-b46c-38fd80e138cf",
-              "variable": "hitPlayerIndex",
-              "value": "(hitGroup>=3&&hitGroup<=9)?0:(hitGroup>=10&&hitGroup<=16)?1:(hitGroup>=17&&hitGroup<=23)?2:(hitGroup>=24&&hitGroup<=30)?3:(hitGroup==2?-1:4)\n"
-            },
-            {
-              "objID": "bb4f6124-9108-432d-b7a5-bad885d131b4",
-              "variable": "jokerHit",
-              "value": "(hitGroup==2)"
-            }
-          ]
-        },
-        {
-          "objID": "1c78f84b-ac6f-4a9a-d001-5ca37e57130b",
-          "type": "SetVariableActionComponent",
-          "left": 267,
-          "top": -17,
-          "width": 1099,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "89f0b4e7-10e4-432d-de15-f81a0f7a5d48",
-              "variable": "hitPlayerIndex",
-              "value": "(hitGroup>=4&&hitGroup<=9)?0:(hitGroup>=10&&hitGroup<=15)?1:(hitGroup>=16&&hitGroup<=21)?2:(hitGroup>=22&&hitGroup<=27)?3:(hitGroup>=28&&hitGroup<=33)?4:5\n"
-            }
-          ]
-        },
-        {
-          "objID": "17253aa6-57bc-45ed-c958-55f547781556",
-          "type": "SwitchActionComponent",
-          "left": 70,
-          "top": 535,
-          "width": 179,
-          "height": 144,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "1641314e-1a8a-4dde-f4bf-cc35e796f332",
-              "condition": "hitPlayerIndex == 0",
-              "outputName": "P1"
-            },
-            {
-              "objID": "2860a709-7a8c-4208-e202-ce14566b38f3",
-              "condition": "hitPlayerIndex == 1",
-              "outputName": "P2"
-            },
-            {
-              "objID": "a0174095-9108-4de2-bb62-f0681a907784",
-              "condition": "hitPlayerIndex == 2",
-              "outputName": "P3"
-            },
-            {
-              "objID": "2addbd98-97e2-4790-dc02-d48641a3a55f",
-              "condition": "hitPlayerIndex == 3",
-              "outputName": "P4"
-            },
-            {
-              "objID": "da605759-5f19-4579-c1d9-1f1dbf9c5d92",
-              "condition": "hitPlayerIndex == 4",
-              "outputName": "P5"
-            },
-            {
-              "objID": "8f343c84-2b2f-4825-b853-fa99acb379ef",
-              "condition": "hitPlayerIndex == 5",
-              "outputName": "P6"
-            }
-          ]
-        },
-        {
-          "objID": "06de6294-d49c-4959-f14d-35d7fb620f96",
-          "type": "SetVariableActionComponent",
-          "left": 533,
-          "top": 383,
-          "width": 251,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "b30ecd81-6a46-416f-b559-f04fcb5dbfc4",
-              "variable": "scoreP1",
-              "value": "scoreP1>0?(scoreP1-1):0"
-            }
-          ]
-        },
-        {
-          "objID": "a60cf228-3d48-4dfe-ad41-b9963adda05f",
-          "type": "SwitchActionComponent",
-          "left": 851,
-          "top": 383,
-          "width": 185,
-          "height": 72,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "3e5dfaa0-6d7b-4f4c-c9e5-7be6f2ff14d3",
-              "condition": "scoreP1 == 0",
-              "outputName": "p1_not_zero"
-            },
-            {
-              "objID": "af282d90-33a7-4b05-f783-f5b054e04989",
-              "condition": "scoreP1 == 1",
-              "outputName": "p1_zero"
-            }
-          ]
-        },
-        {
-          "objID": "9cbc8f55-61cd-43b8-b1de-3524b2bee380",
-          "type": "SetVariableActionComponent",
-          "left": 1115,
-          "top": 372,
-          "width": 140,
-          "height": 80,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "1c7bb1f6-0cdf-4887-bf88-82833a06a379",
-              "variable": "resultIndex",
-              "value": "0"
-            },
-            {
-              "objID": "6b6d83e1-5e64-4585-a2e1-a5f43a9e2d8d",
-              "variable": "gameOver",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "objID": "ece37d64-8a67-4ce1-da2e-ecf2f3e31054",
-          "type": "LabelInActionComponent",
-          "left": -219,
-          "top": -231,
-          "width": 87,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": [],
-          "label": "afterAll"
-        },
-        {
-          "objID": "842315df-7caf-45df-a730-a353f2ffc7a6",
-          "type": "EndActionComponent",
-          "left": -63,
-          "top": -231,
-          "width": 87,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": []
-        },
-        {
-          "objID": "774cfb34-3f70-4159-95e9-fe903f1ed210",
-          "type": "LabelOutActionComponent",
-          "left": 1736,
-          "top": 658,
-          "width": 87,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": [],
-          "label": "afterAll"
-        },
-        {
-          "objID": "6edcc8a9-27ba-484e-f991-c373fcc39654",
-          "type": "SetVariableActionComponent",
-          "left": 533,
-          "top": 462,
-          "width": 251,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "c74d52f2-f59d-4cfe-a1c9-5170d41592e2",
-              "variable": "scoreP2",
-              "value": "scoreP2>0?(scoreP2-1):0"
-            }
-          ]
-        },
-        {
-          "objID": "50f9a0e0-9a4b-4cd7-9d8b-5df53e4dcf27",
-          "type": "SwitchActionComponent",
-          "left": 851,
-          "top": 462,
-          "width": 185,
-          "height": 72,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "335033a9-33bf-4538-e90e-e46ee31b3405",
-              "condition": "scoreP2 == 0",
-              "outputName": "p2_not_zero"
-            },
-            {
-              "objID": "217f68d5-d03a-4918-c209-3301b3d4bfe2",
-              "condition": "scoreP2 == 1",
-              "outputName": "p2_zero"
-            }
-          ]
-        },
-        {
-          "objID": "bbc32e50-434f-4e91-f1e7-e2883292a49a",
-          "type": "SetVariableActionComponent",
-          "left": 1115,
-          "top": 456,
-          "width": 140,
-          "height": 80,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "76d36536-4f98-4c60-d846-c9db47dfa144",
-              "variable": "resultIndex",
-              "value": "1"
-            },
-            {
-              "objID": "e563aadf-ac9a-4156-d7cb-314e8a719330",
-              "variable": "gameOver",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "objID": "98ed721b-4d41-470f-b72c-56c6436e88a2",
-          "type": "CallActionActionComponent",
-          "left": 1599,
-          "top": 371,
-          "width": 195,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": [],
-          "action": "Lichtloser_ShowEndScreens",
-          "userPropertyValues": {
-            "objID": "05648564-bb83-49ab-efaf-693d1f9f2138",
-            "values": {}
-          }
-        },
-        {
-          "objID": "48e49320-5e01-4d47-cc33-032e31218436",
-          "type": "SetVariableActionComponent",
-          "left": 533,
-          "top": 540,
-          "width": 251,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "14ac57e4-2a6c-4b68-9689-6d8be3e4c5da",
-              "variable": "scoreP3",
-              "value": "scoreP3>0?(scoreP3-1):0"
-            }
-          ]
-        },
-        {
-          "objID": "8bcd2592-4fe5-43a3-8511-950efce866ed",
-          "type": "SetVariableActionComponent",
-          "left": 533,
-          "top": 613,
-          "width": 251,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "979b57ed-413f-4768-8f05-b84641ebab77",
-              "variable": "scoreP4",
-              "value": "scoreP4>0?(scoreP4-1):0"
-            }
-          ]
-        },
-        {
-          "objID": "80d82f99-e7f3-42b9-8353-83a4c4b9f83e",
-          "type": "SetVariableActionComponent",
-          "left": 533,
-          "top": 686,
-          "width": 251,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "6bd10cd4-7e0b-4058-8d06-2e409e98a405",
-              "variable": "scoreP5",
-              "value": "scoreP5>0?(scoreP5-1):0"
-            }
-          ]
-        },
-        {
-          "objID": "4bf6ab5a-1942-485d-b905-79656fb5f97d",
-          "type": "SetVariableActionComponent",
-          "left": 533,
-          "top": 759,
-          "width": 251,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "2eb04f5c-1395-4b83-86e4-fbad8f0e3a40",
-              "variable": "scoreP6",
-              "value": "scoreP6>0?(scoreP6-1):0"
-            }
-          ]
-        },
-        {
-          "objID": "29eceef3-f2af-4869-94b4-21f11f43c53c",
-          "type": "SwitchActionComponent",
-          "left": 851,
-          "top": 540,
-          "width": 185,
-          "height": 72,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "7fcf29c1-6b29-4d77-f9b1-03b88e0a3fde",
-              "condition": "scoreP3 == 0",
-              "outputName": "p3_not_zero"
-            },
-            {
-              "objID": "01dc1656-d98f-408a-da8a-03b704d57ae0",
-              "condition": "scoreP3 == 1",
-              "outputName": "p3_zero"
-            }
-          ]
-        },
-        {
-          "objID": "1ae276f5-70f8-4637-a9c0-6bdc3b553bbf",
-          "type": "SwitchActionComponent",
-          "left": 851,
-          "top": 613,
-          "width": 185,
-          "height": 72,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "8cdf8b65-005b-4062-88ed-5d6c7c85cceb",
-              "condition": "scoreP4 == 0",
-              "outputName": "p4_not_zero"
-            },
-            {
-              "objID": "f110bd93-5f3c-4b07-b3c2-29d0b49832dc",
-              "condition": "scoreP4 == 1",
-              "outputName": "p4_zero"
-            }
-          ]
-        },
-        {
-          "objID": "b75f5623-f943-44af-e931-377b473127a1",
-          "type": "SwitchActionComponent",
-          "left": 851,
-          "top": 686,
-          "width": 185,
-          "height": 72,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "8e827eb0-314c-4df8-d340-56fbc544319a",
-              "condition": "scoreP5 == 0",
-              "outputName": "p5_not_zero"
-            },
-            {
-              "objID": "c2639ba0-4a44-45d3-f323-d0ff637c5ac2",
-              "condition": "scoreP5 == 1",
-              "outputName": "p5_zero"
-            }
-          ]
-        },
-        {
-          "objID": "cc7848e1-4471-41f6-b8e7-cc30462c3473",
-          "type": "SwitchActionComponent",
-          "left": 851,
-          "top": 759,
-          "width": 185,
-          "height": 72,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "0f4a66f3-7e11-4058-f50c-38c74e24066c",
-              "condition": "scoreP6 == 0",
-              "outputName": "p6_not_zero"
-            },
-            {
-              "objID": "9cd9087e-92fe-454e-e52f-d37cdac37f63",
-              "condition": "scoreP6 == 1",
-              "outputName": "p6_zero"
-            }
-          ]
-        },
-        {
-          "objID": "fc26ed6e-945b-4fa5-f739-2c95318d11ba",
-          "type": "SetVariableActionComponent",
-          "left": 1115,
-          "top": 535,
-          "width": 140,
-          "height": 80,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "e84d7a4f-2da3-4496-99d2-2d811049292c",
-              "variable": "resultIndex",
-              "value": "2"
-            },
-            {
-              "objID": "8c8b9eec-c28f-4875-e8ac-e60502fb059f",
-              "variable": "gameOver",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "objID": "27d7a4f4-6260-4bb9-8516-bf5aa7f147ae",
-          "type": "SetVariableActionComponent",
-          "left": 1115,
-          "top": 613,
-          "width": 140,
-          "height": 80,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "a4ffea54-de62-4089-b754-ba5ed69494be",
-              "variable": "resultIndex",
-              "value": "3"
-            },
-            {
-              "objID": "159d082d-64e2-4469-e732-f0c83424beaa",
-              "variable": "gameOver",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "objID": "f4643147-18e3-4227-a407-93330767a925",
-          "type": "SetVariableActionComponent",
-          "left": 1115,
-          "top": 686,
-          "width": 140,
-          "height": 80,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "a0f1e7c0-73c3-4fc1-dce1-12cf962b3d80",
-              "variable": "resultIndex",
-              "value": "4"
-            },
-            {
-              "objID": "8e8f8b1d-9b49-4e62-e54b-4f95e784464a",
-              "variable": "gameOver",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "objID": "6f434eb5-a343-41a2-95d4-9bede0aa59e5",
-          "type": "SetVariableActionComponent",
-          "left": 1115,
-          "top": 759,
-          "width": 140,
-          "height": 80,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "d9e668d3-a4cb-4c67-993d-0b4a3b1dfb30",
-              "variable": "resultIndex",
-              "value": "5"
-            },
-            {
-              "objID": "da3a0ba3-5c1e-47d5-a3b1-8a51349d292a",
-              "variable": "gameOver",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "objID": "ef5e44d5-1d29-4783-a0f4-d9498dc32622",
-          "type": "SetVariableActionComponent",
-          "left": 70,
-          "top": 864,
-          "width": 183,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "2bf3122d-62a9-4263-9852-409c90ca8cdf",
-              "variable": "spinInProgress",
-              "value": "false"
-            }
-          ]
-        },
-        {
-          "objID": "c4fac092-efa2-41d8-dec0-6d4605f35dab",
-          "type": "DelayActionComponent",
-          "left": 851,
-          "top": 864,
-          "width": 87,
-          "height": 53,
-          "customInputs": [],
-          "customOutputs": [],
-          "milliseconds": "10000"
-        },
-        {
-          "objID": "61763d20-44c8-4e3e-d70b-c1df5dc7960f",
-          "type": "SetVariableActionComponent",
-          "left": 1115,
-          "top": 862,
-          "width": 165,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "da640f1d-619a-40b4-f759-bcf8df6c2557",
-              "variable": "canStartSpin",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "objID": "75e8eded-b63a-4ce9-9da1-ceb500a9ae39",
-          "type": "SetVariableActionComponent",
-          "left": 1394,
-          "top": 441,
-          "width": 183,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "85d1f970-6fb0-4daa-9936-97a6ab01cc49",
-              "variable": "spinInProgress",
-              "value": "false"
-            }
-          ]
-        },
-        {
-          "objID": "2d5e7abb-2548-4310-cb50-70fa4008f148",
-          "type": "DelayActionComponent",
-          "left": 1442,
-          "top": 519,
-          "width": 87,
-          "height": 53,
-          "customInputs": [],
-          "customOutputs": [],
-          "milliseconds": "3000"
-        },
-        {
-          "objID": "a3522fb8-d29e-4559-ff14-df93623a8dbf",
-          "type": "SetVariableActionComponent",
-          "left": 1400,
-          "top": 587,
-          "width": 171,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "7f46aa4e-313f-4fa5-a022-67039ea8b1a8",
-              "variable": "canStartSpin",
-              "value": "false"
-            }
-          ]
-        },
-        {
-          "objID": "32782a88-bb85-4344-efbc-e3c64956ba2e",
-          "type": "SetVariableActionComponent",
-          "left": 1394,
-          "top": 372,
-          "width": 183,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "dce8e397-abff-4764-88e7-ceb4f6b31393",
-              "variable": "spinInProgress",
-              "value": "false"
-            }
-          ]
-        },
-        {
-          "objID": "313a8e5f-e7f9-4bb4-f064-474093adb624",
-          "type": "CallActionActionComponent",
-          "left": 533,
-          "top": 864,
-          "width": 159,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": [],
-          "action": "Lichtloser_ShowJoker",
-          "userPropertyValues": {
-            "objID": "08d5b5df-e684-4569-86cf-e807e0118d3b",
-            "values": {}
-          }
-        },
-        {
-          "objID": "8defe406-409a-4358-c8b2-954fbf2a28fc",
-          "type": "SetVariableActionComponent",
-          "left": 1561,
-          "top": -58,
-          "width": 233,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "bfb58dcb-e3f0-404f-965a-42d80ca64c61",
-              "variable": "lastHitPlayer",
-              "value": "hitPlayerIndex"
-            }
-          ]
-        },
-        {
-          "objID": "7a2d5340-72f4-4556-fa22-f58d29b91587",
-          "type": "SwitchActionComponent",
-          "left": 118,
-          "top": 173,
-          "width": 177,
-          "height": 72,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "f9b3902d-3c7d-493f-9b47-3b8c18d3defa",
-              "condition": "hitPlayerIndex == 1",
-              "outputName": "_1"
-            },
-            {
-              "objID": "f9f82628-cbf1-473d-d919-68c23d9701db",
-              "condition": "hitPlayerIndex >= 0",
-              "outputName": "_0"
-            }
-          ]
-        },
-        {
-          "objID": "2733580a-fce7-476a-85d7-63dc1760e8bb",
-          "type": "SetVariableActionComponent",
-          "left": 350,
-          "top": 173,
-          "width": 233,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "a3531344-40c6-429f-8837-b9040f111b12",
-              "variable": "lastHitPlayer",
-              "value": "hitPlayerIndex"
-            }
-          ]
-        },
-        {
-          "objID": "819e4b1b-69b5-4972-d9bd-6e1a8850f127",
-          "type": "CallActionActionComponent",
-          "left": 381,
-          "top": 245,
-          "width": 171,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": [],
-          "action": "LichtLoser_StartHitBlink",
-          "userPropertyValues": {
-            "objID": "d0a20b71-a072-4e52-8053-5e76831043c1",
-            "values": {}
-          }
-        }
-      ],
-      "connectionLines": [
-        {
-          "objID": "2370baef-a527-47d6-c6a8-77721ba61fc8",
-          "source": "8c00e55d-8764-43f7-a220-ae36f7dab328",
-          "output": "@seqout",
-          "target": "7b84f227-c307-45cf-990e-257897c79eca",
-          "input": "@seqin"
-        },
-        {
-          "objID": "29e82d11-90f4-4f8f-ec34-a86665754c42",
-          "source": "1d940d35-4268-4ab4-eb27-cc973cd04da7",
-          "output": "_2",
-          "target": "96ff57ba-2a37-419a-fb51-72e472883f10",
-          "input": "@seqin"
-        },
-        {
-          "objID": "f8b65c31-57bf-4d2d-b10a-886c49c1797a",
-          "source": "1d940d35-4268-4ab4-eb27-cc973cd04da7",
-          "output": "_3",
-          "target": "0c08c84c-9dc3-4441-c8db-a8dc06a26aba",
-          "input": "@seqin"
-        },
-        {
-          "objID": "59d020d1-35b0-4f46-e422-57efccd22bb9",
-          "source": "1d940d35-4268-4ab4-eb27-cc973cd04da7",
-          "output": "_4",
-          "target": "a381b77a-b987-41d0-fc94-b185600b7439",
-          "input": "@seqin"
-        },
-        {
-          "objID": "e54825aa-f6b8-401d-f3c0-8d35308a2b24",
-          "source": "1d940d35-4268-4ab4-eb27-cc973cd04da7",
-          "output": "_5",
-          "target": "11f3df45-cde5-4ca1-828e-ff56fa7fc329",
-          "input": "@seqin"
-        },
-        {
-          "objID": "6fc70256-bd75-463f-915f-543582970c5a",
-          "source": "1d940d35-4268-4ab4-eb27-cc973cd04da7",
-          "output": "_6",
-          "target": "1c78f84b-ac6f-4a9a-d001-5ca37e57130b",
-          "input": "@seqin"
-        },
-        {
-          "objID": "f8b50fc2-c452-4b28-9665-d9d3b8c6a4d3",
-          "source": "06de6294-d49c-4959-f14d-35d7fb620f96",
-          "output": "@seqout",
-          "target": "a60cf228-3d48-4dfe-ad41-b9963adda05f",
-          "input": "@seqin"
-        },
-        {
-          "objID": "d5d9cc81-4710-434b-bd0f-070d391a68d6",
-          "source": "ece37d64-8a67-4ce1-da2e-ecf2f3e31054",
-          "output": "@seqout",
-          "target": "842315df-7caf-45df-a730-a353f2ffc7a6",
-          "input": "@seqin"
-        },
-        {
-          "objID": "8207ab73-48ff-4043-9e4b-0640564a80f3",
-          "source": "a60cf228-3d48-4dfe-ad41-b9963adda05f",
-          "output": "p1_zero",
-          "target": "9cbc8f55-61cd-43b8-b1de-3524b2bee380",
-          "input": "@seqin"
-        },
-        {
-          "objID": "898cc4c3-ab77-4626-91af-542a1fa236c9",
-          "source": "17253aa6-57bc-45ed-c958-55f547781556",
-          "output": "P1",
-          "target": "06de6294-d49c-4959-f14d-35d7fb620f96",
-          "input": "@seqin"
-        },
-        {
-          "objID": "db62a158-bbca-4e09-ed16-394767b7882d",
-          "source": "17253aa6-57bc-45ed-c958-55f547781556",
-          "output": "P2",
-          "target": "6edcc8a9-27ba-484e-f991-c373fcc39654",
-          "input": "@seqin"
-        },
-        {
-          "objID": "2627c951-3756-4585-fcbe-38e5f32c5014",
-          "source": "6edcc8a9-27ba-484e-f991-c373fcc39654",
-          "output": "@seqout",
-          "target": "50f9a0e0-9a4b-4cd7-9d8b-5df53e4dcf27",
-          "input": "@seqin"
-        },
-        {
-          "objID": "91198873-aa65-4adc-c622-2dbf44bfed07",
-          "source": "50f9a0e0-9a4b-4cd7-9d8b-5df53e4dcf27",
-          "output": "p2_zero",
-          "target": "bbc32e50-434f-4e91-f1e7-e2883292a49a",
-          "input": "@seqin"
-        },
-        {
-          "objID": "d5fb6160-9c92-439e-99fc-027ba83756c6",
-          "source": "17253aa6-57bc-45ed-c958-55f547781556",
-          "output": "P3",
-          "target": "48e49320-5e01-4d47-cc33-032e31218436",
-          "input": "@seqin"
-        },
-        {
-          "objID": "57c5c69e-69f1-49ab-f4d3-14cfc1cd7c6f",
-          "source": "17253aa6-57bc-45ed-c958-55f547781556",
-          "output": "P4",
-          "target": "8bcd2592-4fe5-43a3-8511-950efce866ed",
-          "input": "@seqin"
-        },
-        {
-          "objID": "ecf02200-ff9c-441e-cd38-11298edd878a",
-          "source": "17253aa6-57bc-45ed-c958-55f547781556",
-          "output": "P5",
-          "target": "80d82f99-e7f3-42b9-8353-83a4c4b9f83e",
-          "input": "@seqin"
-        },
-        {
-          "objID": "0ce1da2c-f22e-4770-e0f5-1d007f8bc414",
-          "source": "17253aa6-57bc-45ed-c958-55f547781556",
-          "output": "P6",
-          "target": "4bf6ab5a-1942-485d-b905-79656fb5f97d",
-          "input": "@seqin"
-        },
-        {
-          "objID": "b8e02035-8ae9-4975-9dac-4fc63c716c14",
-          "source": "48e49320-5e01-4d47-cc33-032e31218436",
-          "output": "@seqout",
-          "target": "29eceef3-f2af-4869-94b4-21f11f43c53c",
-          "input": "@seqin"
-        },
-        {
-          "objID": "7f2777f6-8002-40d1-f263-37912d975c77",
-          "source": "8bcd2592-4fe5-43a3-8511-950efce866ed",
-          "output": "@seqout",
-          "target": "1ae276f5-70f8-4637-a9c0-6bdc3b553bbf",
-          "input": "@seqin"
-        },
-        {
-          "objID": "9882f0ad-7223-42ae-ca7d-4a4ed35a31bb",
-          "source": "80d82f99-e7f3-42b9-8353-83a4c4b9f83e",
-          "output": "@seqout",
-          "target": "b75f5623-f943-44af-e931-377b473127a1",
-          "input": "@seqin"
-        },
-        {
-          "objID": "d911c400-f45e-49d0-d601-8a552859af71",
-          "source": "4bf6ab5a-1942-485d-b905-79656fb5f97d",
-          "output": "@seqout",
-          "target": "cc7848e1-4471-41f6-b8e7-cc30462c3473",
-          "input": "@seqin"
-        },
-        {
-          "objID": "4036fee8-744f-4ae4-e092-408cf690078d",
-          "source": "cc7848e1-4471-41f6-b8e7-cc30462c3473",
-          "output": "p6_zero",
-          "target": "6f434eb5-a343-41a2-95d4-9bede0aa59e5",
-          "input": "@seqin"
-        },
-        {
-          "objID": "ac4c0cca-80d0-46b0-f0c3-e31aad62825b",
-          "source": "b75f5623-f943-44af-e931-377b473127a1",
-          "output": "p5_zero",
-          "target": "f4643147-18e3-4227-a407-93330767a925",
-          "input": "@seqin"
-        },
-        {
-          "objID": "06a17216-f8fc-4ced-c63f-d8625164fada",
-          "source": "1ae276f5-70f8-4637-a9c0-6bdc3b553bbf",
-          "output": "p4_zero",
-          "target": "27d7a4f4-6260-4bb9-8516-bf5aa7f147ae",
-          "input": "@seqin"
-        },
-        {
-          "objID": "e7513711-f043-43bc-aacb-84ac9ef61503",
-          "source": "29eceef3-f2af-4869-94b4-21f11f43c53c",
-          "output": "p3_zero",
-          "target": "fc26ed6e-945b-4fa5-f739-2c95318d11ba",
-          "input": "@seqin"
-        },
-        {
-          "objID": "921030a5-42bf-40fc-e1e7-8520d92ccc99",
-          "source": "98ed721b-4d41-470f-b72c-56c6436e88a2",
-          "output": "@seqout",
-          "target": "774cfb34-3f70-4159-95e9-fe903f1ed210",
-          "input": "@seqin"
-        },
-        {
-          "objID": "547994d4-07e6-48be-c0c7-3932c47cdb6b",
-          "source": "17253aa6-57bc-45ed-c958-55f547781556",
-          "output": "@seqout",
-          "target": "ef5e44d5-1d29-4783-a0f4-d9498dc32622",
-          "input": "@seqin"
-        },
-        {
-          "objID": "b309cb6d-22a0-4857-a204-fb639fac4c15",
-          "source": "c4fac092-efa2-41d8-dec0-6d4605f35dab",
-          "output": "@seqout",
-          "target": "61763d20-44c8-4e3e-d70b-c1df5dc7960f",
-          "input": "@seqin"
-        },
-        {
-          "objID": "5d169717-35ba-4a72-8ea0-41f28a678026",
-          "source": "61763d20-44c8-4e3e-d70b-c1df5dc7960f",
-          "output": "@seqout",
-          "target": "774cfb34-3f70-4159-95e9-fe903f1ed210",
-          "input": "@seqin"
-        },
-        {
-          "objID": "8a78f207-2f13-4340-eea9-e5a47804ecd4",
-          "source": "7b84f227-c307-45cf-990e-257897c79eca",
-          "output": "@seqout",
-          "target": "1d940d35-4268-4ab4-eb27-cc973cd04da7",
-          "input": "@seqin"
-        },
-        {
-          "objID": "e5977ce0-1c39-4368-ef59-abcf4f31cb8a",
-          "source": "a60cf228-3d48-4dfe-ad41-b9963adda05f",
-          "output": "p1_not_zero",
-          "target": "75e8eded-b63a-4ce9-9da1-ceb500a9ae39",
-          "input": "@seqin"
-        },
-        {
-          "objID": "054c377c-31f9-41e2-ae07-5fefabc65152",
-          "source": "50f9a0e0-9a4b-4cd7-9d8b-5df53e4dcf27",
-          "output": "p2_not_zero",
-          "target": "75e8eded-b63a-4ce9-9da1-ceb500a9ae39",
-          "input": "@seqin"
-        },
-        {
-          "objID": "c0ca5b03-fd48-405c-e91e-1a0ae839747c",
-          "source": "29eceef3-f2af-4869-94b4-21f11f43c53c",
-          "output": "p3_not_zero",
-          "target": "75e8eded-b63a-4ce9-9da1-ceb500a9ae39",
-          "input": "@seqin"
-        },
-        {
-          "objID": "dfd0e6cb-00a2-4532-b46f-74c9968ec610",
-          "source": "1ae276f5-70f8-4637-a9c0-6bdc3b553bbf",
-          "output": "p4_not_zero",
-          "target": "75e8eded-b63a-4ce9-9da1-ceb500a9ae39",
-          "input": "@seqin"
-        },
-        {
-          "objID": "96e60c3f-536b-4297-df25-1f4dd1193d36",
-          "source": "b75f5623-f943-44af-e931-377b473127a1",
-          "output": "p5_not_zero",
-          "target": "75e8eded-b63a-4ce9-9da1-ceb500a9ae39",
-          "input": "@seqin"
-        },
-        {
-          "objID": "a8dfd789-b759-4e29-a5a8-798c6e0d5e16",
-          "source": "cc7848e1-4471-41f6-b8e7-cc30462c3473",
-          "output": "p6_not_zero",
-          "target": "75e8eded-b63a-4ce9-9da1-ceb500a9ae39",
-          "input": "@seqin"
-        },
-        {
-          "objID": "77fa5f3d-65d1-434d-95ef-bac76b2100ce",
-          "source": "75e8eded-b63a-4ce9-9da1-ceb500a9ae39",
-          "output": "@seqout",
-          "target": "2d5e7abb-2548-4310-cb50-70fa4008f148",
-          "input": "@seqin"
-        },
-        {
-          "objID": "df25a046-dfbe-4d20-d1aa-da60ce6af011",
-          "source": "2d5e7abb-2548-4310-cb50-70fa4008f148",
-          "output": "@seqout",
-          "target": "a3522fb8-d29e-4559-ff14-df93623a8dbf",
-          "input": "@seqin"
-        },
-        {
-          "objID": "e93c67e5-0a93-41cb-8a1d-a61947dd374c",
-          "source": "a3522fb8-d29e-4559-ff14-df93623a8dbf",
-          "output": "@seqout",
-          "target": "774cfb34-3f70-4159-95e9-fe903f1ed210",
-          "input": "@seqin"
-        },
-        {
-          "objID": "82f807a9-2922-4162-b925-9fed00c0fd45",
-          "source": "32782a88-bb85-4344-efbc-e3c64956ba2e",
-          "output": "@seqout",
-          "target": "98ed721b-4d41-470f-b72c-56c6436e88a2",
-          "input": "@seqin"
-        },
-        {
-          "objID": "02726dec-2a99-4735-ac80-f954dc5a5f74",
-          "source": "9cbc8f55-61cd-43b8-b1de-3524b2bee380",
-          "output": "@seqout",
-          "target": "32782a88-bb85-4344-efbc-e3c64956ba2e",
-          "input": "@seqin"
-        },
-        {
-          "objID": "1a5b90e0-1dd9-40fc-b4bd-5ed7d2950275",
-          "source": "bbc32e50-434f-4e91-f1e7-e2883292a49a",
-          "output": "@seqout",
-          "target": "32782a88-bb85-4344-efbc-e3c64956ba2e",
-          "input": "@seqin"
-        },
-        {
-          "objID": "f1775265-ba1d-4d21-884b-7d9e94adec23",
-          "source": "fc26ed6e-945b-4fa5-f739-2c95318d11ba",
-          "output": "@seqout",
-          "target": "32782a88-bb85-4344-efbc-e3c64956ba2e",
-          "input": "@seqin"
-        },
-        {
-          "objID": "5512d7d3-eb6e-4a49-fffe-b7633632fbc6",
-          "source": "27d7a4f4-6260-4bb9-8516-bf5aa7f147ae",
-          "output": "@seqout",
-          "target": "32782a88-bb85-4344-efbc-e3c64956ba2e",
-          "input": "@seqin"
-        },
-        {
-          "objID": "1ea65e1b-112b-43f6-ba49-b82a2ae049c0",
-          "source": "f4643147-18e3-4227-a407-93330767a925",
-          "output": "@seqout",
-          "target": "32782a88-bb85-4344-efbc-e3c64956ba2e",
-          "input": "@seqin"
-        },
-        {
-          "objID": "49213679-b878-4408-97e7-77391a7ec928",
-          "source": "6f434eb5-a343-41a2-95d4-9bede0aa59e5",
-          "output": "@seqout",
-          "target": "32782a88-bb85-4344-efbc-e3c64956ba2e",
-          "input": "@seqin"
-        },
-        {
-          "objID": "2b2dcaa8-717b-424a-9e0e-eff96862cb7e",
-          "source": "ef5e44d5-1d29-4783-a0f4-d9498dc32622",
-          "output": "@seqout",
-          "target": "313a8e5f-e7f9-4bb4-f064-474093adb624",
-          "input": "@seqin"
-        },
-        {
-          "objID": "3147a83d-88e9-4771-fc54-fbe54f3cfac1",
-          "source": "313a8e5f-e7f9-4bb4-f064-474093adb624",
-          "output": "@seqout",
-          "target": "c4fac092-efa2-41d8-dec0-6d4605f35dab",
-          "input": "@seqin"
-        },
-        {
-          "objID": "1131a50d-7ead-4b5f-fca4-346c4aaf3676",
-          "source": "96ff57ba-2a37-419a-fb51-72e472883f10",
-          "output": "@seqout",
-          "target": "8defe406-409a-4358-c8b2-954fbf2a28fc",
-          "input": "@seqin"
-        },
-        {
-          "objID": "1e752851-c0a8-46b6-a9e6-394d443a5702",
-          "source": "0c08c84c-9dc3-4441-c8db-a8dc06a26aba",
-          "output": "@seqout",
-          "target": "8defe406-409a-4358-c8b2-954fbf2a28fc",
-          "input": "@seqin"
-        },
-        {
-          "objID": "46dfd5ee-142d-4bee-dc65-4fe400347068",
-          "source": "a381b77a-b987-41d0-fc94-b185600b7439",
-          "output": "@seqout",
-          "target": "8defe406-409a-4358-c8b2-954fbf2a28fc",
-          "input": "@seqin"
-        },
-        {
-          "objID": "32e848f1-1e5f-4e5c-9a84-570b83b2b2a9",
-          "source": "11f3df45-cde5-4ca1-828e-ff56fa7fc329",
-          "output": "@seqout",
-          "target": "8defe406-409a-4358-c8b2-954fbf2a28fc",
-          "input": "@seqin"
-        },
-        {
-          "objID": "a8bd4dc3-8e8f-4db2-f8fc-ef5110f6d3e0",
-          "source": "1c78f84b-ac6f-4a9a-d001-5ca37e57130b",
-          "output": "@seqout",
-          "target": "8defe406-409a-4358-c8b2-954fbf2a28fc",
-          "input": "@seqin"
-        },
-        {
-          "objID": "cf004013-3438-468a-a0fe-06f0a83e8419",
-          "source": "8defe406-409a-4358-c8b2-954fbf2a28fc",
-          "output": "@seqout",
-          "target": "7a2d5340-72f4-4556-fa22-f58d29b91587",
-          "input": "@seqin"
-        },
-        {
-          "objID": "3529ac12-2a6b-43e7-8366-ab974226d022",
-          "source": "7a2d5340-72f4-4556-fa22-f58d29b91587",
-          "output": "_0",
-          "target": "17253aa6-57bc-45ed-c958-55f547781556",
-          "input": "@seqin"
-        },
-        {
-          "objID": "febd4712-4eec-4e5f-83e2-2a9a8de6b310",
-          "source": "2733580a-fce7-476a-85d7-63dc1760e8bb",
-          "output": "@seqout",
-          "target": "819e4b1b-69b5-4972-d9bd-6e1a8850f127",
-          "input": "@seqin"
-        },
-        {
-          "objID": "0ccc1362-6e4b-405c-8bea-fc895196cc82",
-          "source": "819e4b1b-69b5-4972-d9bd-6e1a8850f127",
-          "output": "@seqout",
-          "target": "17253aa6-57bc-45ed-c958-55f547781556",
-          "input": "@seqin"
-        },
-        {
-          "objID": "bbe4e72d-b1c1-4b21-f4f7-b72c654c8ae1",
-          "source": "7a2d5340-72f4-4556-fa22-f58d29b91587",
-          "output": "_1",
-          "target": "2733580a-fce7-476a-85d7-63dc1760e8bb",
-          "input": "@seqin"
-        }
-      ],
-      "localVariables": [],
-      "userProperties": [],
-      "name": "Lichtloser_OnHit_Backup",
-      "implementationType": "flow"
-    },
-    {
       "objID": "f8250aeb-291f-407e-8932-aa03ab9c3966",
       "components": [
         {
@@ -6500,8 +5293,8 @@
         {
           "objID": "e74da84b-809d-4318-e7e9-b213f7d076df",
           "type": "SetVariableActionComponent",
-          "left": 102,
-          "top": 520,
+          "left": 181,
+          "top": 510,
           "width": 183,
           "height": 57,
           "customInputs": [],
@@ -6517,16 +5310,16 @@
         {
           "objID": "8541a4bb-1b63-409d-bb0a-da64ff6423f4",
           "type": "SwitchActionComponent",
-          "left": 102,
-          "top": 606,
-          "width": 448,
-          "height": 53,
+          "left": 166,
+          "top": 605,
+          "width": 245,
+          "height": 54,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
             {
               "objID": "9c65a4c2-3940-4e5f-af0a-f7a4f9e1202b",
-              "condition": "playerCount == 5 && jokerEnabled == true && hitGroup == 2",
+              "condition": "jokerEnabled && jokerHit",
               "outputName": "_JokerHit"
             }
           ]
@@ -6552,7 +5345,7 @@
           "left": 288,
           "top": 780,
           "width": 87,
-          "height": 53,
+          "height": 54,
           "customInputs": [],
           "customOutputs": [],
           "milliseconds": "5000"
@@ -6562,8 +5355,8 @@
           "type": "LVGLActionComponent",
           "left": 213,
           "top": 849,
-          "width": 238,
-          "height": 53,
+          "width": 237,
+          "height": 54,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -6609,8 +5402,8 @@
           "type": "SwitchActionComponent",
           "left": 669,
           "top": 264,
-          "width": 159,
-          "height": 126,
+          "width": 158,
+          "height": 130,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -6647,7 +5440,7 @@
           "left": 948,
           "top": 80,
           "width": 257,
-          "height": 72,
+          "height": 73,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -6669,7 +5462,7 @@
           "left": 948,
           "top": 152,
           "width": 257,
-          "height": 90,
+          "height": 92,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -6798,7 +5591,7 @@
           "left": 948,
           "top": 242,
           "width": 257,
-          "height": 108,
+          "height": 111,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -6830,7 +5623,7 @@
           "left": 948,
           "top": 350,
           "width": 257,
-          "height": 126,
+          "height": 130,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -6867,7 +5660,7 @@
           "left": 948,
           "top": 476,
           "width": 257,
-          "height": 144,
+          "height": 149,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -6908,7 +5701,7 @@
           "type": "SetVariableActionComponent",
           "left": 1539,
           "top": 510,
-          "width": 233,
+          "width": 232,
           "height": 57,
           "customInputs": [],
           "customOutputs": [],
@@ -6941,7 +5734,7 @@
           "left": 669,
           "top": 686,
           "width": 177,
-          "height": 144,
+          "height": 149,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -7085,38 +5878,38 @@
           "left": 1168,
           "top": 686,
           "width": 134,
-          "height": 144,
+          "height": 149,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
             {
               "objID": "76f09ae4-ed5e-44a2-9aa9-af68075a41b6",
-              "condition": "scoreP1 <= 0",
+              "condition": "scoreP1 == 0",
               "outputName": "_1"
             },
             {
               "objID": "d711c4bb-e2a3-4816-d804-00129eea18f9",
-              "condition": "scoreP2 <= 0",
+              "condition": "scoreP2 == 0",
               "outputName": "_2"
             },
             {
               "objID": "b99d49ef-8a5f-4704-d381-466fddf0cbeb",
-              "condition": "scoreP3 <= 0",
+              "condition": "scoreP3 == 0",
               "outputName": "_3"
             },
             {
               "objID": "cc840746-c6ee-4f09-8b5a-d8673fc631e1",
-              "condition": "scoreP4 <= 0",
+              "condition": "scoreP4 == 0",
               "outputName": "_4"
             },
             {
               "objID": "bb8c761b-f8bd-4680-d54a-11ce0f3e570a",
-              "condition": "scoreP5 <= 0",
+              "condition": "scoreP5 == 0",
               "outputName": "_5"
             },
             {
               "objID": "e905b73d-c32d-4efc-9f01-10c25a1b069f",
-              "condition": "scoreP6 <= 0",
+              "condition": "scoreP6 == 0",
               "outputName": "_6"
             }
           ]
@@ -7127,7 +5920,7 @@
           "left": 1395,
           "top": 703,
           "width": 140,
-          "height": 80,
+          "height": 79,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -7149,7 +5942,7 @@
           "left": 1395,
           "top": 793,
           "width": 140,
-          "height": 80,
+          "height": 79,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -7171,7 +5964,7 @@
           "left": 1395,
           "top": 874,
           "width": 140,
-          "height": 80,
+          "height": 79,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -7193,7 +5986,7 @@
           "left": 1395,
           "top": 954,
           "width": 140,
-          "height": 80,
+          "height": 79,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -7215,7 +6008,7 @@
           "left": 1395,
           "top": 1039,
           "width": 140,
-          "height": 80,
+          "height": 79,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -7237,7 +6030,7 @@
           "left": 1395,
           "top": 1119,
           "width": 140,
-          "height": 80,
+          "height": 79,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -7259,7 +6052,7 @@
           "left": 1643,
           "top": 898,
           "width": 183,
-          "height": 80,
+          "height": 79,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -7301,62 +6094,24 @@
           "customOutputs": []
         },
         {
-          "objID": "cb3c998e-17e3-4b29-edc7-630aa478442a",
-          "type": "DelayActionComponent",
-          "left": 1618,
-          "top": 686,
-          "width": 87,
-          "height": 53,
-          "customInputs": [],
-          "customOutputs": [],
-          "milliseconds": "1000"
-        },
-        {
-          "objID": "f6a83f00-f214-4d9b-a98a-047d726407d0",
-          "type": "LVGLActionComponent",
-          "left": 1734,
-          "top": 686,
-          "width": 238,
-          "height": 53,
-          "customInputs": [],
-          "customOutputs": [],
-          "actions": [
-            {
-              "objID": "afa1be6f-6bb0-4ff9-edf8-14a4bae9bae7",
-              "action": "objClearState",
-              "object": "button_game",
-              "objectType": "literal",
-              "state": "DISABLED",
-              "stateType": "literal"
-            }
-          ]
-        },
-        {
           "objID": "29c61fde-3df4-4e66-f984-285ed5dcbc68",
           "type": "SetVariableActionComponent",
-          "left": 1807,
-          "top": 758,
-          "width": 165,
+          "left": 1735,
+          "top": 686,
+          "width": 183,
           "height": 57,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
             {
               "objID": "ff137185-ec0f-4145-ce0e-1d784d3914f2",
-              "variable": "canStartSpin",
-              "value": "true"
+              "variable": "spinInProgress",
+              "value": "false"
             }
           ]
         }
       ],
       "connectionLines": [
-        {
-          "objID": "4548af50-81da-43b4-e2e1-c381f9aa09e3",
-          "source": "a892ba34-8c71-47d8-ece2-ad227f039bf5",
-          "output": "@seqout",
-          "target": "e74da84b-809d-4318-e7e9-b213f7d076df",
-          "input": "@seqin"
-        },
         {
           "objID": "cfbbcb24-1a99-463d-d392-6374c5e7f724",
           "source": "e74da84b-809d-4318-e7e9-b213f7d076df",
@@ -7778,20 +6533,6 @@
           "input": "@seqin"
         },
         {
-          "objID": "34cf286d-4f27-4901-e739-3edd732d6760",
-          "source": "cb3c998e-17e3-4b29-edc7-630aa478442a",
-          "output": "@seqout",
-          "target": "f6a83f00-f214-4d9b-a98a-047d726407d0",
-          "input": "@seqin"
-        },
-        {
-          "objID": "8909d001-6143-47f0-c7a9-7eb3d509be43",
-          "source": "f6a83f00-f214-4d9b-a98a-047d726407d0",
-          "output": "@seqout",
-          "target": "29c61fde-3df4-4e66-f984-285ed5dcbc68",
-          "input": "@seqin"
-        },
-        {
           "objID": "2057d5ca-d868-47ba-cf67-166c2be72744",
           "source": "29c61fde-3df4-4e66-f984-285ed5dcbc68",
           "output": "@seqout",
@@ -7803,13 +6544,6 @@
           "source": "a5887d78-bea4-404c-bb72-bfe2a3b5ff87",
           "output": "@seqout",
           "target": "55e9f7a8-7bb0-4fa4-9a71-ccf427ae3c08",
-          "input": "@seqin"
-        },
-        {
-          "objID": "7861f916-9966-4243-ee87-57eeb80e79d2",
-          "source": "28169b7c-3fb2-4de1-8911-5f46f5706771",
-          "output": "@seqout",
-          "target": "cb3c998e-17e3-4b29-edc7-630aa478442a",
           "input": "@seqin"
         },
         {
@@ -7853,6 +6587,20 @@
           "output": "@seqout",
           "target": "32bc6002-709b-4ce0-f531-b8be4af8b2dd",
           "input": "@seqin"
+        },
+        {
+          "objID": "36e1a9f8-99f0-49be-8109-7c86d9142a00",
+          "source": "28169b7c-3fb2-4de1-8911-5f46f5706771",
+          "output": "@seqout",
+          "target": "29c61fde-3df4-4e66-f984-285ed5dcbc68",
+          "input": "@seqin"
+        },
+        {
+          "objID": "83b5c0a0-e5e2-4960-822b-6d2099b3f92a",
+          "source": "a892ba34-8c71-47d8-ece2-ad227f039bf5",
+          "output": "@seqout",
+          "target": "e74da84b-809d-4318-e7e9-b213f7d076df",
+          "input": "@seqin"
         }
       ],
       "localVariables": [],
@@ -7879,7 +6627,7 @@
           "left": -55,
           "top": -39,
           "width": 140,
-          "height": 72,
+          "height": 73,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -7911,7 +6659,7 @@
           "left": 126,
           "top": -39,
           "width": 165,
-          "height": 72,
+          "height": 73,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -7933,7 +6681,7 @@
           "left": 347,
           "top": -39,
           "width": 177,
-          "height": 72,
+          "height": 73,
           "customInputs": [],
           "customOutputs": [],
           "tests": [
@@ -7952,10 +6700,10 @@
         {
           "objID": "85853a97-46e4-48b1-bba9-bd77efa5886f",
           "type": "SetVariableActionComponent",
-          "left": 564,
+          "left": 547,
           "top": -39,
           "width": 177,
-          "height": 80,
+          "height": 79,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -7974,8 +6722,8 @@
         {
           "objID": "644ee243-f350-4f27-dc31-efac926d54eb",
           "type": "CallActionActionComponent",
-          "left": 872,
-          "top": -3,
+          "left": 774,
+          "top": -39,
           "width": 205,
           "height": 24,
           "customInputs": [],
@@ -7987,39 +6735,19 @@
           }
         },
         {
-          "objID": "e4e14fe7-73d7-4262-980b-eea4b17202bc",
+          "objID": "405174c1-f640-40dc-810f-e2b8b9d5fa4e",
           "type": "CallActionActionComponent",
-          "left": 867,
-          "top": -39,
+          "left": 653,
+          "top": -173,
           "width": 210,
           "height": 24,
           "customInputs": [],
           "customOutputs": [],
           "action": "cmd_SendJokerStopToArduino",
           "userPropertyValues": {
-            "objID": "36782fd1-fec5-44dc-f5c7-b59e8db5e896",
+            "objID": "fb26e139-bd0d-451e-808f-027632fbe19e",
             "values": {}
           }
-        },
-        {
-          "objID": "b02dfd0c-15ad-4620-f602-1c143ede4129",
-          "type": "LVGLActionComponent",
-          "left": 741,
-          "top": -131,
-          "width": 225,
-          "height": 53,
-          "customInputs": [],
-          "customOutputs": [],
-          "actions": [
-            {
-              "objID": "510b8e46-744c-4fb9-aac1-c5d29e6f3647",
-              "action": "objAddState",
-              "object": "button_game",
-              "objectType": "literal",
-              "state": "DISABLED",
-              "stateType": "literal"
-            }
-          ]
         }
       ],
       "connectionLines": [
@@ -8073,13 +6801,6 @@
           "input": "@seqin"
         },
         {
-          "objID": "dca6824d-2511-4749-f6c9-272fb7c684af",
-          "source": "e4e14fe7-73d7-4262-980b-eea4b17202bc",
-          "output": "@seqout",
-          "target": "644ee243-f350-4f27-dc31-efac926d54eb",
-          "input": "@seqin"
-        },
-        {
           "objID": "42c464b6-a41b-45a4-b9a2-9f66f484bd8c",
           "source": "644ee243-f350-4f27-dc31-efac926d54eb",
           "output": "@seqout",
@@ -8087,17 +6808,17 @@
           "input": "@seqin"
         },
         {
-          "objID": "c8399039-eee3-4e47-953d-b2882b4ef446",
-          "source": "85853a97-46e4-48b1-bba9-bd77efa5886f",
+          "objID": "ffe4b2dc-b513-4cc3-bc4a-11ec35bed41c",
+          "source": "405174c1-f640-40dc-810f-e2b8b9d5fa4e",
           "output": "@seqout",
-          "target": "b02dfd0c-15ad-4620-f602-1c143ede4129",
+          "target": "644ee243-f350-4f27-dc31-efac926d54eb",
           "input": "@seqin"
         },
         {
-          "objID": "ade61f60-2b03-447d-e0b8-123535b46018",
-          "source": "b02dfd0c-15ad-4620-f602-1c143ede4129",
+          "objID": "fbbcd1bf-0aa4-49aa-edae-6d24859c322f",
+          "source": "85853a97-46e4-48b1-bba9-bd77efa5886f",
           "output": "@seqout",
-          "target": "e4e14fe7-73d7-4262-980b-eea4b17202bc",
+          "target": "405174c1-f640-40dc-810f-e2b8b9d5fa4e",
           "input": "@seqin"
         }
       ],
@@ -8142,17 +6863,6 @@
           ]
         },
         {
-          "objID": "c887b181-b573-455b-d11a-5bbb07414c52",
-          "type": "DelayActionComponent",
-          "left": 429,
-          "top": -34,
-          "width": 87,
-          "height": 54,
-          "customInputs": [],
-          "customOutputs": [],
-          "milliseconds": "10000"
-        },
-        {
           "objID": "00f89310-44b8-4506-f017-b8b965d5be48",
           "type": "SetVariableActionComponent",
           "left": 558,
@@ -8172,8 +6882,8 @@
         {
           "objID": "bbe31495-125e-4484-e9d9-dfed77992853",
           "type": "EndActionComponent",
-          "left": 765,
-          "top": -34,
+          "left": 775,
+          "top": -184,
           "width": 87,
           "height": 24,
           "customInputs": [],
@@ -8193,6 +6903,17 @@
             "objID": "339638b7-def7-403a-d234-0f5df46aee10",
             "values": {}
           }
+        },
+        {
+          "objID": "d688f4a7-1a57-407f-b41a-2fe01d0e64e9",
+          "type": "DelayActionComponent",
+          "left": 437,
+          "top": -37,
+          "width": 87,
+          "height": 54,
+          "customInputs": [],
+          "customOutputs": [],
+          "milliseconds": "3000"
         }
       ],
       "connectionLines": [
@@ -8201,13 +6922,6 @@
           "source": "07712e89-f45f-4176-8960-699e9f48e544",
           "output": "@seqout",
           "target": "e1101f22-fb45-4ad9-9752-ca1ab95ca73c",
-          "input": "@seqin"
-        },
-        {
-          "objID": "af9000c4-884e-4d07-a6c9-c28bf9c9843b",
-          "source": "c887b181-b573-455b-d11a-5bbb07414c52",
-          "output": "@seqout",
-          "target": "00f89310-44b8-4506-f017-b8b965d5be48",
           "input": "@seqin"
         },
         {
@@ -8225,10 +6939,17 @@
           "input": "@seqin"
         },
         {
-          "objID": "0880aba7-42c5-4cc7-bbfb-062c1ce5de90",
+          "objID": "43fffb35-d67e-452c-b7f0-3a90bd7a5117",
           "source": "b0ff3d05-4884-4300-f109-6cb5979df7c0",
           "output": "@seqout",
-          "target": "c887b181-b573-455b-d11a-5bbb07414c52",
+          "target": "d688f4a7-1a57-407f-b41a-2fe01d0e64e9",
+          "input": "@seqin"
+        },
+        {
+          "objID": "6666ddd1-db58-49fb-9444-68af76137502",
+          "source": "d688f4a7-1a57-407f-b41a-2fe01d0e64e9",
+          "output": "@seqout",
+          "target": "00f89310-44b8-4506-f017-b8b965d5be48",
           "input": "@seqin"
         }
       ],
@@ -8256,7 +6977,7 @@
           "left": -51,
           "top": -38,
           "width": 220,
-          "height": 255,
+          "height": 257,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -8317,8 +7038,8 @@
           "type": "SetVariableActionComponent",
           "left": 179,
           "top": -38,
-          "width": 361,
-          "height": 167,
+          "width": 362,
+          "height": 168,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -8456,7 +7177,7 @@
           "left": -92,
           "top": -40,
           "width": 177,
-          "height": 79,
+          "height": 80,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -8478,7 +7199,7 @@
           "left": 192,
           "top": -40,
           "width": 87,
-          "height": 54,
+          "height": 53,
           "customInputs": [],
           "customOutputs": [],
           "countValue": "8"
@@ -8489,7 +7210,7 @@
           "left": 346,
           "top": -40,
           "width": 183,
-          "height": 79,
+          "height": 80,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
@@ -8511,7 +7232,7 @@
           "left": 139,
           "top": -186,
           "width": 87,
-          "height": 54,
+          "height": 53,
           "customInputs": [],
           "customOutputs": [],
           "milliseconds": "150"
@@ -8521,7 +7242,7 @@
           "type": "SetVariableActionComponent",
           "left": 260,
           "top": -186,
-          "width": 232,
+          "width": 233,
           "height": 57,
           "customInputs": [],
           "customOutputs": [],
@@ -8635,7 +7356,7 @@
         {
           "objID": "0831c65c-52f2-4ce5-8bb7-f9758f7c8845",
           "type": "CallActionActionComponent",
-          "left": -73,
+          "left": -12,
           "top": -53,
           "width": 210,
           "height": 24,
@@ -9129,274 +7850,145 @@
       "objID": "40bd55a4-913f-4a04-d167-451d4f1edff4",
       "components": [
         {
-          "objID": "f9a784d9-ba48-4bde-8afa-8d9ac2eb93db",
-          "type": "WatchVariableActionComponent",
-          "left": -58,
-          "top": 203,
-          "width": 136,
-          "height": 53,
+          "objID": "135ad245-fe47-403a-a3c5-e34cde197d04",
+          "type": "CompareActionComponent",
+          "left": 20,
+          "top": -121,
+          "width": 230,
+          "height": 68,
           "customInputs": [],
           "customOutputs": [],
-          "variable": "hitTrigger"
+          "A": "hitTrigger",
+          "B": "lastHitTrigger",
+          "operator": "<>"
         },
         {
-          "objID": "a0b6d749-cf1e-4c6b-c800-ac8810b66a65",
+          "objID": "1c438961-c0e2-4164-89aa-483705b1886a",
           "type": "StartActionComponent",
           "left": -238,
-          "top": 142,
+          "top": -94,
           "width": 87,
           "height": 24,
           "customInputs": [],
           "customOutputs": []
         },
         {
-          "objID": "099c4d22-0067-4815-f3e3-742360d4cc0b",
+          "objID": "78037003-91d0-4bbc-f5df-95593547573b",
           "type": "DelayActionComponent",
-          "left": -33,
-          "top": 88,
+          "left": -86,
+          "top": -105,
           "width": 87,
           "height": 53,
           "customInputs": [],
           "customOutputs": [],
-          "milliseconds": "40"
+          "milliseconds": "100"
         },
         {
-          "objID": "5944e965-71d6-4e36-d7ee-8359e3285837",
-          "type": "SwitchActionComponent",
-          "left": 151,
-          "top": 211,
-          "width": 140,
-          "height": 53,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "aaeb0264-41a9-4cd7-e3a8-06dc33d91b17",
-              "condition": "firstRun == 1",
-              "outputName": "_1"
-            }
-          ]
-        },
-        {
-          "objID": "6bddb477-451c-4ef0-f798-71aba2da00b4",
+          "objID": "87d1c6b8-2e8d-44d3-a695-975f4a2063ee",
           "type": "SetVariableActionComponent",
-          "left": 370,
-          "top": 237,
-          "width": 122,
+          "left": 312,
+          "top": -127,
+          "width": 214,
           "height": 57,
           "customInputs": [],
           "customOutputs": [],
           "entries": [
             {
-              "objID": "748a382a-ea4f-4bc4-a127-d5085208dd61",
-              "variable": "firstRun",
-              "value": "0"
+              "objID": "3d30be0a-3af2-42ff-9618-5c624b3a148c",
+              "variable": "lastHitTrigger",
+              "value": "hitTrigger"
             }
           ]
         },
         {
-          "objID": "19a15e63-8fd3-4f8c-9ace-c582c8fc9d7b",
+          "objID": "128595c5-a17b-4e76-dd52-2617e85be1df",
           "type": "CallActionActionComponent",
-          "left": 559,
-          "top": 211,
-          "width": 210,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": [],
-          "action": "cmd_SendJokerStopToArduino",
-          "userPropertyValues": {
-            "objID": "c6cee86f-9a75-4af1-fbf2-e8d96c83ad9c",
-            "values": {}
-          }
-        },
-        {
-          "objID": "8a6f621b-0c0d-4123-eac6-43e09cd8f0eb",
-          "type": "CallActionActionComponent",
-          "left": 672,
-          "top": 245,
+          "left": 620,
+          "top": -172,
           "width": 128,
           "height": 24,
           "customInputs": [],
           "customOutputs": [],
           "action": "Lichtloser_OnHit",
           "userPropertyValues": {
-            "objID": "742d2f19-785b-4d81-be21-39da7ac9703a",
+            "objID": "87a93ec6-a704-44e2-d1f1-b1c9f91c3e6c",
             "values": {}
           }
         },
         {
-          "objID": "7b24f7c0-b708-41c3-88aa-b3b419723515",
-          "type": "SwitchActionComponent",
-          "left": 823,
-          "top": 211,
-          "width": 171,
-          "height": 53,
+          "objID": "4666bcf0-b755-46c2-f976-7d6537571fb6",
+          "type": "CallActionActionComponent",
+          "left": 579,
+          "top": -211,
+          "width": 210,
+          "height": 24,
           "customInputs": [],
           "customOutputs": [],
-          "tests": [
-            {
-              "objID": "660dd60a-1a5e-4ec6-91cd-86ed1d14863a",
-              "condition": "llGameRunning == 0",
-              "outputName": "_0"
-            }
-          ]
+          "action": "cmd_SendJokerStopToArduino",
+          "userPropertyValues": {
+            "objID": "3ccb21c5-d50b-493e-ca4a-83aed8977446",
+            "values": {}
+          }
         },
         {
-          "objID": "688cf2e9-0e31-4c9c-8218-107f9184e7eb",
+          "objID": "93cba899-d20c-4933-e073-14b5c4f9aed5",
           "type": "EndActionComponent",
-          "left": 1070,
-          "top": 238,
+          "left": 841,
+          "top": -127,
           "width": 87,
           "height": 24,
           "customInputs": [],
           "customOutputs": []
-        },
-        {
-          "objID": "2226faa7-735b-4f41-e950-350c729d3e12",
-          "type": "DelayActionComponent",
-          "left": 333,
-          "top": 424,
-          "width": 87,
-          "height": 53,
-          "customInputs": [],
-          "customOutputs": [],
-          "milliseconds": "1000"
-        },
-        {
-          "objID": "ce82971c-bf38-41d2-d768-133a329a8824",
-          "type": "LVGLActionComponent",
-          "left": 201,
-          "top": 507,
-          "width": 219,
-          "height": 53,
-          "customInputs": [],
-          "customOutputs": [],
-          "actions": [
-            {
-              "objID": "5a8ae96f-c151-40b5-ac3e-7ec7c75fd5d9",
-              "action": "objClearFlag",
-              "object": "button_game",
-              "objectType": "literal",
-              "flag": "HIDDEN",
-              "flagType": "literal"
-            }
-          ]
-        },
-        {
-          "objID": "c5237209-3c4a-415c-c53f-f137072546e2",
-          "type": "SetVariableActionComponent",
-          "left": -49,
-          "top": 505,
-          "width": 165,
-          "height": 57,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "5f7cbace-3393-4424-8c28-71bd7f0158b1",
-              "variable": "canStartSpin",
-              "value": "true"
-            }
-          ]
         }
       ],
       "connectionLines": [
         {
-          "objID": "8920d1de-c07a-4e21-c91d-cdb663c06503",
-          "source": "a0b6d749-cf1e-4c6b-c800-ac8810b66a65",
+          "objID": "49beae22-006e-4bd5-cf22-7fcabe98807f",
+          "source": "1c438961-c0e2-4164-89aa-483705b1886a",
           "output": "@seqout",
-          "target": "f9a784d9-ba48-4bde-8afa-8d9ac2eb93db",
+          "target": "78037003-91d0-4bbc-f5df-95593547573b",
           "input": "@seqin"
         },
         {
-          "objID": "ee6ffb89-290e-422c-f7e5-28177733ab9f",
-          "source": "f9a784d9-ba48-4bde-8afa-8d9ac2eb93db",
+          "objID": "afa1440b-5906-445d-f0b0-a7367189facf",
+          "source": "78037003-91d0-4bbc-f5df-95593547573b",
           "output": "@seqout",
-          "target": "099c4d22-0067-4815-f3e3-742360d4cc0b",
+          "target": "135ad245-fe47-403a-a3c5-e34cde197d04",
           "input": "@seqin"
         },
         {
-          "objID": "79d3aa00-bd64-4059-8053-3fc2370a8ed6",
-          "source": "099c4d22-0067-4815-f3e3-742360d4cc0b",
+          "objID": "0e0347d6-16d8-4e2d-d6d7-71ae179e0069",
+          "source": "135ad245-fe47-403a-a3c5-e34cde197d04",
+          "output": "False",
+          "target": "78037003-91d0-4bbc-f5df-95593547573b",
+          "input": "@seqin"
+        },
+        {
+          "objID": "8cf95a05-fd93-49e1-aeba-2bffc1fcbfc4",
+          "source": "135ad245-fe47-403a-a3c5-e34cde197d04",
+          "output": "True",
+          "target": "87d1c6b8-2e8d-44d3-a695-975f4a2063ee",
+          "input": "@seqin"
+        },
+        {
+          "objID": "649da7fe-8964-45dd-db60-567d40e22385",
+          "source": "87d1c6b8-2e8d-44d3-a695-975f4a2063ee",
           "output": "@seqout",
-          "target": "f9a784d9-ba48-4bde-8afa-8d9ac2eb93db",
+          "target": "4666bcf0-b755-46c2-f976-7d6537571fb6",
           "input": "@seqin"
         },
         {
-          "objID": "5ac8f8aa-dce4-4e00-bc45-4e9bd253e4d3",
-          "source": "f9a784d9-ba48-4bde-8afa-8d9ac2eb93db",
-          "output": "variable",
-          "target": "5944e965-71d6-4e36-d7ee-8359e3285837",
-          "input": "@seqin"
-        },
-        {
-          "objID": "a5250173-28ea-4232-8588-a84c49b8699d",
-          "source": "5944e965-71d6-4e36-d7ee-8359e3285837",
-          "output": "_1",
-          "target": "6bddb477-451c-4ef0-f798-71aba2da00b4",
-          "input": "@seqin"
-        },
-        {
-          "objID": "7bc62947-f383-4973-8a01-2d68fafc5610",
-          "source": "6bddb477-451c-4ef0-f798-71aba2da00b4",
+          "objID": "a8e61842-d7b2-4162-d3f0-f7d157463d46",
+          "source": "4666bcf0-b755-46c2-f976-7d6537571fb6",
           "output": "@seqout",
-          "target": "f9a784d9-ba48-4bde-8afa-8d9ac2eb93db",
+          "target": "128595c5-a17b-4e76-dd52-2617e85be1df",
           "input": "@seqin"
         },
         {
-          "objID": "103d0ecc-f4fa-4be9-e355-5cc5e102b464",
-          "source": "5944e965-71d6-4e36-d7ee-8359e3285837",
+          "objID": "f301cde0-f5d5-4af4-a808-4cab1f8d42e5",
+          "source": "128595c5-a17b-4e76-dd52-2617e85be1df",
           "output": "@seqout",
-          "target": "19a15e63-8fd3-4f8c-9ace-c582c8fc9d7b",
-          "input": "@seqin"
-        },
-        {
-          "objID": "182f2ddb-170b-4866-f025-92c20e330cac",
-          "source": "19a15e63-8fd3-4f8c-9ace-c582c8fc9d7b",
-          "output": "@seqout",
-          "target": "8a6f621b-0c0d-4123-eac6-43e09cd8f0eb",
-          "input": "@seqin"
-        },
-        {
-          "objID": "8b1e49a0-4813-4a1d-ea30-3cb8231bc538",
-          "source": "8a6f621b-0c0d-4123-eac6-43e09cd8f0eb",
-          "output": "@seqout",
-          "target": "7b24f7c0-b708-41c3-88aa-b3b419723515",
-          "input": "@seqin"
-        },
-        {
-          "objID": "0b4479eb-c9d5-402a-b5ed-7d8593319c3d",
-          "source": "7b24f7c0-b708-41c3-88aa-b3b419723515",
-          "output": "_0",
-          "target": "688cf2e9-0e31-4c9c-8218-107f9184e7eb",
-          "input": "@seqin"
-        },
-        {
-          "objID": "6098d261-c312-4953-84b3-40137904a137",
-          "source": "7b24f7c0-b708-41c3-88aa-b3b419723515",
-          "output": "@seqout",
-          "target": "2226faa7-735b-4f41-e950-350c729d3e12",
-          "input": "@seqin"
-        },
-        {
-          "objID": "e7e3cc90-f2df-4591-cb0d-f7fd2a393f95",
-          "source": "2226faa7-735b-4f41-e950-350c729d3e12",
-          "output": "@seqout",
-          "target": "ce82971c-bf38-41d2-d768-133a329a8824",
-          "input": "@seqin"
-        },
-        {
-          "objID": "a27c0a7b-405c-4c6b-a8d9-2fac9df055d9",
-          "source": "ce82971c-bf38-41d2-d768-133a329a8824",
-          "output": "@seqout",
-          "target": "c5237209-3c4a-415c-c53f-f137072546e2",
-          "input": "@seqin"
-        },
-        {
-          "objID": "4b9db2a0-0150-4244-a5d8-b75260042208",
-          "source": "c5237209-3c4a-415c-c53f-f137072546e2",
-          "output": "@seqout",
-          "target": "f9a784d9-ba48-4bde-8afa-8d9ac2eb93db",
+          "target": "93cba899-d20c-4933-e073-14b5c4f9aed5",
           "input": "@seqin"
         }
       ],
@@ -10310,6 +8902,219 @@
       "userProperties": [],
       "name": "actBorderColorWatcher",
       "implementationType": "flow"
+    },
+    {
+      "objID": "776d04ec-1427-4fc2-c463-397576a58555",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "settingsLoad",
+      "implementationType": "native"
+    },
+    {
+      "objID": "0a15aa9f-77c2-4817-a1c1-49a76eb5cf2b",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "settingsFactoryReset",
+      "implementationType": "native"
+    },
+    {
+      "objID": "d02f44f3-eca2-4f27-837b-0be060004d6c",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "sendPlayerState",
+      "implementationType": "native"
+    },
+    {
+      "objID": "a3cc6fba-9c4d-4e9b-8260-edb90dae5220",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "sendBorderState",
+      "implementationType": "native"
+    },
+    {
+      "objID": "9886ae81-c653-4531-8ea5-40fd776f30ed",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "settingsMarkDirty",
+      "implementationType": "native"
+    },
+    {
+      "objID": "23181ae7-6b02-4e77-8951-94c1207337bb",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "settingsApplyToFlow",
+      "implementationType": "native"
+    },
+    {
+      "objID": "3e270855-05ed-4956-dace-b9e253587c2f",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "settingsScheduleFlush",
+      "implementationType": "native"
+    },
+    {
+      "objID": "ed37d715-58ff-4d8c-d570-9bdd0d3fbf02",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "settingsSet_*",
+      "implementationType": "native"
+    },
+    {
+      "objID": "f0a5dfa1-9ca6-4f8f-f859-ca3b58008254",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "sendAllSettingsToArduino",
+      "implementationType": "native"
+    },
+    {
+      "objID": "e5599086-6ff3-416b-c9b1-8f465b041a8a",
+      "components": [
+        {
+          "objID": "caf7638e-eba3-406c-c4c9-fc12123a9f70",
+          "type": "StartActionComponent",
+          "left": -332,
+          "top": -76,
+          "width": 87,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": []
+        },
+        {
+          "objID": "694cf787-b93f-4899-baad-a68c8026e0b3",
+          "type": "DelayActionComponent",
+          "left": -182,
+          "top": -76,
+          "width": 87,
+          "height": 53,
+          "customInputs": [],
+          "customOutputs": [],
+          "milliseconds": "50"
+        },
+        {
+          "objID": "e2ac5d9d-0f20-4878-844b-a1dff7b72097",
+          "type": "SwitchActionComponent",
+          "left": -49,
+          "top": -5,
+          "width": 349,
+          "height": 53,
+          "customInputs": [],
+          "customOutputs": [],
+          "tests": [
+            {
+              "objID": "e9d9c174-c998-4eec-82ec-c45f2ee9ecf8",
+              "condition": "canStartSpin == true && spinInProgress == false",
+              "outputName": "_1"
+            }
+          ]
+        },
+        {
+          "objID": "fbb8091c-4c71-4ec7-8022-bf3922acc235",
+          "type": "LVGLActionComponent",
+          "left": 357,
+          "top": 12,
+          "width": 238,
+          "height": 53,
+          "customInputs": [],
+          "customOutputs": [],
+          "actions": [
+            {
+              "objID": "2cde276f-2fc0-4eaa-dbd6-8508d891ff4f",
+              "action": "objClearState",
+              "object": "button_game",
+              "objectType": "literal",
+              "state": "DISABLED",
+              "stateType": "literal"
+            }
+          ]
+        },
+        {
+          "objID": "3d0059c1-03c2-4c9e-bcb4-bbb536bd00a2",
+          "type": "EndActionComponent",
+          "left": 624,
+          "top": 12,
+          "width": 87,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": []
+        }
+      ],
+      "connectionLines": [
+        {
+          "objID": "b7a6dc2f-5a86-47f9-895d-dd8aa4a54a5c",
+          "source": "caf7638e-eba3-406c-c4c9-fc12123a9f70",
+          "output": "@seqout",
+          "target": "694cf787-b93f-4899-baad-a68c8026e0b3",
+          "input": "@seqin"
+        },
+        {
+          "objID": "e75afacb-043b-4539-d1a2-83f9553d27d2",
+          "source": "694cf787-b93f-4899-baad-a68c8026e0b3",
+          "output": "@seqout",
+          "target": "e2ac5d9d-0f20-4878-844b-a1dff7b72097",
+          "input": "@seqin"
+        },
+        {
+          "objID": "0459c3ff-7022-4a08-f1c7-b9f9ebdd6a71",
+          "source": "e2ac5d9d-0f20-4878-844b-a1dff7b72097",
+          "output": "@seqout",
+          "target": "694cf787-b93f-4899-baad-a68c8026e0b3",
+          "input": "@seqin"
+        },
+        {
+          "objID": "1f453d9d-a05a-4d2c-a174-29411836fadf",
+          "source": "e2ac5d9d-0f20-4878-844b-a1dff7b72097",
+          "output": "_1",
+          "target": "fbb8091c-4c71-4ec7-8022-bf3922acc235",
+          "input": "@seqin"
+        },
+        {
+          "objID": "88b67f07-bfa6-4aaf-82ff-e6daff35e9d0",
+          "source": "fbb8091c-4c71-4ec7-8022-bf3922acc235",
+          "output": "@seqout",
+          "target": "3d0059c1-03c2-4c9e-bcb4-bbb536bd00a2",
+          "input": "@seqin"
+        }
+      ],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "actLichtLoser_SpinReady",
+      "implementationType": "flow"
+    },
+    {
+      "objID": "1e1df44b-b56f-4a93-afab-4ba550ccfd71",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "cmd_SendCfgJoker",
+      "implementationType": "native"
+    },
+    {
+      "objID": "b2312cd4-de7d-4e22-bd68-b8b44bff5400",
+      "components": [],
+      "connectionLines": [],
+      "localVariables": [],
+      "userProperties": [],
+      "name": "sendCfgPlayers",
+      "implementationType": "native"
     }
   ],
   "userPages": [
@@ -10336,7 +9141,7 @@
             {
               "objID": "c5349c0c-fa8d-4db8-be0c-dfd00d42a58d",
               "eventName": "SCREEN_LOADED",
-              "handlerType": "action",
+              "handlerType": "flow",
               "action": "actJokerUnForceHit",
               "userData": 0
             }
@@ -10617,7 +9422,7 @@
           "left": 491,
           "top": 372,
           "width": 391,
-          "height": 53,
+          "height": 54,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -10636,6 +9441,21 @@
               "useStackType": "literal"
             }
           ]
+        },
+        {
+          "objID": "82f4ce68-cee3-4a80-de9d-40832e50c951",
+          "type": "CallActionActionComponent",
+          "left": 512,
+          "top": 146,
+          "width": 147,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "actJokerUnForceHit",
+          "userPropertyValues": {
+            "objID": "94a7fa56-176d-429e-b19d-00ccff4fe956",
+            "values": {}
+          }
         }
       ],
       "connectionLines": [
@@ -10644,6 +9464,13 @@
           "source": "126e9f90-036c-4651-dd53-293e2e963d46",
           "output": "RELEASED",
           "target": "223169bd-ba1e-4ce2-97ed-708441be2342",
+          "input": "@seqin"
+        },
+        {
+          "objID": "03bea409-b5c9-4f0d-8c2c-a213e803201d",
+          "source": "52094a6e-2e45-4928-d08b-d1f2a53f0452",
+          "output": "SCREEN_LOADED",
+          "target": "82f4ce68-cee3-4a80-de9d-40832e50c951",
           "input": "@seqin"
         }
       ],
@@ -15141,10 +13968,10 @@
                   "timeline": [],
                   "eventHandlers": [
                     {
-                      "objID": "c08bcf24-c3dd-43e1-bec0-c8a07581000d",
+                      "objID": "001f3d61-6c4d-41a8-d9fc-767e8910cb60",
                       "eventName": "RELEASED",
-                      "handlerType": "flow",
-                      "action": "actPlayerRoller_ValueChanged",
+                      "handlerType": "action",
+                      "action": "LichtLoser_StartRound",
                       "userData": 0
                     }
                   ],
@@ -15209,7 +14036,7 @@
                   ],
                   "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_ON_FOCUS|SCROLL_WITH_ARROW|SNAPPABLE",
                   "hiddenFlagType": "literal",
-                  "clickableFlag": true,
+                  "clickableFlag": "canStartSpin == true",
                   "clickableFlagType": "literal",
                   "flagScrollbarMode": "",
                   "flagScrollDirection": "",
@@ -15217,8 +14044,8 @@
                   "scrollSnapY": "",
                   "checkedState": false,
                   "checkedStateType": "literal",
-                  "disabledState": false,
-                  "disabledStateType": "literal",
+                  "disabledState": "spinInProgress",
+                  "disabledStateType": "expression",
                   "states": "",
                   "useStyle": "Gold",
                   "localStyles": {
@@ -15292,95 +14119,6 @@
               "useStackType": "literal"
             }
           ]
-        },
-        {
-          "objID": "c3181bf5-52c9-47ec-e3d5-dff8e318281a",
-          "type": "CallActionActionComponent",
-          "left": 571,
-          "top": 266,
-          "width": 221,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": [],
-          "action": "cmd_SendSpinParamsToArduino",
-          "userPropertyValues": {
-            "objID": "db3e9ea5-6075-4f9a-aaa5-ba57850d7338",
-            "values": {}
-          }
-        },
-        {
-          "objID": "57b882de-00a0-46bb-9877-5dfbe371509d",
-          "type": "SetVariableActionComponent",
-          "left": 571,
-          "top": 155,
-          "width": 177,
-          "height": 79,
-          "customInputs": [],
-          "customOutputs": [],
-          "entries": [
-            {
-              "objID": "6b845af4-f2cf-44bc-859a-c2422c5f64bc",
-              "variable": "spinInProgress",
-              "value": "true"
-            },
-            {
-              "objID": "901b12f0-e4e9-47f8-b170-d92df17011bf",
-              "variable": "canStartSpin",
-              "value": "false"
-            }
-          ]
-        },
-        {
-          "objID": "9fc63aa2-f26b-4827-a9af-faccad7a9bb4",
-          "type": "CallActionActionComponent",
-          "left": 571,
-          "top": 308,
-          "width": 205,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": [],
-          "action": "cmd_SendSpinStartToArduino",
-          "userPropertyValues": {
-            "objID": "76eb382a-59f7-4a67-d3aa-176b8e69247c",
-            "values": {}
-          }
-        },
-        {
-          "objID": "7ab28c60-5cf7-427f-9225-dc1e465acb59",
-          "type": "LVGLActionComponent",
-          "left": 571,
-          "top": 350,
-          "width": 225,
-          "height": 54,
-          "customInputs": [],
-          "customOutputs": [],
-          "actions": [
-            {
-              "objID": "e32cbc18-482f-4dc4-d580-779e15b5f28d",
-              "action": "objSetFlagHidden",
-              "object": "button_game",
-              "objectType": "literal",
-              "hidden": true,
-              "hiddenType": "literal"
-            }
-          ]
-        },
-        {
-          "objID": "6b3a5b85-9a07-41b8-859a-8f34bde5c7bb",
-          "type": "SwitchActionComponent",
-          "left": 571,
-          "top": 87,
-          "width": 183,
-          "height": 54,
-          "customInputs": [],
-          "customOutputs": [],
-          "tests": [
-            {
-              "objID": "f48f972c-7ecc-49bc-cfba-f54c993e56c6",
-              "condition": "canStartSpin == true",
-              "outputName": "_1"
-            }
-          ]
         }
       ],
       "connectionLines": [
@@ -15389,41 +14127,6 @@
           "source": "21dc3240-5c2b-4e73-cd6f-1e9f19ea9fa5",
           "output": "RELEASED",
           "target": "1d7344d2-5efd-42b0-cd39-bcc3dce3c99f",
-          "input": "@seqin"
-        },
-        {
-          "objID": "80a429e7-2219-496d-ce1c-3b5dd93ec44c",
-          "source": "57b882de-00a0-46bb-9877-5dfbe371509d",
-          "output": "@seqout",
-          "target": "c3181bf5-52c9-47ec-e3d5-dff8e318281a",
-          "input": "@seqin"
-        },
-        {
-          "objID": "8c43964f-7afe-48b5-e7b5-d25609c5f33d",
-          "source": "c3181bf5-52c9-47ec-e3d5-dff8e318281a",
-          "output": "@seqout",
-          "target": "9fc63aa2-f26b-4827-a9af-faccad7a9bb4",
-          "input": "@seqin"
-        },
-        {
-          "objID": "eb53e6fc-34ec-4e3a-b785-8665a88682e3",
-          "source": "9fc63aa2-f26b-4827-a9af-faccad7a9bb4",
-          "output": "@seqout",
-          "target": "7ab28c60-5cf7-427f-9225-dc1e465acb59",
-          "input": "@seqin"
-        },
-        {
-          "objID": "704f69d6-ebfa-4859-be16-a2258adb1acb",
-          "source": "9c1bb444-5087-4470-ca33-cdcedcde0d5f",
-          "output": "RELEASED",
-          "target": "6b3a5b85-9a07-41b8-859a-8f34bde5c7bb",
-          "input": "@seqin"
-        },
-        {
-          "objID": "f968a490-e75a-4af7-c690-0069766c7d8e",
-          "source": "6b3a5b85-9a07-41b8-859a-8f34bde5c7bb",
-          "output": "_1",
-          "target": "57b882de-00a0-46bb-9877-5dfbe371509d",
           "input": "@seqin"
         }
       ],
@@ -15918,7 +14621,7 @@
           "left": -51,
           "top": -123,
           "width": 391,
-          "height": 53,
+          "height": 54,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -19948,7 +18651,7 @@
           "left": -81,
           "top": -104,
           "width": 311,
-          "height": 54,
+          "height": 53,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -19970,7 +18673,7 @@
           "left": 497,
           "top": 275,
           "width": 477,
-          "height": 54,
+          "height": 53,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -19996,7 +18699,7 @@
           "left": 497,
           "top": 340,
           "width": 489,
-          "height": 54,
+          "height": 53,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -20070,22 +18773,7 @@
             "childStyles": []
           },
           "timeline": [],
-          "eventHandlers": [
-            {
-              "objID": "450493d6-e900-4c24-fd93-a728391f6081",
-              "eventName": "VALUE_CHANGED",
-              "handlerType": "action",
-              "action": "actJokerColor_Changed",
-              "userData": 0
-            },
-            {
-              "objID": "730b5026-a30b-4f9a-d2d0-3ad4d144b1a1",
-              "eventName": "SCREEN_UNLOADED",
-              "handlerType": "action",
-              "action": "cmd_SendJokerStopToArduino",
-              "userData": 0
-            }
-          ],
+          "eventHandlers": [],
           "leftUnit": "px",
           "topUnit": "px",
           "widthUnit": "px",
@@ -20322,7 +19010,7 @@
                     {
                       "objID": "a3662dc5-821a-478d-a8bd-af74b61252c5",
                       "eventName": "VALUE_CHANGED",
-                      "handlerType": "action",
+                      "handlerType": "flow",
                       "action": "cmd_SendBordersStateToArduino",
                       "userData": 0
                     }
@@ -20582,10 +19270,10 @@
                   "timeline": [],
                   "eventHandlers": [
                     {
-                      "objID": "869ebb04-526a-4ed6-a8c8-fe5ab5fc091b",
+                      "objID": "c28ddb85-5c42-4133-af91-a090a9768739",
                       "eventName": "VALUE_CHANGED",
-                      "handlerType": "action",
-                      "action": "actJokerColor_Changed",
+                      "handlerType": "flow",
+                      "action": "actPlayerRoller_ValueChanged",
                       "userData": 0
                     }
                   ],
@@ -20678,6 +19366,103 @@
               "delayType": "literal"
             }
           ]
+        },
+        {
+          "objID": "add52aca-d8ab-45a7-e971-c7a75fa2db32",
+          "type": "CallActionActionComponent",
+          "left": 556,
+          "top": 195,
+          "width": 170,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "cmd_SendJokerPreview",
+          "userPropertyValues": {
+            "objID": "4946c772-1c2d-4e38-84cf-32b48de1ec11",
+            "values": {}
+          }
+        },
+        {
+          "objID": "5d2b0910-5419-48d8-de01-aae4c53820bb",
+          "type": "SwitchActionComponent",
+          "left": 495,
+          "top": 87,
+          "width": 189,
+          "height": 73,
+          "customInputs": [],
+          "customOutputs": [],
+          "tests": [
+            {
+              "objID": "7b1cf977-2ec8-4be6-d5b3-d13757bb0b9a",
+              "condition": "jokerEnabled == true",
+              "outputName": "_1"
+            },
+            {
+              "objID": "cca47218-693a-4188-e426-4d2dce9a5eab",
+              "condition": "jokerEnabled == false",
+              "outputName": "_0"
+            }
+          ]
+        },
+        {
+          "objID": "c52c65d5-c22d-45c3-d58c-ab675cafc42f",
+          "type": "CallActionActionComponent",
+          "left": 910,
+          "top": 98,
+          "width": 212,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "cmd_SendJokerStartToArduino",
+          "userPropertyValues": {
+            "objID": "02741f8e-91fd-4292-a7f1-b47b41768d28",
+            "values": {}
+          }
+        },
+        {
+          "objID": "c8f64887-e5e5-4238-b558-53ed3a086023",
+          "type": "CallActionActionComponent",
+          "left": 726,
+          "top": 140,
+          "width": 210,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "cmd_SendJokerStopToArduino",
+          "userPropertyValues": {
+            "objID": "b295a620-a6c4-4e79-b8fd-b0996444227b",
+            "values": {}
+          }
+        },
+        {
+          "objID": "10c57a71-a47a-4b8a-fdf6-c92b2633f7b4",
+          "type": "CallActionActionComponent",
+          "left": 712,
+          "top": 98,
+          "width": 170,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "cmd_SendJokerPreview",
+          "userPropertyValues": {
+            "objID": "5294fc59-4e16-4173-8da7-5ca0b267d2a4",
+            "values": {}
+          }
+        },
+        {
+          "objID": "7799e357-3033-460c-c12d-7a08ae8cd697",
+          "type": "CallActionActionComponent",
+          "left": 954,
+          "top": 140,
+          "width": 168,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "cmd_SendPreviewClear",
+          "userPropertyValues": {
+            "objID": "1196d6a0-5884-4131-b2b2-04bfba6eab15",
+            "values": {}
+          }
         }
       ],
       "connectionLines": [
@@ -20686,6 +19471,48 @@
           "source": "c4905829-65cc-4e53-985c-095dac54cf64",
           "output": "RELEASED",
           "target": "746290af-601b-4515-a91a-4587dbc90f21",
+          "input": "@seqin"
+        },
+        {
+          "objID": "1f713ce2-5d56-45f4-b473-d065e25c9910",
+          "source": "6b33b4d9-3f7c-4d55-91f0-5389b066932d",
+          "output": "VALUE_CHANGED",
+          "target": "add52aca-d8ab-45a7-e971-c7a75fa2db32",
+          "input": "@seqin"
+        },
+        {
+          "objID": "dd2a48c1-5831-486c-85b1-42415106653b",
+          "source": "2e5b684d-d4bf-45a1-b6fd-d93528ee3523",
+          "output": "VALUE_CHANGED",
+          "target": "5d2b0910-5419-48d8-de01-aae4c53820bb",
+          "input": "@seqin"
+        },
+        {
+          "objID": "841d3568-40b0-48be-cbb1-16fbefc1c305",
+          "source": "5d2b0910-5419-48d8-de01-aae4c53820bb",
+          "output": "_1",
+          "target": "10c57a71-a47a-4b8a-fdf6-c92b2633f7b4",
+          "input": "@seqin"
+        },
+        {
+          "objID": "dfa8b730-1471-4631-a91d-aabb8033e6ec",
+          "source": "10c57a71-a47a-4b8a-fdf6-c92b2633f7b4",
+          "output": "@seqout",
+          "target": "c52c65d5-c22d-45c3-d58c-ab675cafc42f",
+          "input": "@seqin"
+        },
+        {
+          "objID": "d4c7ad6c-8df4-4179-ee15-eec241bc18bb",
+          "source": "5d2b0910-5419-48d8-de01-aae4c53820bb",
+          "output": "_0",
+          "target": "c8f64887-e5e5-4238-b558-53ed3a086023",
+          "input": "@seqin"
+        },
+        {
+          "objID": "28a532ca-6cd8-492e-dced-2f39b13af81e",
+          "source": "c8f64887-e5e5-4238-b558-53ed3a086023",
+          "output": "@seqout",
+          "target": "7799e357-3033-460c-c12d-7a08ae8cd697",
           "input": "@seqin"
         }
       ],
@@ -22295,7 +21122,7 @@
           "left": -81,
           "top": -104,
           "width": 311,
-          "height": 53,
+          "height": 54,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -24138,6 +22965,13 @@
               "userData": 0
             },
             {
+              "objID": "ee8852df-67b7-423b-a7cc-37be5655eb4b",
+              "eventName": "SCREEN_UNLOAD_START",
+              "handlerType": "action",
+              "action": "sendPlayerState",
+              "userData": 0
+            },
+            {
               "objID": "d321a76a-76d7-41f9-b13f-0dffbdfaf963",
               "eventName": "SCREEN_UNLOADED",
               "handlerType": "action",
@@ -24441,7 +23275,7 @@
                     {
                       "objID": "cb345831-f41c-4c07-a3a0-f8ef9e9f8463",
                       "eventName": "VALUE_CHANGED",
-                      "handlerType": "action",
+                      "handlerType": "flow",
                       "action": "actPlayerColorMode_Changed",
                       "userData": 0
                     }
@@ -24640,7 +23474,7 @@
                     {
                       "objID": "b2979dc8-fb35-4e9c-bb66-1cb00697a820",
                       "eventName": "VALUE_CHANGED",
-                      "handlerType": "action",
+                      "handlerType": "flow",
                       "action": "actPlayerSingleColor_Changed",
                       "userData": 0
                     }
@@ -24789,7 +23623,15 @@
                   },
                   "hiddenInEditor": false,
                   "timeline": [],
-                  "eventHandlers": [],
+                  "eventHandlers": [
+                    {
+                      "objID": "2e846307-f140-4d82-b949-c1ceeece7ca3",
+                      "eventName": "VALUE_CHANGED",
+                      "handlerType": "flow",
+                      "action": "actPlayerRoller_ValueChanged",
+                      "userData": 0
+                    }
+                  ],
                   "identifier": "checkbox_2",
                   "leftUnit": "px",
                   "topUnit": "px",
@@ -25054,7 +23896,7 @@
                     {
                       "objID": "e5feafab-9532-471d-c56a-f8cb53ae8dab",
                       "eventName": "VALUE_CHANGED",
-                      "handlerType": "action",
+                      "handlerType": "flow",
                       "action": "actInactiveEffect_Changed",
                       "userData": 0
                     }
@@ -25140,6 +23982,51 @@
               "delayType": "literal"
             }
           ]
+        },
+        {
+          "objID": "71c54b94-abc5-4123-aee2-a07ad300a359",
+          "type": "CallActionActionComponent",
+          "left": 753,
+          "top": 240,
+          "width": 210,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "cmd_SendPlayerColorsPreview",
+          "userPropertyValues": {
+            "objID": "fe420935-d58a-40fb-b3e4-3fccc43e1001",
+            "values": {}
+          }
+        },
+        {
+          "objID": "aff49fe2-ef5e-4770-cf17-9c06afb14250",
+          "type": "CallActionActionComponent",
+          "left": 489,
+          "top": 228,
+          "width": 209,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "actPlayerSingleColor_Changed",
+          "userPropertyValues": {
+            "objID": "a724e2ed-8bc6-489d-84e2-22fdad0764a3",
+            "values": {}
+          }
+        },
+        {
+          "objID": "dc022cfd-0a5f-4dea-8649-e94618b4b54f",
+          "type": "CallActionActionComponent",
+          "left": 492,
+          "top": 135,
+          "width": 206,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "actPlayerColorMode_Changed",
+          "userPropertyValues": {
+            "objID": "f5548a64-b7c7-4114-f82d-915ca261e1f4",
+            "values": {}
+          }
         }
       ],
       "connectionLines": [
@@ -25148,6 +24035,48 @@
           "source": "cff984f9-75f0-405e-faed-6dcbb4da8749",
           "output": "RELEASED",
           "target": "99106f02-cbf4-43a1-c270-029e276f6db6",
+          "input": "@seqin"
+        },
+        {
+          "objID": "0a7382f8-11fe-43d8-a095-820e0e046893",
+          "source": "4a6c04ff-0e4e-48b5-c945-960a1bfe0896",
+          "output": "VALUE_CHANGED",
+          "target": "71c54b94-abc5-4123-aee2-a07ad300a359",
+          "input": "@seqin"
+        },
+        {
+          "objID": "8edeab2b-56e4-49a5-e208-86f726837c64",
+          "source": "21da75ea-e968-4cfc-a4ec-06447e19266e",
+          "output": "VALUE_CHANGED",
+          "target": "aff49fe2-ef5e-4770-cf17-9c06afb14250",
+          "input": "@seqin"
+        },
+        {
+          "objID": "40b10a61-ae2a-4046-9341-c452e50eeeb9",
+          "source": "9b8cdc5d-469d-4c99-cbf5-f9117a28c724",
+          "output": "VALUE_CHANGED",
+          "target": "dc022cfd-0a5f-4dea-8649-e94618b4b54f",
+          "input": "@seqin"
+        },
+        {
+          "objID": "09707dd4-cbfb-4896-e328-cb2eb5babeb0",
+          "source": "aff49fe2-ef5e-4770-cf17-9c06afb14250",
+          "output": "@seqout",
+          "target": "71c54b94-abc5-4123-aee2-a07ad300a359",
+          "input": "@seqin"
+        },
+        {
+          "objID": "ba6ff5cb-d3de-4bce-cd23-41ae8c76ef2a",
+          "source": "dc022cfd-0a5f-4dea-8649-e94618b4b54f",
+          "output": "@seqout",
+          "target": "71c54b94-abc5-4123-aee2-a07ad300a359",
+          "input": "@seqin"
+        },
+        {
+          "objID": "07dc253d-83c3-4844-c24d-760b9e3155a0",
+          "source": "a3ddf53c-6087-41ea-99b8-6222529b5fde",
+          "output": "VALUE_CHANGED",
+          "target": "dc022cfd-0a5f-4dea-8649-e94618b4b54f",
           "input": "@seqin"
         }
       ],
@@ -25187,6 +24116,13 @@
               "eventName": "SCREEN_LOAD_START",
               "handlerType": "action",
               "action": "actInit_OptionBorderColor",
+              "userData": 0
+            },
+            {
+              "objID": "d947a922-5ffc-4fdc-b95c-da419f0097a7",
+              "eventName": "SCREEN_UNLOAD_START",
+              "handlerType": "action",
+              "action": "sendBorderState",
               "userData": 0
             },
             {
@@ -25493,7 +24429,7 @@
                     {
                       "objID": "294c2897-06eb-436e-9116-6bf489ab8af6",
                       "eventName": "VALUE_CHANGED",
-                      "handlerType": "action",
+                      "handlerType": "flow",
                       "action": "actBorderColorMode_Changed",
                       "userData": 0
                     }
@@ -25692,7 +24628,7 @@
                     {
                       "objID": "82f37ec8-5802-463f-ea05-7662e4e3c735",
                       "eventName": "VALUE_CHANGED",
-                      "handlerType": "action",
+                      "handlerType": "flow",
                       "action": "actBorderSingleColor_Changed",
                       "userData": 0
                     }
@@ -25771,7 +24707,7 @@
           "left": -82,
           "top": -101,
           "width": 311,
-          "height": 53,
+          "height": 54,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -25786,6 +24722,21 @@
               "delayType": "literal"
             }
           ]
+        },
+        {
+          "objID": "97328dd0-d48d-4706-9610-f0a810709384",
+          "type": "CallActionActionComponent",
+          "left": 566,
+          "top": 178,
+          "width": 129,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "sendBorderState",
+          "userPropertyValues": {
+            "objID": "4a6a270d-8f0f-4d27-dbc2-bb2595cd1b0e",
+            "values": {}
+          }
         }
       ],
       "connectionLines": [
@@ -25794,6 +24745,20 @@
           "source": "cfef1638-64fd-4d5d-ac6a-0475aca7c9b7",
           "output": "RELEASED",
           "target": "10d8ebe5-176a-4430-ed12-7206afd677f5",
+          "input": "@seqin"
+        },
+        {
+          "objID": "19155604-c64f-40ed-b02a-d2c4dea4eaa6",
+          "source": "8a87032e-72a2-475c-ee81-5734e740a4da",
+          "output": "VALUE_CHANGED",
+          "target": "97328dd0-d48d-4706-9610-f0a810709384",
+          "input": "@seqin"
+        },
+        {
+          "objID": "bed68a87-57c1-45ea-9d44-6dc81b3acc01",
+          "source": "1e4b1228-4728-43f3-da48-dee7279500e7",
+          "output": "VALUE_CHANGED",
+          "target": "97328dd0-d48d-4706-9610-f0a810709384",
           "input": "@seqin"
         }
       ],
@@ -38903,7 +37868,7 @@
           "left": -82,
           "top": -101,
           "width": 311,
-          "height": 53,
+          "height": 54,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -39590,7 +38555,7 @@
           "left": -82,
           "top": -101,
           "width": 311,
-          "height": 53,
+          "height": 54,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -39612,7 +38577,7 @@
           "left": 495,
           "top": 358,
           "width": 422,
-          "height": 53,
+          "height": 54,
           "customInputs": [],
           "customOutputs": [],
           "actions": [
@@ -39633,30 +38598,34 @@
           ]
         },
         {
-          "objID": "2037d418-6596-4d7d-8e1d-16d72c43e3dc",
-          "type": "LVGLActionComponent",
-          "left": 495,
-          "top": 424,
-          "width": 305,
-          "height": 53,
+          "objID": "a4b3e01d-6f64-403c-dffe-fb9b71d9a432",
+          "type": "CallActionActionComponent",
+          "left": 509,
+          "top": 438,
+          "width": 154,
+          "height": 24,
           "customInputs": [],
           "customOutputs": [],
-          "actions": [
-            {
-              "objID": "34fa7e95-f057-432c-f399-afea9fe72202",
-              "action": "changeScreen",
-              "screen": "okayScreen",
-              "screenType": "literal",
-              "fadeMode": "NONE",
-              "fadeModeType": "literal",
-              "speed": 200,
-              "speedType": "literal",
-              "delay": 0,
-              "delayType": "literal",
-              "useStack": true,
-              "useStackType": "literal"
-            }
-          ]
+          "action": "settingsFactoryReset",
+          "userPropertyValues": {
+            "objID": "abe28df3-a01b-4888-f213-56ce31b08f95",
+            "values": {}
+          }
+        },
+        {
+          "objID": "ed9ad25e-f8ed-424a-9558-862c2bb80aaf",
+          "type": "CallActionActionComponent",
+          "left": 691,
+          "top": 438,
+          "width": 108,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "settingsLoad",
+          "userPropertyValues": {
+            "objID": "5c42a9bc-a96b-4e4f-ad85-4a44fd906aa8",
+            "values": {}
+          }
         }
       ],
       "connectionLines": [
@@ -39675,10 +38644,17 @@
           "input": "@seqin"
         },
         {
-          "objID": "0e05b619-593f-497e-b620-5f939b2610a0",
+          "objID": "d04c4104-38ca-46e9-c6d9-fd7d0e060f88",
           "source": "5e08bde2-2aea-4391-e7be-4824ee7d2a1c",
           "output": "RELEASED",
-          "target": "2037d418-6596-4d7d-8e1d-16d72c43e3dc",
+          "target": "a4b3e01d-6f64-403c-dffe-fb9b71d9a432",
+          "input": "@seqin"
+        },
+        {
+          "objID": "3bbaa2ca-5a2e-4193-8763-78bfd52478d8",
+          "source": "a4b3e01d-6f64-403c-dffe-fb9b71d9a432",
+          "output": "@seqout",
+          "target": "ed9ad25e-f8ed-424a-9558-862c2bb80aaf",
           "input": "@seqin"
         }
       ],

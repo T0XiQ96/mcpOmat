@@ -1,0 +1,78 @@
+{
+  "players": {
+    "2": {
+      "spiel_led": [
+        { "slot_id": 1, "start": 1, "end": 18 },
+        { "slot_id": 2, "start": 19, "end": 36 }
+      ],
+      "grenz_led": [
+        { "slot_id": 1, "left": 36, "right": 18 },
+        { "slot_id": 2, "left": 18, "right": 36 }
+      ]
+    },
+    "3": {
+      "spiel_led": [
+        { "slot_id": 1, "start": 1, "end": 12 },
+        { "slot_id": 2, "start": 13, "end": 24 },
+        { "slot_id": 3, "start": 25, "end": 36 }
+      ],
+      "grenz_led": [
+        { "slot_id": 1, "left": 36, "right": 12 },
+        { "slot_id": 2, "left": 12, "right": 24 },
+        { "slot_id": 3, "left": 24, "right": 36 }
+      ]
+    },
+    "4": {
+      "spiel_led": [
+        { "slot_id": 1, "start": 5, "end": 13 },
+        { "slot_id": 2, "start": 14, "end": 22 },
+        { "slot_id": 3, "start": 23, "end": 31 },
+        { "slot_id": 4, "start": 32, "end": 4 }
+      ],
+      "grenz_led": [
+        { "slot_id": 1, "left": 4, "right": 13 },
+        { "slot_id": 2, "left": 13, "right": 22 },
+        { "slot_id": 3, "left": 22, "right": 31 },
+        { "slot_id": 4, "left": 31, "right": 4 }
+      ]
+    },
+    "5": {
+      "spiel_led": [
+        { "slot_id": 1, "start": 3, "end": 9 },
+        { "slot_id": 2, "start": 10, "end": 16 },
+        { "slot_id": 3, "start": 17, "end": 23 },
+        { "slot_id": 4, "start": 24, "end": 30 },
+        { "slot_id": 5, "start": 31, "end": 1 }
+      ],
+      "grenz_led": [
+        { "slot_id": 1, "left": 2, "right": 9 },
+        { "slot_id": 2, "left": 9, "right": 16 },
+        { "slot_id": 3, "left": 16, "right": 23 },
+        { "slot_id": 4, "left": 23, "right": 30 },
+        { "slot_id": 5, "left": 30, "right": 1 }
+      ],
+      "joker": {
+        "group_removed": 2,
+        "color_default": "gold"
+      }
+    },
+    "6": {
+      "spiel_led": [
+        { "slot_id": 1, "start": 4, "end": 9 },
+        { "slot_id": 2, "start": 10, "end": 15 },
+        { "slot_id": 3, "start": 16, "end": 21 },
+        { "slot_id": 4, "start": 22, "end": 27 },
+        { "slot_id": 5, "start": 28, "end": 33 },
+        { "slot_id": 6, "start": 34, "end": 3 }
+      ],
+      "grenz_led": [
+        { "slot_id": 1, "left": 3, "right": 9 },
+        { "slot_id": 2, "left": 9, "right": 15 },
+        { "slot_id": 3, "left": 15, "right": 21 },
+        { "slot_id": 4, "left": 21, "right": 27 },
+        { "slot_id": 5, "left": 27, "right": 33 },
+        { "slot_id": 6, "left": 33, "right": 3 }    
+      ]
+    }
+  }
+}

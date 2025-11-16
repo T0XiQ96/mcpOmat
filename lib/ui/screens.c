@@ -20,7 +20,7 @@ static void event_handler_cb_idle_screen_idle_screen(lv_event_t *e) {
     
     if (event == LV_EVENT_SCREEN_LOADED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 70, e);
+        flowPropagateValueLVGLEvent(flowState, 1, 0, e);
     }
 }
 
@@ -42,7 +42,7 @@ static void event_handler_cb_logo_screen_logo_screen(lv_event_t *e) {
     
     if (event == LV_EVENT_SCREEN_LOADED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 70, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 69, e);
     }
 }
 
@@ -53,7 +53,7 @@ static void event_handler_cb_menu_screen_menu_screen(lv_event_t *e) {
     
     if (event == LV_EVENT_SCREEN_UNLOADED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 59, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 58, e);
     }
     if (event == LV_EVENT_SCREEN_LOADED) {
         e->user_data = (void *)0;
@@ -79,7 +79,7 @@ static void event_handler_cb_menu_screen_optionen(lv_event_t *e) {
     
     if (event == LV_EVENT_RELEASED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 56, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 55, e);
     }
 }
 
@@ -90,7 +90,7 @@ static void event_handler_cb_menu_screen_optionen_1(lv_event_t *e) {
     
     if (event == LV_EVENT_RELEASED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 58, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 57, e);
     }
 }
 
@@ -101,7 +101,7 @@ static void event_handler_cb_choose_player_screen_choose_player_screen(lv_event_
     
     if (event == LV_EVENT_SCREEN_LOADED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 49, e);
+        action_act_player_roller_value_changed(e);
     }
 }
 
@@ -120,7 +120,7 @@ static void event_handler_cb_choose_player_screen_player_roller(lv_event_t *e) {
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 49, e);
+        action_act_player_roller_value_changed(e);
     }
 }
 
@@ -160,7 +160,7 @@ static void event_handler_cb_choose_game_screen_choose_game_screen(lv_event_t *e
     
     if (event == LV_EVENT_SCREEN_LOAD_START) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 50, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 49, e);
     }
 }
 
@@ -179,7 +179,7 @@ static void event_handler_cb_choose_game_screen_game_roller(lv_event_t *e) {
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 50, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 49, e);
     }
 }
 
@@ -201,7 +201,7 @@ static void event_handler_cb_choose_game_screen_obj51(lv_event_t *e) {
     
     if (event == LV_EVENT_RELEASED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 52, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 51, e);
     }
 }
 
@@ -267,7 +267,7 @@ static void event_handler_cb_game_lichtloser_game_lichtloser(lv_event_t *e) {
     
     if (event == LV_EVENT_SCREEN_LOAD_START) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 75, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 74, e);
     }
 }
 
@@ -417,9 +417,10 @@ static void event_handler_cb_game_lichtloser_button_game(lv_event_t *e) {
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
+    
     if (event == LV_EVENT_RELEASED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, 23, 0, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 77, e);
     }
 }
 
@@ -474,7 +475,7 @@ static void event_handler_cb_useroptionen1_spiele_useroptionen1_spiele(lv_event_
     
     if (event == LV_EVENT_SCREEN_LOAD_START) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 51, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 50, e);
     }
 }
 
@@ -504,7 +505,7 @@ static void event_handler_cb_useroptionen1_spiele_options_game_roller(lv_event_t
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 51, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 50, e);
     }
 }
 
@@ -515,7 +516,7 @@ static void event_handler_cb_useroptionen1_spiele_obj62(lv_event_t *e) {
     
     if (event == LV_EVENT_RELEASED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 53, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 52, e);
     }
 }
 
@@ -592,7 +593,7 @@ static void event_handler_cb_adminoptionen1_spiele_adminoptionen1_spiele(lv_even
     
     if (event == LV_EVENT_SCREEN_LOAD_START) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 51, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 50, e);
     }
 }
 
@@ -622,7 +623,7 @@ static void event_handler_cb_adminoptionen1_spiele_options_game_roller_1(lv_even
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 51, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 50, e);
     }
 }
 
@@ -633,7 +634,7 @@ static void event_handler_cb_adminoptionen1_spiele_obj66(lv_event_t *e) {
     
     if (event == LV_EVENT_RELEASED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 54, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 53, e);
     }
 }
 
@@ -663,7 +664,7 @@ static void event_handler_cb_adminoptionen1_spiele_lichtloser_slider_lichtloserr
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 72, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 71, e);
     }
 }
 
@@ -686,21 +687,6 @@ static void event_handler_cb_adminoptionen1_spiele_lichtloser_button_4(lv_event_
     if (event == LV_EVENT_RELEASED) {
         e->user_data = (void *)0;
         flowPropagateValueLVGLEvent(flowState, 17, 0, e);
-    }
-}
-
-static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_adminoptionen1_spiele_lichtloser_joker(lv_event_t *e) {
-    lv_event_code_t event = lv_event_get_code(e);
-    void *flowState = lv_event_get_user_data(e);
-    (void)flowState;
-    
-    if (event == LV_EVENT_VALUE_CHANGED) {
-        e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 60, e);
-    }
-    if (event == LV_EVENT_SCREEN_UNLOADED) {
-        e->user_data = (void *)0;
-        action_cmd_send_joker_stop_to_arduino(e);
     }
 }
 
@@ -730,7 +716,7 @@ static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj69(lv_eve
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        action_cmd_send_borders_state_to_arduino(e);
+        flowPropagateValueLVGLEvent(flowState, 6, 0, e);
     }
 }
 
@@ -756,7 +742,7 @@ static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj71(lv_eve
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 60, e);
+        flowPropagateValueLVGLEvent(flowState, 11, 0, e);
     }
 }
 
@@ -767,7 +753,7 @@ static void event_handler_cb_adminoptionen1_spiele_lichtloser_timings_adminoptio
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 60, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 59, e);
     }
 }
 
@@ -921,7 +907,11 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_adminopti
     
     if (event == LV_EVENT_SCREEN_LOAD_START) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 65, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 64, e);
+    }
+    if (event == LV_EVENT_SCREEN_UNLOAD_START) {
+        e->user_data = (void *)0;
+        action_send_player_state(e);
     }
     if (event == LV_EVENT_SCREEN_UNLOADED) {
         e->user_data = (void *)0;
@@ -955,7 +945,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj76(lv_
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 61, e);
+        flowPropagateValueLVGLEvent(flowState, 7, 0, e);
     }
 }
 
@@ -981,7 +971,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj78(lv_
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 62, e);
+        flowPropagateValueLVGLEvent(flowState, 11, 0, e);
     }
 }
 
@@ -1004,6 +994,11 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_checkbox_
             assignBooleanProperty(flowState, 14, 3, value, "Failed to assign Checked state");
         }
     }
+    
+    if (event == LV_EVENT_VALUE_CHANGED) {
+        e->user_data = (void *)0;
+        flowPropagateValueLVGLEvent(flowState, 14, 0, e);
+    }
 }
 
 static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj80(lv_event_t *e) {
@@ -1021,7 +1016,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj80(lv_
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 63, e);
+        flowPropagateValueLVGLEvent(flowState, 19, 0, e);
     }
 }
 
@@ -1032,7 +1027,11 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_adminoption
     
     if (event == LV_EVENT_SCREEN_LOAD_START) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 64, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 63, e);
+    }
+    if (event == LV_EVENT_SCREEN_UNLOAD_START) {
+        e->user_data = (void *)0;
+        action_send_border_state(e);
     }
     if (event == LV_EVENT_SCREEN_UNLOADED) {
         e->user_data = (void *)0;
@@ -1066,7 +1065,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj82(lv_ev
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 66, e);
+        flowPropagateValueLVGLEvent(flowState, 7, 0, e);
     }
 }
 
@@ -1092,7 +1091,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj84(lv_ev
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 67, e);
+        flowPropagateValueLVGLEvent(flowState, 11, 0, e);
     }
 }
 
@@ -1303,7 +1302,7 @@ static void event_handler_cb_adminoptionen1_system_anzeige_idle_adminoptionen1_s
     
     if (event == LV_EVENT_SCREEN_LOADED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 68, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 67, e);
     }
 }
 
@@ -1354,7 +1353,7 @@ static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj93(lv_event_t
     
     if (event == LV_EVENT_VALUE_CHANGED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 68, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 67, e);
     }
 }
 
@@ -1672,7 +1671,7 @@ static void event_handler_cb_adminoptionen1_bonus_adminoptionen1_bonus(lv_event_
     
     if (event == LV_EVENT_RELEASED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 69, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 68, e);
     }
 }
 
@@ -1683,7 +1682,7 @@ static void event_handler_cb_adminoptionen1_bonus_button_7(lv_event_t *e) {
     
     if (event == LV_EVENT_CLICKED) {
         e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 69, e);
+        flowPropagateValueLVGLEvent(flowState, -1, 68, e);
     }
 }
 
@@ -3386,6 +3385,16 @@ void tick_screen_game_lichtloser() {
             tick_value_change_obj = NULL;
         }
     }
+    {
+        bool new_val = evalBooleanProperty(flowState, 23, 3, "Failed to evaluate Disabled state");
+        bool cur_val = lv_obj_has_state(objects.button_game, LV_STATE_DISABLED);
+        if (new_val != cur_val) {
+            tick_value_change_obj = objects.button_game;
+            if (new_val) lv_obj_add_state(objects.button_game, LV_STATE_DISABLED);
+            else lv_obj_clear_state(objects.button_game, LV_STATE_DISABLED);
+            tick_value_change_obj = NULL;
+        }
+    }
 }
 
 void create_screen_game_win() {
@@ -4667,7 +4676,6 @@ void create_screen_adminoptionen1_spiele_lichtloser_joker() {
     objects.adminoptionen1_spiele_lichtloser_joker = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 480);
-    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_joker_adminoptionen1_spiele_lichtloser_joker, LV_EVENT_ALL, flowState);
     lv_obj_add_state(obj, LV_STATE_CHECKED);
     {
         lv_obj_t *parent_obj = obj;

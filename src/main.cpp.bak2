@@ -213,7 +213,7 @@ static void rs485Poll() {
   }
 }
 
-// === Helper für EEZ Globals ==================================================
+// === Helper fÃ¼r EEZ Globals ==================================================
 static inline int32_t gv_i(unsigned idx) {
   int err = 0;
   eez::Value v = eez::flow::getGlobalVariable(idx);
@@ -359,31 +359,23 @@ static PlayerStateSettings g_cachedPlayerState{};
 static BorderStateSettings g_cachedBorderState{};
 static BrightnessSettings g_cachedBrightness{};
 static SpinSettings g_cachedSpin{};
-static bool g_cachedPlayerValid       = false;
-static bool g_cachedBorderValid       = false;
-static bool g_cachedBrightnessValid   = false;
-static bool g_cachedSpinValid         = false;
-static bool g_cachedShowBorders       = false;
-static bool g_cachedShowBordersValid  = false;
-
-// Preview-Flag: solange true, werden echte States nicht zum Arduino gesendet
-static bool g_previewActive           = false;
+static bool g_cachedPlayerValid = false;
+static bool g_cachedBorderValid = false;
+static bool g_cachedBrightnessValid = false;
+static bool g_cachedSpinValid = false;
+static bool g_cachedShowBorders = false;
+static bool g_cachedShowBordersValid = false;
 
 static void updateCachedStatesFromSettings() {
-  g_cachedPlayerState   = settings_get_player();
-  g_cachedBorderState   = settings_get_border();
-  g_cachedBrightness    = settings_get_brightness();
-  g_cachedSpin          = settings_get_spin();
-  g_cachedShowBorders   = settings_get_show_borders();
+  g_cachedPlayerState = settings_get_player();
+  g_cachedBorderState = settings_get_border();
+  g_cachedBrightness  = settings_get_brightness();
+  g_cachedSpin        = settings_get_spin();
+  g_cachedShowBorders = settings_get_show_borders();
+  g_cachedPlayerValid = g_cachedBorderValid = g_cachedBrightnessValid = g_cachedSpinValid = g_cachedShowBordersValid = true;
 
-  g_cachedPlayerValid       = true;
-  g_cachedBorderValid       = true;
-  g_cachedBrightnessValid   = true;
-  g_cachedSpinValid         = true;
-  g_cachedShowBordersValid  = true;
+static bool g_previewActive = false; // Skip real state sync while preview screens are active
 
-  // Nach Laden/Factory-Reset ist kein Preview aktiv
-  g_previewActive = false;
 }
 
 static void syncPlayerStateFromFlow() {
@@ -498,16 +490,6 @@ extern "C" void action_send_player_state(lv_event_t *e) {
   syncPlayerStateFromFlow();
 }
 
-extern "C" void action_act_player_roller_value_changed(lv_event_t *e) {
-  // Wenn der Player-Roller geändert wird, direkt Player-State zum Arduino schicken
-  action_send_player_state(e);
-}
-
-extern "C" void action_send_cfg_players(lv_event_t *e) {
-  // Explizite CFG_PLAYERS-Action, nutzt die gleiche Logik wie action_send_player_state
-  action_send_player_state(e);
-}
-
 extern "C" void action_send_border_state(lv_event_t *e) {
   (void)e;
   syncBorderStateFromFlow();
@@ -579,7 +561,7 @@ extern "C" void action_cmd_send_player_colors_preview(lv_event_t *e) {
   g_previewActive = true;
 
   (void)e;
-  // Korrigiert: verwende INDEX-Variablen für Modus und Farbe
+  // Korrigiert: verwende INDEX-Variablen fÃ¼r Modus und Farbe
   int mode        = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_COLOR_MODE_INDEX);
   int singleIndex = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_SINGLE_COLOR_INDEX);
   int ownRandom   = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_OWN_COLOR_FLAG);
@@ -594,7 +576,7 @@ extern "C" void action_cmd_send_border_colors_preview(lv_event_t *e) {
   g_previewActive = true;
 
   (void)e;
-  // Korrigiert: verwende INDEX-Variablen für Grenzmodus und -farbe
+  // Korrigiert: verwende INDEX-Variablen fÃ¼r Grenzmodus und -farbe
   int mode        = gv_i(FLOW_GLOBAL_VARIABLE_BORDER_COLOR_MODE_INDEX);
   int singleIndex = gv_i(FLOW_GLOBAL_VARIABLE_BORDER_SINGLE_COLOR_INDEX);
   char buf[64];
@@ -674,11 +656,11 @@ static void init_lvgl() {
   lv_log_register_print_cb(lvlog_cb);
 #endif
 
-  screenWidth  = gfx->width();
-  screenHeight = gfx->height();
+screenWidth  = gfx->width();
+screenHeight = gfx->height();
 
-  // statt 1/10 Frame: ~80 Zeilen
-  size_t px_cnt = screenWidth * 80;  // 480 * 80 = 38.4k Pixel -> 76.8 kB
+/* statt 1/10 Frame: ~80 Zeilen */
+size_t px_cnt = screenWidth * 80;  // 480 * 80 = 38.4k Pixel -> 76.8 kB
   buf1 = (lv_color_t *)heap_caps_malloc(px_cnt * sizeof(lv_color_t), MALLOC_CAP_DMA);
   if (!buf1) {
     USBSerial.println("LVGL DMA buffer alloc failed, fallback to smaller");
@@ -688,19 +670,18 @@ static void init_lvgl() {
   if (!buf1) {
     while (true) { USBSerial.println("LVGL buffer alloc failed"); delay(1000); }
   }
+  
+lv_disp_draw_buf_init(&draw_buf, buf1, NULL, px_cnt);
 
-  lv_disp_draw_buf_init(&draw_buf, buf1, NULL, px_cnt);
-
-  static lv_disp_drv_t disp_drv;
+static lv_disp_drv_t disp_drv;
   lv_disp_drv_init(&disp_drv);
   disp_drv.hor_res   = screenWidth;
   disp_drv.ver_res   = screenHeight;
   disp_drv.flush_cb  = my_disp_flush;
   disp_drv.draw_buf  = &draw_buf;
-  disp_drv.full_refresh = 1;   // kompletter Frame -> weniger sichtbare Tearing/Jitter
+  disp_drv.full_refresh = 1;   // kompletter Frame â†’ weniger sichtbare Tearing/Jitter
   disp_drv.sw_rotate = 1;
   lv_disp_drv_register(&disp_drv);
-
   static lv_indev_drv_t indev_drv;
   lv_indev_drv_init(&indev_drv);
   indev_drv.type    = LV_INDEV_TYPE_POINTER;
@@ -725,19 +706,6 @@ static void handleRs485Line(const String &line) {
     int grp = atoi(line.c_str() + 4);
     if (grp < 1) grp = 1;
     if (grp > 36) grp = 36;
-
-    // Joker-Hit erkennen: grp==2 bei 5 Spielern ist Joker-Spot
-    {
-      int errJ = 0;
-      int jokerEn = eez::flow::getGlobalVariable(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED).toInt32(&errJ);
-      (void)jokerEn; // aktuell nicht weiter ausgewertet
-
-      if (grp == 2) {
-        eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_JOKER_HIT, eez::IntegerValue(1));
-      } else {
-        eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_JOKER_HIT, eez::IntegerValue(0));
-      }
-    }
 
     // UI-Flags freigeben
     eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_SPIN_IN_PROGRESS,
@@ -823,3 +791,4 @@ void loop() {
   settings_process();
   delay(5);
 }
+
