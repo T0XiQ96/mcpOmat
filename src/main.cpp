@@ -9,6 +9,7 @@
 #include <Wire.h>
 #include "esp_timer.h"
 #include "settings_store.h"
+#include <ctype.h>
 
 #if defined(ARDUINO_USB_MODE) && (ARDUINO_USB_MODE == 1)
 #include "HWCDC.h"
@@ -150,17 +151,10 @@ constexpr uint32_t RS485_BAUD = 115200;
 HardwareSerial &RS485 = Serial2;
 constexpr int RS485_RX_PIN = 43;
 constexpr int RS485_TX_PIN = 44;
-constexpr int RS485_DE_PIN = 4;
-
-static void rs485SendLine(const char *line);
 
 static inline void rs485SendRaw(const uint8_t *data, size_t len) {
-  digitalWrite(RS485_DE_PIN, HIGH);
-  delayMicroseconds(10);
   RS485.write(data, len);
   RS485.flush();
-  delayMicroseconds(20);
-  digitalWrite(RS485_DE_PIN, LOW);
 }
 
 static void logRs485Line(const char *prefix, const char *line, size_t len = 0) {
@@ -183,7 +177,7 @@ static void logRs485Line(const char *prefix, const String &line) {
   logRs485Line(prefix, line.c_str(), line.length());
 }
 
-static void rs485SendLine(const char *line) {
+void rs485SendLine(const char *line) {
   if (!line) {
     return;
   }
@@ -197,7 +191,14 @@ static void handleRs485Line(const String &line);
 
 static void rs485Poll() {
   while (RS485.available()) {
-    char c = (char)RS485.read();
+    int b = RS485.read();
+    char c = (char)b;
+
+    // Roh-Log zum Debuggen
+    USBSerial.printf("[RS485-BYTE] 0x%02X '%c'\n",
+                     b,
+                     isprint(c) ? c : '.');
+
     if (c == '\n') {
       if (rsInLine.length() > 0) {
         logRs485Line("[RS485-RX] ", rsInLine);
@@ -213,7 +214,7 @@ static void rs485Poll() {
   }
 }
 
-// === Helper für EEZ Globals ==================================================
+// === Helper fÃ¼r EEZ Globals ==================================================
 static inline int32_t gv_i(unsigned idx) {
   int err = 0;
   eez::Value v = eez::flow::getGlobalVariable(idx);
@@ -225,336 +226,280 @@ static inline bool gv_b(unsigned idx) {
   return v.toBool(&err);
 }
 
-static inline int clampInt(int value, int minVal, int maxVal) {
-  if (value < minVal) return minVal;
-  if (value > maxVal) return maxVal;
+// === LichtLoser Spin-Engine (ESP-seitig) =====================================
+
+struct LichtLoserSpinState {
+  bool active;
+  bool hitPublished;
+  uint32_t spinEndMs;
+  uint32_t buttonEnableMs;
+  uint8_t currentGroup; // 1..36
+};
+
+static LichtLoserSpinState g_llSpinState = { false, false, 0, 0, 1 };
+static bool g_llScoreLogInit = false;
+static int32_t g_llLastScores[6] = {0, 0, 0, 0, 0, 0};
+
+static uint32_t llClampToRange(uint32_t value, uint32_t minVal, uint32_t maxVal) {
+  if (value < minVal) {
+    return minVal;
+  }
+  if (value > maxVal) {
+    return maxVal;
+  }
   return value;
 }
 
-static PlayerStateSettings collectPlayerStateFromFlow() {
-  PlayerStateSettings state;
-  state.playerCount  = (uint8_t)clampInt(gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_COUNT), 1, 6);
-  state.mode         = (uint8_t)clampInt(gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_COLOR_MODE_INDEX), 0, 5);
-  state.singleColor  = (uint8_t)clampInt(gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_SINGLE_COLOR_INDEX), 0, 6);
-  state.ownRandom    = (uint8_t)clampInt(gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_OWN_COLOR_FLAG), 0, 1);
-  state.inactiveMode = (uint8_t)clampInt(gv_i(FLOW_GLOBAL_VARIABLE_INACTIVE_EFFECT_INDEX), 0, 3);
-  return state;
-}
-
-static BorderStateSettings collectBorderStateFromFlow() {
-  BorderStateSettings state;
-  state.mode        = (uint8_t)clampInt(gv_i(FLOW_GLOBAL_VARIABLE_BORDER_COLOR_MODE_INDEX), 0, 2);
-  state.singleColor = (uint8_t)clampInt(gv_i(FLOW_GLOBAL_VARIABLE_BORDER_SINGLE_COLOR_INDEX), 0, 5);
-  return state;
-}
-
-static BrightnessSettings collectBrightnessFromFlow() {
-  BrightnessSettings s;
-  s.game   = (uint16_t)clampInt(gv_i(FLOW_GLOBAL_VARIABLE_LED_GAME_BRIGHTNESS), 1, 255);
-  s.border = (uint16_t)clampInt(gv_i(FLOW_GLOBAL_VARIABLE_LED_BORDER_BRIGHTNESS), 1, 255);
-  return s;
-}
-
-static SpinSettings collectSpinFromFlow() {
-  SpinSettings s;
-  s.accelMin10 = (int16_t)gv_i(FLOW_GLOBAL_VARIABLE_LL_ACCEL_TURNS_MIN10);
-  s.accelMax10 = (int16_t)gv_i(FLOW_GLOBAL_VARIABLE_LL_ACCEL_TURNS_MAX10);
-  s.decelMin10 = (int16_t)gv_i(FLOW_GLOBAL_VARIABLE_LL_DECEL_TURNS_MIN10);
-  s.decelMax10 = (int16_t)gv_i(FLOW_GLOBAL_VARIABLE_LL_DECEL_TURNS_MAX10);
-  s.maxMin10   = (int16_t)gv_i(FLOW_GLOBAL_VARIABLE_LL_MAX_SPEED_TURNS_MIN10);
-  s.maxMax10   = (int16_t)gv_i(FLOW_GLOBAL_VARIABLE_LL_MAX_SPEED_TURNS_MAX10);
-  s.stepMs     = (int16_t)gv_i(FLOW_GLOBAL_VARIABLE_LL_STEP_MS);
-  return s;
-}
-
-static bool equals(const PlayerStateSettings &a, const PlayerStateSettings &b) {
-  return a.playerCount == b.playerCount &&
-         a.mode == b.mode &&
-         a.singleColor == b.singleColor &&
-         a.ownRandom == b.ownRandom &&
-         a.inactiveMode == b.inactiveMode;
-}
-
-static bool equals(const BorderStateSettings &a, const BorderStateSettings &b) {
-  return a.mode == b.mode && a.singleColor == b.singleColor;
-}
-
-static bool equals(const BrightnessSettings &a, const BrightnessSettings &b) {
-  return a.game == b.game && a.border == b.border;
-}
-
-static bool equals(const SpinSettings &a, const SpinSettings &b) {
-  return a.accelMin10 == b.accelMin10 &&
-         a.accelMax10 == b.accelMax10 &&
-         a.decelMin10 == b.decelMin10 &&
-         a.decelMax10 == b.decelMax10 &&
-         a.maxMin10   == b.maxMin10 &&
-         a.maxMax10   == b.maxMax10 &&
-         a.stepMs     == b.stepMs;
-}
-
-static void sendPlayerState(const PlayerStateSettings &state) {
-  char buf[64];
-  snprintf(buf, sizeof(buf), "PLAYER_STATE %u %u %u %u %u\n",
-           state.playerCount, state.mode, state.singleColor,
-           state.ownRandom, state.inactiveMode);
-  rs485SendLine(buf);
-
-  snprintf(buf, sizeof(buf), "CFG_PLAYERS %u\n", state.playerCount);
-  rs485SendLine(buf);
-}
-
-static void sendBorderState(const BorderStateSettings &state) {
-  char buf[48];
-  snprintf(buf, sizeof(buf), "BORDER_STATE %u %u\n", state.mode, state.singleColor);
-  rs485SendLine(buf);
-}
-
-static void sendBrightnessState(const BrightnessSettings &state) {
-  char buf[48];
-  snprintf(buf, sizeof(buf), "BRIGHT_STATE %u %u\n", state.game, state.border);
-  rs485SendLine(buf);
-}
-
-static void sendSpinState(const SpinSettings &state) {
-  char buf[96];
-  snprintf(buf, sizeof(buf),
-           "SPIN_PARAMS %d %d %d %d %d %d %d\n",
-           state.accelMin10, state.accelMax10,
-           state.maxMin10, state.maxMax10,
-           state.decelMin10, state.decelMax10,
-           state.stepMs);
-  rs485SendLine(buf);
-}
-
-static void sendShowBorders(bool enable, uint8_t playerCount) {
-  char buf[48];
-  snprintf(buf, sizeof(buf), "BORDERS_STATE %d %u\n", enable ? 1 : 0, playerCount);
-  rs485SendLine(buf);
-}
-
-static void sendBrightnessPair(const BrightnessSettings &state) {
-  sendBrightnessState(state);
-  char buf[48];
-  snprintf(buf, sizeof(buf), "SET_BRIGHTNESS G %u\n", state.game);
-  rs485SendLine(buf);
-  snprintf(buf, sizeof(buf), "SET_BRIGHTNESS B %u\n", state.border);
-  rs485SendLine(buf);
-}
-
-static void sendAllSettingsToArduino() {
-  const PlayerStateSettings &player = settings_get_player();
-  const BorderStateSettings &border = settings_get_border();
-  const BrightnessSettings &bright  = settings_get_brightness();
-  const SpinSettings &spin          = settings_get_spin();
-
-  sendPlayerState(player);
-  sendBorderState(border);
-  sendBrightnessPair(bright);
-  sendSpinState(spin);
-  sendShowBorders(settings_get_show_borders(), player.playerCount);
-}
-
-static PlayerStateSettings g_cachedPlayerState{};
-static BorderStateSettings g_cachedBorderState{};
-static BrightnessSettings g_cachedBrightness{};
-static SpinSettings g_cachedSpin{};
-static bool g_cachedPlayerValid       = false;
-static bool g_cachedBorderValid       = false;
-static bool g_cachedBrightnessValid   = false;
-static bool g_cachedSpinValid         = false;
-static bool g_cachedShowBorders       = false;
-static bool g_cachedShowBordersValid  = false;
-
-// Preview-Flag: solange true, werden echte States nicht zum Arduino gesendet
-static bool g_previewActive           = false;
-
-static void updateCachedStatesFromSettings() {
-  g_cachedPlayerState   = settings_get_player();
-  g_cachedBorderState   = settings_get_border();
-  g_cachedBrightness    = settings_get_brightness();
-  g_cachedSpin          = settings_get_spin();
-  g_cachedShowBorders   = settings_get_show_borders();
-
-  g_cachedPlayerValid       = true;
-  g_cachedBorderValid       = true;
-  g_cachedBrightnessValid   = true;
-  g_cachedSpinValid         = true;
-  g_cachedShowBordersValid  = true;
-
-  // Nach Laden/Factory-Reset ist kein Preview aktiv
-  g_previewActive = false;
-}
-
-static void syncPlayerStateFromFlow() {
-  PlayerStateSettings st = collectPlayerStateFromFlow();
-  settings_set_player_state(st);
-  sendPlayerState(st);
-  g_cachedPlayerState = st;
-  g_cachedPlayerValid = true;
-}
-
-static void syncBorderStateFromFlow() {
-  BorderStateSettings st = collectBorderStateFromFlow();
-  settings_set_border_state(st);
-  sendBorderState(st);
-  g_cachedBorderState = st;
-  g_cachedBorderValid = true;
-}
-
-static void syncBrightnessFromFlow() {
-  BrightnessSettings st = collectBrightnessFromFlow();
-  settings_set_brightness(st);
-  sendBrightnessPair(st);
-  g_cachedBrightness = st;
-  g_cachedBrightnessValid = true;
-}
-
-static void syncSpinFromFlow() {
-  SpinSettings st = collectSpinFromFlow();
-  settings_set_spin(st);
-  sendSpinState(st);
-  g_cachedSpin = st;
-  g_cachedSpinValid = true;
-}
-
-static void syncShowBordersFromFlow() {
-  bool enable = gv_b(FLOW_GLOBAL_VARIABLE_LL_SHOW_BORDERS);
-  settings_set_show_borders(enable);
-  PlayerStateSettings st = collectPlayerStateFromFlow();
-  settings_set_player_state(st);
-  sendShowBorders(enable, st.playerCount);
-  g_cachedPlayerState = st;
-  g_cachedPlayerValid = true;
-  g_cachedShowBorders = enable;
-  g_cachedShowBordersValid = true;
-}
-
-static void pollFlowStateChanges() {
-  PlayerStateSettings currentPlayer = collectPlayerStateFromFlow();
-  if (!g_previewActive && (!g_cachedPlayerValid || !equals(currentPlayer, g_cachedPlayerState))) {
-    settings_set_player_state(currentPlayer);
-    sendPlayerState(currentPlayer);
-    g_cachedPlayerState = currentPlayer;
-    g_cachedPlayerValid = true;
+static void lichtLoserPublishHit(uint8_t hitGroup) {
+  if (hitGroup < 1) {
+    hitGroup = 1;
+  } else if (hitGroup > 36) {
+    hitGroup = 36;
   }
 
-  BorderStateSettings currentBorder = collectBorderStateFromFlow();
-  if (!g_previewActive && (!g_cachedBorderValid || !equals(currentBorder, g_cachedBorderState))) {
-    settings_set_border_state(currentBorder);
-    sendBorderState(currentBorder);
-    g_cachedBorderState = currentBorder;
-    g_cachedBorderValid = true;
-  }
+  eez::flow::setGlobalVariable(
+    FLOW_GLOBAL_VARIABLE_HIT_GROUP,
+    eez::IntegerValue(static_cast<int32_t>(hitGroup))
+  );
 
-  BrightnessSettings currentBrightness = collectBrightnessFromFlow();
-  if (!g_cachedBrightnessValid || !equals(currentBrightness, g_cachedBrightness)) {
-    settings_set_brightness(currentBrightness);
-    sendBrightnessPair(currentBrightness);
-    g_cachedBrightness = currentBrightness;
-    g_cachedBrightnessValid = true;
+  int err = 0;
+  int32_t oldTrig = eez::flow::getGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_TRIGGER).toInt32(&err);
+  if (err != 0) {
+    oldTrig = 0;
   }
+  eez::flow::setGlobalVariable(
+    FLOW_GLOBAL_VARIABLE_HIT_TRIGGER,
+    eez::IntegerValue(oldTrig + 1)
+  );
+}
 
-  SpinSettings currentSpin = collectSpinFromFlow();
-  if (!g_cachedSpinValid || !equals(currentSpin, g_cachedSpin)) {
-    settings_set_spin(currentSpin);
-    sendSpinState(currentSpin);
-    g_cachedSpin = currentSpin;
-    g_cachedSpinValid = true;
-  }
-
-  bool showBorders = gv_b(FLOW_GLOBAL_VARIABLE_LL_SHOW_BORDERS);
-  if (!g_cachedShowBordersValid || showBorders != g_cachedShowBorders ||
-      !g_cachedPlayerValid || currentPlayer.playerCount != g_cachedPlayerState.playerCount) {
-    settings_set_show_borders(showBorders);
-    sendShowBorders(showBorders, currentPlayer.playerCount);
-    g_cachedShowBorders = showBorders;
-    g_cachedShowBordersValid = true;
+static void lichtLoserResetSpinState() {
+  g_llSpinState.active = false;
+  g_llSpinState.hitPublished = false;
+  g_llSpinState.spinEndMs = 0;
+  g_llSpinState.buttonEnableMs = 0;
+  if (g_llSpinState.currentGroup < 1 || g_llSpinState.currentGroup > 36) {
+    g_llSpinState.currentGroup = 1;
   }
 }
 
+static void lichtLoserInit() {
+  lichtLoserResetSpinState();
+  eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_SPIN_IN_PROGRESS, eez::IntegerValue(0));
+  eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_CAN_START_SPIN, eez::IntegerValue(1));
+  g_llScoreLogInit = false;
+}
+
+static bool lichtLoserPlanSpin(uint8_t startGroup,
+                               char *cmdBuf,
+                               size_t cmdBufSize,
+                               uint32_t &totalDurationMs,
+                               uint8_t &finalGroupOut) {
+  if (!cmdBuf || cmdBufSize == 0) {
+    return false;
+  }
+
+  int aMin = gv_i(FLOW_GLOBAL_VARIABLE_LL_ACCEL_TURNS_MIN10);
+  int aMax = gv_i(FLOW_GLOBAL_VARIABLE_LL_ACCEL_TURNS_MAX10);
+  int mMin = gv_i(FLOW_GLOBAL_VARIABLE_LL_MAX_SPEED_TURNS_MIN10);
+  int mMax = gv_i(FLOW_GLOBAL_VARIABLE_LL_MAX_SPEED_TURNS_MAX10);
+  int dMin = gv_i(FLOW_GLOBAL_VARIABLE_LL_DECEL_TURNS_MIN10);
+  int dMax = gv_i(FLOW_GLOBAL_VARIABLE_LL_DECEL_TURNS_MAX10);
+  int stepMs = gv_i(FLOW_GLOBAL_VARIABLE_LL_STEP_MS);
+
+  if (stepMs <= 0) {
+    stepMs = 20;
+  }
+
+  if (aMax < aMin) aMax = aMin;
+  if (mMax < mMin) mMax = mMin;
+  if (dMax < dMin) dMax = dMin;
+
+  auto randTurns = [](int min10, int max10) -> float {
+    if (max10 < min10) {
+      max10 = min10;
+    }
+    long r = random(min10, max10 + 1);
+    return r / 10.0f;
+  };
+
+  float accelTurns = randTurns(aMin, aMax);
+  float maxTurns   = randTurns(mMin, mMax);
+  float decelTurns = randTurns(dMin, dMax);
+
+  if (accelTurns < 0.1f) accelTurns = 0.1f;
+  if (maxTurns   < 0.1f) maxTurns   = 0.1f;
+  if (decelTurns < 0.1f) decelTurns = 0.1f;
+
+  uint16_t accelSteps = static_cast<uint16_t>(accelTurns * 36.0f);
+  uint16_t maxSteps   = static_cast<uint16_t>(maxTurns   * 36.0f);
+  uint16_t decelSteps = static_cast<uint16_t>(decelTurns * 36.0f);
+
+  uint32_t totalSteps = static_cast<uint32_t>(accelSteps) + maxSteps + decelSteps;
+  if (totalSteps == 0) {
+    totalSteps = 36;
+  }
+
+  int dir = random(0, 2) ? 1 : -1;
+
+  if (startGroup < 1 || startGroup > 36) {
+    startGroup = 1;
+  }
+  uint8_t startIndex = static_cast<uint8_t>(startGroup - 1); // 0..35
+
+  int32_t signedOffset = dir * static_cast<int32_t>(totalSteps % 36);
+  int32_t idx = static_cast<int32_t>(startIndex) + signedOffset;
+  while (idx < 0) {
+    idx += 36;
+  }
+  while (idx >= 36) {
+    idx -= 36;
+  }
+  uint8_t finalGroup = static_cast<uint8_t>(idx + 1); // 1..36
+
+  totalDurationMs = 0;
+  for (uint32_t step = 0; step < totalSteps; ++step) {
+    float fDelay;
+    if (step < accelSteps && accelSteps > 0) {
+      float k = static_cast<float>(step) / static_cast<float>(accelSteps);
+      fDelay = 1.5f - k;
+    } else if (step < static_cast<uint32_t>(accelSteps) + maxSteps) {
+      fDelay = 0.5f;
+    } else if (decelSteps > 0) {
+      uint32_t decelIndex = step - accelSteps - maxSteps;
+      float k = static_cast<float>(decelIndex) / static_cast<float>(decelSteps);
+      fDelay = 0.5f + k * 1.5f;
+    } else {
+      fDelay = 1.0f;
+    }
+    uint32_t stepDelay = static_cast<uint32_t>(stepMs * fDelay);
+    stepDelay = llClampToRange(stepDelay, 1, 2000);
+    totalDurationMs += stepDelay;
+  }
+
+  uint16_t blinkMs = static_cast<uint16_t>(stepMs * 2);
+  blinkMs = static_cast<uint16_t>(llClampToRange(blinkMs, 80, 500));
+
+  int written = snprintf(cmdBuf, cmdBufSize,
+                         "LL_SPIN %u %u %u %u %d %u %u\n",
+                         static_cast<unsigned>(startGroup),
+                         static_cast<unsigned>(accelSteps),
+                         static_cast<unsigned>(maxSteps),
+                         static_cast<unsigned>(decelSteps),
+                         dir,
+                         static_cast<unsigned>(stepMs),
+                         static_cast<unsigned>(blinkMs));
+  if (written <= 0 || static_cast<size_t>(written) >= cmdBufSize) {
+    return false;
+  }
+
+  finalGroupOut = finalGroup;
+  return true;
+}
+
+static void lichtLoserUpdate() {
+  if (!g_llSpinState.active && g_llSpinState.buttonEnableMs == 0) {
+    return;
+  }
+
+  uint32_t now = millis();
+
+  if (g_llSpinState.active && now >= g_llSpinState.spinEndMs) {
+    g_llSpinState.active = false;
+    eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_SPIN_IN_PROGRESS, eez::IntegerValue(0));
+    if (!g_llSpinState.hitPublished) {
+      g_llSpinState.hitPublished = true;
+      lichtLoserPublishHit(g_llSpinState.currentGroup);
+    }
+  }
+
+  if (!g_llSpinState.active && g_llSpinState.buttonEnableMs != 0 && now >= g_llSpinState.buttonEnableMs) {
+    eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_CAN_START_SPIN, eez::IntegerValue(1));
+    g_llSpinState.buttonEnableMs = 0;
+  }
+}
+
+static void lichtLoserScoreLogUpdate() {
+  static const unsigned kScoreGlobals[6] = {
+      FLOW_GLOBAL_VARIABLE_SCORE_P1,
+      FLOW_GLOBAL_VARIABLE_SCORE_P2,
+      FLOW_GLOBAL_VARIABLE_SCORE_P3,
+      FLOW_GLOBAL_VARIABLE_SCORE_P4,
+      FLOW_GLOBAL_VARIABLE_SCORE_P5,
+      FLOW_GLOBAL_VARIABLE_SCORE_P6};
+
+  int32_t scores[6];
+  bool resetDetected = false;
+  for (int i = 0; i < 6; ++i) {
+    scores[i] = gv_i(kScoreGlobals[i]);
+    if (g_llScoreLogInit && scores[i] > g_llLastScores[i]) {
+      resetDetected = true;
+    }
+  }
+
+  if (!g_llScoreLogInit || resetDetected) {
+    for (int i = 0; i < 6; ++i) {
+      g_llLastScores[i] = scores[i];
+    }
+    g_llScoreLogInit = true;
+    return;
+  }
+
+  int modeWinLose    = gv_i(FLOW_GLOBAL_VARIABLE_MODE_WIN_LOSE);
+  int resultIndex    = gv_i(FLOW_GLOBAL_VARIABLE_RESULT_INDEX);
+  int mySeatIndex    = gv_i(FLOW_GLOBAL_VARIABLE_MY_SEAT_INDEX);
+  int isResultPlayer = gv_i(FLOW_GLOBAL_VARIABLE_IS_RESULT_PLAYER);
+
+  for (int i = 0; i < 6; ++i) {
+    if (g_llLastScores[i] > 0 && scores[i] <= 0) {
+      USBSerial.printf("[LL] Player %d score %ld -> %ld (mode=%d result=%d seat=%d isResult=%d)\n",
+                       i + 1,
+                       static_cast<long>(g_llLastScores[i]),
+                       static_cast<long>(scores[i]),
+                       modeWinLose,
+                       resultIndex,
+                       mySeatIndex,
+                       isResultPlayer);
+    }
+    g_llLastScores[i] = scores[i];
+  }
+}
 // === Native Actions (RS485-Befehle) ==========================================
 extern "C" void action_cmd_led_ring_test(lv_event_t *e) {
   (void)e;
   rs485SendLine("LED_TEST\n");
 }
 
-extern "C" void action_settings_load(lv_event_t *e) {
-  (void)e;
-  settings_apply_to_flow();
-  sendAllSettingsToArduino();
-  updateCachedStatesFromSettings();
-}
-
-extern "C" void action_settings_factory_reset(lv_event_t *e) {
-  (void)e;
-  settings_factory_reset();
-  sendAllSettingsToArduino();
-  updateCachedStatesFromSettings();
-}
-
-extern "C" void action_send_player_state(lv_event_t *e) {
-  (void)e;
-  syncPlayerStateFromFlow();
-}
-
-extern "C" void action_act_player_roller_value_changed(lv_event_t *e) {
-  // Wenn der Player-Roller geändert wird, direkt Player-State zum Arduino schicken
-  action_send_player_state(e);
-}
-
-extern "C" void action_send_cfg_players(lv_event_t *e) {
-  // Explizite CFG_PLAYERS-Action, nutzt die gleiche Logik wie action_send_player_state
-  action_send_player_state(e);
-}
-
-extern "C" void action_send_border_state(lv_event_t *e) {
-  (void)e;
-  syncBorderStateFromFlow();
-}
-
-extern "C" void action_settings_mark_dirty(lv_event_t *e) {
-  (void)e;
-  settings_schedule_flush();
-}
-
-extern "C" void action_settings_apply_to_flow(lv_event_t *e) {
-  (void)e;
-  settings_apply_to_flow();
-}
-
-extern "C" void action_settings_schedule_flush(lv_event_t *e) {
-  (void)e;
-  settings_schedule_flush();
-}
-
-extern "C" void action_settings_set__(lv_event_t *e) {
-  (void)e;
-  settings_schedule_flush();
-}
-
-extern "C" void action_send_all_settings_to_arduino(lv_event_t *e) {
-  (void)e;
-  sendAllSettingsToArduino();
-  updateCachedStatesFromSettings();
-}
-
-extern "C" void action_cmd_send_cfg_joker(lv_event_t *e) {
-  (void)e;
-  bool enabled = gv_b(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED);
-  char buf[32];
-  snprintf(buf, sizeof(buf), "CFG_JOKER %d\n", enabled ? 1 : 0);
-  rs485SendLine(buf);
-}
-
 extern "C" void action_cmd_send_spin_start_to_arduino(lv_event_t *e) {
   (void)e;
-  rs485SendLine("SPIN_START\n");
+  if (g_llSpinState.active) {
+    return;
+  }
+  uint32_t now = millis();
+  if (g_llSpinState.buttonEnableMs != 0 && now < g_llSpinState.buttonEnableMs) {
+    return;
+  }
+
+  char buf[96];
+  uint32_t totalMs = 0;
+  uint8_t finalGroup = g_llSpinState.currentGroup;
+  if (!lichtLoserPlanSpin(g_llSpinState.currentGroup, buf, sizeof(buf), totalMs, finalGroup)) {
+    return;
+  }
+
+  rs485SendLine(buf);
+
+  g_llSpinState.active = true;
+  g_llSpinState.hitPublished = false;
+  g_llSpinState.spinEndMs = now + totalMs;
+  g_llSpinState.buttonEnableMs = g_llSpinState.spinEndMs + 2000;
+  g_llSpinState.currentGroup = finalGroup;
+
+  eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_SPIN_IN_PROGRESS, eez::IntegerValue(1));
+  eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_CAN_START_SPIN, eez::IntegerValue(0));
 }
 
 extern "C" void action_cmd_send_joker_start_to_arduino(lv_event_t *e) {
-  g_previewActive = true;
-
   (void)e;
   rs485SendLine("JOKER:PREVIEW:START\n");
 }
@@ -565,21 +510,18 @@ extern "C" void action_cmd_send_joker_stop_to_arduino(lv_event_t *e) {
 }
 
 extern "C" void action_cmd_send_joker_preview(lv_event_t *e) {
-  g_previewActive = true;
-
   (void)e;
+  // Korrigiert: nutze jokerColorIndex statt jokerColorModeId
   int mode     = gv_i(FLOW_GLOBAL_VARIABLE_JOKER_COLOR_INDEX);
-  int colorIdx = mode;
+  int colorIdx = gv_i(FLOW_GLOBAL_VARIABLE_JOKER_COLOR_INDEX);
   char buf[64];
   snprintf(buf, sizeof(buf), "JOKER_PREVIEW %d %d\n", mode, colorIdx);
   rs485SendLine(buf);
 }
 
 extern "C" void action_cmd_send_player_colors_preview(lv_event_t *e) {
-  g_previewActive = true;
-
   (void)e;
-  // Korrigiert: verwende INDEX-Variablen für Modus und Farbe
+  // Korrigiert: verwende INDEX-Variablen fÃ¼r Modus und Farbe
   int mode        = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_COLOR_MODE_INDEX);
   int singleIndex = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_SINGLE_COLOR_INDEX);
   int ownRandom   = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_OWN_COLOR_FLAG);
@@ -591,10 +533,8 @@ extern "C" void action_cmd_send_player_colors_preview(lv_event_t *e) {
 }
 
 extern "C" void action_cmd_send_border_colors_preview(lv_event_t *e) {
-  g_previewActive = true;
-
   (void)e;
-  // Korrigiert: verwende INDEX-Variablen für Grenzmodus und -farbe
+  // Korrigiert: verwende INDEX-Variablen fÃ¼r Grenzmodus und -farbe
   int mode        = gv_i(FLOW_GLOBAL_VARIABLE_BORDER_COLOR_MODE_INDEX);
   int singleIndex = gv_i(FLOW_GLOBAL_VARIABLE_BORDER_SINGLE_COLOR_INDEX);
   char buf[64];
@@ -643,8 +583,6 @@ extern "C" void action_cmd_send_game_end(lv_event_t *e) {
 }
 
 extern "C" void action_cmd_send_preview_clear(lv_event_t *e) {
-  g_previewActive = false;
-
   (void)e;
   rs485SendLine("PREVIEW_CLEAR\n");
 }
@@ -674,11 +612,11 @@ static void init_lvgl() {
   lv_log_register_print_cb(lvlog_cb);
 #endif
 
-  screenWidth  = gfx->width();
-  screenHeight = gfx->height();
+screenWidth  = gfx->width();
+screenHeight = gfx->height();
 
-  // statt 1/10 Frame: ~80 Zeilen
-  size_t px_cnt = screenWidth * 80;  // 480 * 80 = 38.4k Pixel -> 76.8 kB
+/* statt 1/10 Frame: ~80 Zeilen */
+size_t px_cnt = screenWidth * 80;  // 480 * 80 = 38.4k Pixel -> 76.8 kB
   buf1 = (lv_color_t *)heap_caps_malloc(px_cnt * sizeof(lv_color_t), MALLOC_CAP_DMA);
   if (!buf1) {
     USBSerial.println("LVGL DMA buffer alloc failed, fallback to smaller");
@@ -688,19 +626,18 @@ static void init_lvgl() {
   if (!buf1) {
     while (true) { USBSerial.println("LVGL buffer alloc failed"); delay(1000); }
   }
+  
+lv_disp_draw_buf_init(&draw_buf, buf1, NULL, px_cnt);
 
-  lv_disp_draw_buf_init(&draw_buf, buf1, NULL, px_cnt);
-
-  static lv_disp_drv_t disp_drv;
+static lv_disp_drv_t disp_drv;
   lv_disp_drv_init(&disp_drv);
   disp_drv.hor_res   = screenWidth;
   disp_drv.ver_res   = screenHeight;
   disp_drv.flush_cb  = my_disp_flush;
   disp_drv.draw_buf  = &draw_buf;
-  disp_drv.full_refresh = 1;   // kompletter Frame -> weniger sichtbare Tearing/Jitter
+  disp_drv.full_refresh = 1;   // kompletter Frame â†’ weniger sichtbare Tearing/Jitter
   disp_drv.sw_rotate = 1;
   lv_disp_drv_register(&disp_drv);
-
   static lv_indev_drv_t indev_drv;
   lv_indev_drv_init(&indev_drv);
   indev_drv.type    = LV_INDEV_TYPE_POINTER;
@@ -720,59 +657,9 @@ static void init_lvgl() {
 
 // === RS485 RX Line Handler ===================================================
 static void handleRs485Line(const String &line) {
-  // HIT n -> Ende des Spins + Trigger
-  if (line.startsWith("HIT ")) {
-    int grp = atoi(line.c_str() + 4);
-    if (grp < 1) grp = 1;
-    if (grp > 36) grp = 36;
-
-    // Joker-Hit erkennen: grp==2 bei 5 Spielern ist Joker-Spot
-    {
-      int errJ = 0;
-      int jokerEn = eez::flow::getGlobalVariable(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED).toInt32(&errJ);
-      (void)jokerEn; // aktuell nicht weiter ausgewertet
-
-      if (grp == 2) {
-        eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_JOKER_HIT, eez::IntegerValue(1));
-      } else {
-        eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_JOKER_HIT, eez::IntegerValue(0));
-      }
-    }
-
-    // UI-Flags freigeben
-    eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_SPIN_IN_PROGRESS,
-                                 eez::IntegerValue(0));
-    eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_CAN_START_SPIN,
-                                 eez::IntegerValue(1));
-
-    // Treffer in Globals
-    eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_GROUP,
-                                 eez::IntegerValue(grp));
-
-    // Trigger++ (für Flow)
-    int err = 0;
-    int32_t oldTrig =
-        eez::flow::getGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_TRIGGER).toInt32(&err);
-    if (err) oldTrig = 0;
-    eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_TRIGGER,
-                                 eez::IntegerValue(oldTrig + 1));
-
-    USBSerial.printf("HIT-Gruppe gesetzt: %d\n", grp);
-    return;
-  }
-
-  // Nur nötig, falls du später wirklich SPIN_DONE/READY senden willst
-  if (line.equalsIgnoreCase("SPIN_READY") || line.equalsIgnoreCase("SPIN_DONE")) {
-    eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_CAN_START_SPIN,
-                                 eez::IntegerValue(1));
-    eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_SPIN_IN_PROGRESS,
-                                 eez::IntegerValue(0));
-    return;
-  }
-
-  // weitere Meldungen bei Bedarf auswerten
+  (void)line;
+  // Mega liefert aktuell keine R�ckmeldungen; Platzhalter f�r sp�tere Protokoll-Erweiterungen.
 }
-
 
 // === setup / loop ============================================================
 void setup() {
@@ -785,7 +672,8 @@ void setup() {
 #endif
   delay(300);
   USBSerial.println("PitterOmat ESP32-S3 + EEZ + RS485 (single buffer, no TCA BL) boot");
-  settings_init();
+
+  randomSeed((uint32_t)esp_timer_get_time());
 
   // Touch I2C0 (GT911)
   Wire.begin(15, 7);
@@ -803,14 +691,11 @@ void setup() {
   // EEZ / UI
   ui_init();
   eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_DISPLAY_ID, eez::IntegerValue(DISPLAY_ID));
-  settings_apply_to_flow();
 
   // RS485
-  pinMode(RS485_DE_PIN, OUTPUT);
-  digitalWrite(RS485_DE_PIN, LOW);
   RS485.begin(RS485_BAUD, SERIAL_8N1, RS485_RX_PIN, RS485_TX_PIN);
-  sendAllSettingsToArduino();
-  updateCachedStatesFromSettings();
+
+  lichtLoserInit();
 }
 
 void loop() {
@@ -819,7 +704,7 @@ void loop() {
   ui_tick();
   rs485Poll();
   usbPoll();
-  pollFlowStateChanges();
-  settings_process();
+  lichtLoserUpdate();
+  lichtLoserScoreLogUpdate();
   delay(5);
 }

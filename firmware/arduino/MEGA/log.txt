@@ -1,0 +1,7 @@
+C:\Users\tommy\PROJEKTE\mcpOmat\firmware\arduino\MEGA\MEGA.ino:7:10: fatal error: ../../shared/player_layout.h: No such file or directory
+ #include "../../shared/player_layout.h"
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+exit status 1
+
+Compilation error: ../../shared/player_layout.h: No such file or directory
