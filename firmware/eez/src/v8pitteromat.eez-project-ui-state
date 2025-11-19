@@ -1,6 +1,13 @@
 {
   "navigation": {
-    "subnavigationSelectedItems": {}
+    "selectedUserPageObject": "[v8pitteromat.eez-project]:/userPages/21",
+    "selectedUserWidgetObject": "[v8pitteromat.eez-project]:/userWidgets/-1",
+    "selectedActionObject": "[v8pitteromat.eez-project]:/actions/46",
+    "selectedGlobalVariableObject": "[v8pitteromat.eez-project]:/variables/globalVariables/105",
+    "selectedBitmapObject": "[v8pitteromat.eez-project]:/bitmaps/-1",
+    "subnavigationSelectedItems": {
+      "variables-tab/sub-navigation/selected-item": "Global"
+    }
   },
   "layoutModel": {
     "rootEditor": {
@@ -75,6 +82,7 @@
           },
           {
             "type": "border",
+            "selected": 0,
             "location": "bottom",
             "children": [
               {
@@ -109,6 +117,7 @@
           },
           {
             "type": "border",
+            "selected": 1,
             "size": 240,
             "location": "left",
             "children": [
@@ -119,6 +128,14 @@
                 "component": "changes",
                 "enableClose": false,
                 "icon": "svg:changes"
+              },
+              {
+                "type": "tab",
+                "id": "PAGES",
+                "name": "Pages",
+                "component": "pages",
+                "enableClose": false,
+                "icon": "svg:pages"
               }
             ]
           }
@@ -136,16 +153,9 @@
                   "type": "tabset",
                   "id": "#0de80a27-827a-458e-b62e-8517ff9dd6ba",
                   "weight": 1,
+                  "selected": 1,
                   "enableClose": false,
                   "children": [
-                    {
-                      "type": "tab",
-                      "id": "PAGES",
-                      "name": "Pages",
-                      "component": "pages",
-                      "enableClose": false,
-                      "icon": "svg:pages"
-                    },
                     {
                       "type": "tab",
                       "id": "WIDGETS",
@@ -201,17 +211,50 @@
             {
               "type": "tabset",
               "id": "EDITORS",
-              "weight": 65,
+              "weight": 67.9258289703316,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
                 {
                   "type": "tab",
-                  "id": "#c9296352-2f2a-4f9e-985f-0039cddeca35",
-                  "name": "idleScreen",
+                  "id": "#f9f7cad2-d4c2-4135-90fe-a658bfe6aeaf",
+                  "name": "actLichtLoser_HitWatcher",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[v8pitteromat.eez-project]:/userPages/0",
+                    "objectPath": "[v8pitteromat.eez-project]:/actions/46",
+                    "permanent": false
+                  },
+                  "icon": "material:code"
+                },
+                {
+                  "type": "tab",
+                  "id": "#1e50d97a-b7a7-4aec-aeb0-4fc3245a1add",
+                  "name": "LichtLoser_StartHitBlink",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[v8pitteromat.eez-project]:/actions/32",
+                    "permanent": true
+                  },
+                  "icon": "material:code"
+                },
+                {
+                  "type": "tab",
+                  "id": "#f8d6934c-c09d-4eca-819d-a952a406055e",
+                  "name": "Lichtloser_ShowEndScreens",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[v8pitteromat.eez-project]:/actions/27",
+                    "permanent": true
+                  },
+                  "icon": "material:code"
+                },
+                {
+                  "type": "tab",
+                  "id": "#c9296352-2f2a-4f9e-985f-0039cddeca35",
+                  "name": "adminoptionen1_spiele_lichtloser_timings",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[v8pitteromat.eez-project]:/userPages/21",
                     "permanent": false
                   },
                   "icon": "svg:page"
@@ -222,7 +265,7 @@
             {
               "type": "row",
               "id": "#bf9719d8-ceca-4747-9f89-b828646fbc37",
-              "weight": 20,
+              "weight": 17.074171029668413,
               "children": [
                 {
                   "type": "tabset",
@@ -555,7 +598,8 @@
                       "component": "bitmaps",
                       "enableClose": false
                     }
-                  ]
+                  ],
+                  "active": true
                 },
                 {
                   "type": "tabset",
@@ -992,6 +1036,135 @@
   "features": {},
   "objects": {
     "[v8pitteromat.eez-project]:/userPages/0[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/53[flow-state]": {
+      "selection": {
+        "0": {
+          "$selected": true
+        },
+        "2": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -27,
+          "y": -17
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/10[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/9[flow-state]": {
+      "selection": {
+        "0": {
+          "1": {
+            "1": {},
+            "3": {
+              "0": {}
+            },
+            "5": {},
+            "7": {},
+            "9": {},
+            "11": {
+              "0": {
+                "$selected": true
+              }
+            }
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -400,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/3[flow-state]": {
+      "selection": {
+        "0": {
+          "0": {}
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -429,
+          "y": -248
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/34[flow-state]": {
+      "selection": {
+        "0": {
+          "8": {
+            "0": {}
+          },
+          "9": {
+            "0": {}
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/1[flow-state]": {
       "selection": {},
       "transform": {
         "translate": {
@@ -1006,6 +1179,916 @@
         "secondToPx": 200,
         "scrollLeft": 0
       }
+    },
+    "[v8pitteromat.eez-project]:/userPages/2[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/4[flow-state]": {
+      "selection": {
+        "0": {
+          "3": {
+            "$selected": true
+          },
+          "4": {}
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/5[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userWidgets/0[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userWidgets/2[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -20
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userWidgets/1[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": -205,
+          "y": -30
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userWidgets/3[flow-state]": {
+      "selection": {
+        "0": {
+          "0": {
+            "$selected": true
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/6[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/7[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/8[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/11[flow-state]": {
+      "selection": {
+        "0": {
+          "1": {
+            "0": {
+              "1": {
+                "0": {
+                  "$selected": true
+                }
+              }
+            }
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/13[flow-state]": {
+      "selection": {
+        "0": {
+          "1": {
+            "$selected": true
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/12[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/14[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/15[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/16[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/17[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/18[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/19[flow-state]": {
+      "selection": {
+        "0": {
+          "2": {
+            "2": {
+              "$selected": true
+            },
+            "3": {}
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/20[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/21[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/22[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/23[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/24[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/25[flow-state]": {
+      "selection": {
+        "0": {
+          "5": {
+            "0": {}
+          },
+          "6": {
+            "0": {},
+            "$selected": true
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/26[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/27[flow-state]": {
+      "selection": {
+        "0": {
+          "4": {
+            "0": {}
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/28[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/29[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/30[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/31[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/32[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/33[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/userPages/35[flow-state]": {
+      "selection": {
+        "0": {
+          "3": {
+            "0": {
+              "$selected": true
+            }
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -240,
+          "y": -240
+        },
+        "scale": 1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/46[flow-state]": {
+      "selection": {
+        "4": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -229.87500000000006,
+          "y": -98
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/28[flow-state]": {
+      "selection": {
+        "3": {},
+        "11": {},
+        "28": {},
+        "47": {
+          "$selected": true
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -2047.3117556158606,
+          "y": -411.26916553595674
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/26[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": -456.5,
+          "y": -135
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/27[flow-state]": {
+      "selection": {
+        "1": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -336,
+          "y": -172.5
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/31[flow-state]": {
+      "selection": {
+        "1": {},
+        "6": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -283.5,
+          "y": -119.5
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/29[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": -709,
+          "y": -68
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/33[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/34[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": -239,
+          "y": -29
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/35[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/36[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/37[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/39[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/38[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/41[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/42[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/43[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/44[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/45[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/32[flow-state]": {
+      "selection": {
+        "$selected": true
+      },
+      "transform": {
+        "translate": {
+          "x": -234,
+          "y": 15
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/30[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": -461,
+          "y": 12
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/24[flow-state]": {
+      "selection": {
+        "15": {
+          "$selected": true
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -415,
+          "y": -198.5
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/25[flow-state]": {
+      "selection": {
+        "9": {
+          "$selected": true
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -348.5,
+          "y": -330.5
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/23[flow-state]": {
+      "selection": {
+        "1": {
+          "$selected": true
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
     }
   },
   "activeOutputSection": 0,
@@ -1014,6 +2097,7 @@
   "searchMatchWholeWord": false,
   "replaceEnabled": false,
   "replaceText": "",
+  "pageRuntimeFrontFace": true,
   "breakpoints": {},
   "watchExpressions": [],
   "showComponentDescriptions": true,
@@ -1021,7 +2105,9 @@
   "selectedStylePropertyName": "",
   "lvglPart": "MAIN",
   "lvglState": "DEFAULT",
-  "lvglExpandedPropertiesGroup": [],
+  "lvglExpandedPropertiesGroup": [
+    "TEXT"
+  ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
   "flowZoom": 1,

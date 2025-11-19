@@ -7,6 +7,7 @@
 #include "Arduino_GFX_Library.h"
 #include "TouchDrvGT911.hpp"
 #include <Wire.h>
+#include <math.h>
 #include "esp_timer.h"
 #include "settings_store.h"
 #include <ctype.h>
@@ -358,19 +359,21 @@ static bool lichtLoserPlanSpin(uint8_t startGroup,
   uint8_t finalGroup = static_cast<uint8_t>(idx + 1); // 1..36
 
   totalDurationMs = 0;
+  const float kExpo = 3.0f;
+  const float expoNorm = 1.0f - expf(-kExpo);
   for (uint32_t step = 0; step < totalSteps; ++step) {
-    float fDelay;
+    float fDelay = 1.0f;
     if (step < accelSteps && accelSteps > 0) {
       float k = static_cast<float>(step) / static_cast<float>(accelSteps);
-      fDelay = 1.5f - k;
+      float decay = expf(-kExpo * k);
+      fDelay = 0.5f + decay;
     } else if (step < static_cast<uint32_t>(accelSteps) + maxSteps) {
       fDelay = 0.5f;
     } else if (decelSteps > 0) {
       uint32_t decelIndex = step - accelSteps - maxSteps;
       float k = static_cast<float>(decelIndex) / static_cast<float>(decelSteps);
-      fDelay = 0.5f + k * 1.5f;
-    } else {
-      fDelay = 1.0f;
+      float rise = (1.0f - expf(-kExpo * k)) / (expoNorm > 0.0f ? expoNorm : 1.0f);
+      fDelay = 0.5f + rise * 1.5f;
     }
     uint32_t stepDelay = static_cast<uint32_t>(stepMs * fDelay);
     stepDelay = llClampToRange(stepDelay, 1, 2000);
@@ -486,6 +489,10 @@ extern "C" void action_cmd_send_spin_start_to_arduino(lv_event_t *e) {
   if (!lichtLoserPlanSpin(g_llSpinState.currentGroup, buf, sizeof(buf), totalMs, finalGroup)) {
     return;
   }
+
+  // Stop UI hit blink when starting a new spin
+  eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_BLINK_ACTIVE, eez::BooleanValue(false));
+  eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_BLINK_PHASE, eez::BooleanValue(false));
 
   rs485SendLine(buf);
 
@@ -658,7 +665,7 @@ static lv_disp_drv_t disp_drv;
 // === RS485 RX Line Handler ===================================================
 static void handleRs485Line(const String &line) {
   (void)line;
-  // Mega liefert aktuell keine Rückmeldungen; Platzhalter für spätere Protokoll-Erweiterungen.
+  // Mega liefert aktuell keine Rckmeldungen; Platzhalter fr sptere Protokoll-Erweiterungen.
 }
 
 // === setup / loop ============================================================

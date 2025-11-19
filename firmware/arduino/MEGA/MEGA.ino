@@ -5,6 +5,7 @@
 struct LlSpinPlan;
 
 #include <Arduino.h>
+#include <math.h>
 #include <Adafruit_NeoPixel.h>
 
 // ===================== RS485 =====================
@@ -532,7 +533,9 @@ static float llStepDelayFactor(const LlSpinPlan &plan, uint32_t step) {
 
   if (step < accel && accel > 0) {
     float k = (float)step / (float)accel;
-    return 1.5f - k;
+    // exponentiell abfallend: startet bei 1.5 und nähert sich 0.5
+    float decay = expf(-3.0f * k);
+    return 0.5f + decay;
   }
   if (step < accel + max) {
     return 0.5f;
@@ -540,7 +543,10 @@ static float llStepDelayFactor(const LlSpinPlan &plan, uint32_t step) {
   if (decel > 0) {
     uint32_t decelIndex = step - accel - max;
     float k = (float)decelIndex / (float)decel;
-    return 0.5f + k * 1.5f;
+    // exponentiell ansteigend: wächst von 0.5 zu 2.0
+    const float denom = 1.0f - expf(-3.0f);
+    float rise = (1.0f - expf(-3.0f * k)) / (denom > 0.0f ? denom : 1.0f);
+    return 0.5f + rise * 1.5f;
   }
   return 1.0f;
 }
@@ -791,7 +797,6 @@ static void handleLine(const char *line) {
     return;
   }
 
-  // unbekannter Befehl -> ignorieren
 }
 
 static void rs485Poll() {

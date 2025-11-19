@@ -94,28 +94,6 @@ static void event_handler_cb_menu_screen_optionen_1(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_menu_screen_optionen_2(lv_event_t *e) {
-    lv_event_code_t event = lv_event_get_code(e);
-    void *flowState = lv_event_get_user_data(e);
-    (void)flowState;
-    
-    if (event == LV_EVENT_RELEASED) {
-        e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 66, e);
-    }
-}
-
-static void event_handler_cb_menu_screen_obj37(lv_event_t *e) {
-    lv_event_code_t event = lv_event_get_code(e);
-    void *flowState = lv_event_get_user_data(e);
-    (void)flowState;
-    
-    if (event == LV_EVENT_RELEASED) {
-        e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 66, e);
-    }
-}
-
 static void event_handler_cb_choose_player_screen_choose_player_screen(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
@@ -146,7 +124,7 @@ static void event_handler_cb_choose_player_screen_player_roller(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_choose_player_screen_obj38(lv_event_t *e) {
+static void event_handler_cb_choose_player_screen_obj37(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -157,14 +135,14 @@ static void event_handler_cb_choose_player_screen_obj38(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_choose_player_screen_obj39(lv_event_t *e) {
+static void event_handler_cb_choose_player_screen_obj38(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
 }
 
-static void event_handler_cb_choose_player_screen_obj40(lv_event_t *e) {
+static void event_handler_cb_choose_player_screen_obj39(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -205,7 +183,7 @@ static void event_handler_cb_choose_game_screen_game_roller(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_choose_game_screen_obj41(lv_event_t *e) {
+static void event_handler_cb_choose_game_screen_obj40(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -216,7 +194,7 @@ static void event_handler_cb_choose_game_screen_obj41(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_choose_game_screen_obj42(lv_event_t *e) {
+static void event_handler_cb_choose_game_screen_obj41(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -227,7 +205,7 @@ static void event_handler_cb_choose_game_screen_obj42(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_keyboard_screen_obj43(lv_event_t *e) {
+static void event_handler_cb_keyboard_screen_obj42(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -238,7 +216,7 @@ static void event_handler_cb_keyboard_screen_obj43(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_numpad_screen_obj44(lv_event_t *e) {
+static void event_handler_cb_numpad_screen_obj43(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -249,7 +227,7 @@ static void event_handler_cb_numpad_screen_obj44(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_okay_screen_obj45(lv_event_t *e) {
+static void event_handler_cb_okay_screen_obj44(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -268,10 +246,6 @@ static void event_handler_cb_game_lichtloser_game_lichtloser(lv_event_t *e) {
     if (event == LV_EVENT_SCREEN_LOAD_START) {
         e->user_data = (void *)0;
         flowPropagateValueLVGLEvent(flowState, -1, 65, e);
-    }
-    if (event == LV_EVENT_SCREEN_UNLOADED) {
-        e->user_data = (void *)0;
-        flowPropagateValueLVGLEvent(flowState, -1, 79, e);
     }
 }
 
@@ -413,7 +387,7 @@ static void event_handler_cb_game_lichtloser_button_game(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_game_lichtloser_obj46(lv_event_t *e) {
+static void event_handler_cb_game_lichtloser_obj45(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -424,7 +398,18 @@ static void event_handler_cb_game_lichtloser_obj46(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_game_win_obj47(lv_event_t *e) {
+static void event_handler_cb_game_win_game_win(lv_event_t *e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    void *flowState = lv_event_get_user_data(e);
+    (void)flowState;
+    
+    if (event == LV_EVENT_SCREEN_UNLOADED) {
+        e->user_data = (void *)0;
+        flowPropagateValueLVGLEvent(flowState, -1, 79, e);
+    }
+}
+
+static void event_handler_cb_game_win_obj46(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -435,7 +420,18 @@ static void event_handler_cb_game_win_obj47(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_game_win_lose_obj48(lv_event_t *e) {
+static void event_handler_cb_game_win_lose_game_win_lose(lv_event_t *e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    void *flowState = lv_event_get_user_data(e);
+    (void)flowState;
+    
+    if (event == LV_EVENT_SCREEN_UNLOADED) {
+        e->user_data = (void *)0;
+        flowPropagateValueLVGLEvent(flowState, -1, 79, e);
+    }
+}
+
+static void event_handler_cb_game_win_lose_obj47(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -446,7 +442,18 @@ static void event_handler_cb_game_win_lose_obj48(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_game_lose_obj49(lv_event_t *e) {
+static void event_handler_cb_game_lose_game_lose(lv_event_t *e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    void *flowState = lv_event_get_user_data(e);
+    (void)flowState;
+    
+    if (event == LV_EVENT_SCREEN_UNLOADED) {
+        e->user_data = (void *)0;
+        flowPropagateValueLVGLEvent(flowState, -1, 79, e);
+    }
+}
+
+static void event_handler_cb_game_lose_obj48(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -457,7 +464,18 @@ static void event_handler_cb_game_lose_obj49(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_game_lose_win_obj50(lv_event_t *e) {
+static void event_handler_cb_game_lose_win_game_lose_win(lv_event_t *e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    void *flowState = lv_event_get_user_data(e);
+    (void)flowState;
+    
+    if (event == LV_EVENT_SCREEN_UNLOADED) {
+        e->user_data = (void *)0;
+        flowPropagateValueLVGLEvent(flowState, -1, 79, e);
+    }
+}
+
+static void event_handler_cb_game_lose_win_obj49(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -479,7 +497,7 @@ static void event_handler_cb_useroptionen1_button_10(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_useroptionen1_obj51(lv_event_t *e) {
+static void event_handler_cb_useroptionen1_obj50(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -520,7 +538,7 @@ static void event_handler_cb_useroptionen1_spiele_options_game_roller(lv_event_t
     }
 }
 
-static void event_handler_cb_useroptionen1_spiele_obj52(lv_event_t *e) {
+static void event_handler_cb_useroptionen1_spiele_obj51(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -531,7 +549,7 @@ static void event_handler_cb_useroptionen1_spiele_obj52(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_useroptionen1_spiele_obj53(lv_event_t *e) {
+static void event_handler_cb_useroptionen1_spiele_obj52(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -542,7 +560,7 @@ static void event_handler_cb_useroptionen1_spiele_obj53(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_useroptionen1_spiele_lichtloser_obj54(lv_event_t *e) {
+static void event_handler_cb_useroptionen1_spiele_lichtloser_obj53(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -597,7 +615,7 @@ static void event_handler_cb_adminoptionen1_button_9(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_adminoptionen1_obj55(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_obj54(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -638,7 +656,7 @@ static void event_handler_cb_adminoptionen1_spiele_options_game_roller_1(lv_even
     }
 }
 
-static void event_handler_cb_adminoptionen1_spiele_obj56(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_spiele_obj55(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -649,7 +667,7 @@ static void event_handler_cb_adminoptionen1_spiele_obj56(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_adminoptionen1_spiele_obj57(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_spiele_obj56(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -657,6 +675,17 @@ static void event_handler_cb_adminoptionen1_spiele_obj57(lv_event_t *e) {
     if (event == LV_EVENT_RELEASED) {
         e->user_data = (void *)0;
         flowPropagateValueLVGLEvent(flowState, 6, 0, e);
+    }
+}
+
+static void event_handler_cb_adminoptionen1_spiele_lichtloser_adminoptionen1_spiele_lichtloser(lv_event_t *e) {
+    lv_event_code_t event = lv_event_get_code(e);
+    void *flowState = lv_event_get_user_data(e);
+    (void)flowState;
+    
+    if (event == LV_EVENT_SCREEN_LOADED) {
+        e->user_data = (void *)0;
+        flowPropagateValueLVGLEvent(flowState, -1, 62, e);
     }
 }
 
@@ -701,7 +730,7 @@ static void event_handler_cb_adminoptionen1_spiele_lichtloser_button_4(lv_event_
     }
 }
 
-static void event_handler_cb_adminoptionen1_spiele_lichtloser_obj58(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_spiele_lichtloser_obj57(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -727,7 +756,7 @@ static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_adminoptione
     }
 }
 
-static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj59(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj58(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -746,14 +775,14 @@ static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj59(lv_eve
     }
 }
 
-static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj60(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj59(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
 }
 
-static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj61(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj60(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -772,7 +801,7 @@ static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj61(lv_eve
     }
 }
 
-static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj62(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj61(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -871,7 +900,7 @@ static void event_handler_cb_adminoptionen1_spiele_lichtloser_timings_slider_1(l
     }
 }
 
-static void event_handler_cb_adminoptionen1_spiele_lichtloser_timings_obj63(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_spiele_lichtloser_timings_obj62(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -904,7 +933,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_button_26(lv_event_t *
     }
 }
 
-static void event_handler_cb_adminoptionen1_farbeneffekte_obj64(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_farbeneffekte_obj63(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -930,7 +959,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_adminopti
     }
 }
 
-static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj65(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj64(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -949,14 +978,14 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj65(lv_
     }
 }
 
-static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj66(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj65(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
 }
 
-static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj67(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj66(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -975,7 +1004,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj67(lv_
     }
 }
 
-static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj68(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj67(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -996,7 +1025,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_checkbox_
     }
 }
 
-static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj69(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj68(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1022,7 +1051,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_adminoption
     }
 }
 
-static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj70(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj69(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1041,14 +1070,14 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj70(lv_ev
     }
 }
 
-static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj71(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj70(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
 }
 
-static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj72(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj71(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1067,7 +1096,7 @@ static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj72(lv_ev
     }
 }
 
-static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj73(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj72(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1111,7 +1140,7 @@ static void event_handler_cb_adminoptionen1_system_button_15(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_obj74(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_obj73(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1122,7 +1151,7 @@ static void event_handler_cb_adminoptionen1_system_obj74(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_obj75(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_obj74(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1144,7 +1173,7 @@ static void event_handler_cb_adminoptionen1_system_leds_button_18(lv_event_t *e)
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_leds_obj76(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_leds_obj75(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1204,7 +1233,7 @@ static void event_handler_cb_adminoptionen1_system_leds_helligkeit_slider_3(lv_e
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_leds_helligkeit_obj77(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_leds_helligkeit_obj76(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1226,7 +1255,7 @@ static void event_handler_cb_adminoptionen1_system_anzeige_button_29(lv_event_t 
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_anzeige_obj78(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_anzeige_obj77(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1248,7 +1277,7 @@ static void event_handler_cb_adminoptionen1_system_anzeige_idle_adminoptionen1_s
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj79(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj78(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1262,14 +1291,14 @@ static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj79(lv_event_t
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj80(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj79(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
     
 }
 
-static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj81(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj80(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1288,7 +1317,7 @@ static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj81(lv_event_t
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj82(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj81(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1309,7 +1338,7 @@ static void event_handler_cb_adminoptionen1_system_anzeige_idle_checkbox_1(lv_ev
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj83(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_anzeige_idle_obj82(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1331,7 +1360,7 @@ static void event_handler_cb_adminoptionen1_system_debug2_button_46(lv_event_t *
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_debug2_obj84(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_debug2_obj83(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1353,7 +1382,7 @@ static void event_handler_cb_adminoptionen1_system_debug2_tests_button_49(lv_eve
     }
 }
 
-static void event_handler_cb_adminoptionen1_system_debug2_tests_obj85(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system_debug2_tests_obj84(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1375,7 +1404,7 @@ static void event_handler_cb_adminoptionen1_system2_button_39(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_adminoptionen1_system2_obj86(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_system2_obj85(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1408,7 +1437,7 @@ static void event_handler_cb_adminoptionen1_bonus_button_7(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_adminoptionen1_bonus_obj87(lv_event_t *e) {
+static void event_handler_cb_adminoptionen1_bonus_obj86(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1419,7 +1448,7 @@ static void event_handler_cb_adminoptionen1_bonus_obj87(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_optionen_template_obj88(lv_event_t *e) {
+static void event_handler_cb_optionen_template_obj87(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1430,7 +1459,7 @@ static void event_handler_cb_optionen_template_obj88(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_optionen_template_obj89(lv_event_t *e) {
+static void event_handler_cb_optionen_template_obj88(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1441,7 +1470,7 @@ static void event_handler_cb_optionen_template_obj89(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_optionen_template_obj90(lv_event_t *e) {
+static void event_handler_cb_optionen_template_obj89(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1452,7 +1481,7 @@ static void event_handler_cb_optionen_template_obj90(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_optionen_template_obj91(lv_event_t *e) {
+static void event_handler_cb_optionen_template_obj90(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1463,7 +1492,7 @@ static void event_handler_cb_optionen_template_obj91(lv_event_t *e) {
     }
 }
 
-static void event_handler_cb_optionen_template_2_obj92(lv_event_t *e) {
+static void event_handler_cb_optionen_template_2_obj91(lv_event_t *e) {
     lv_event_code_t event = lv_event_get_code(e);
     void *flowState = lv_event_get_user_data(e);
     (void)flowState;
@@ -1534,7 +1563,7 @@ void create_screen_idle_screen() {
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_color(obj, lv_color_hex(0xfffdd111), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_label_set_text(obj, "version: 0.1");
+            lv_label_set_text(obj, "version: 0.2");
         }
     }
     
@@ -1642,7 +1671,7 @@ void create_screen_loading_screen() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj93 = obj;
+            objects.obj92 = obj;
             lv_obj_set_pos(obj, 153, 366);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point100, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1661,7 +1690,7 @@ void delete_screen_loading_screen() {
     objects.loading_screen = 0;
     objects.obj2 = 0;
     objects.logo = 0;
-    objects.obj93 = 0;
+    objects.obj92 = 0;
     deletePageFlowState(2);
 }
 
@@ -1748,7 +1777,7 @@ void create_screen_menu_screen() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj94 = obj;
+                    objects.obj93 = obj;
                     lv_obj_set_pos(obj, 1, 0);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, 95);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1771,7 +1800,7 @@ void create_screen_menu_screen() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj95 = obj;
+                    objects.obj94 = obj;
                     lv_obj_set_pos(obj, 0, 10);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, 66);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1794,7 +1823,7 @@ void create_screen_menu_screen() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj96 = obj;
+                    objects.obj95 = obj;
                     lv_obj_set_pos(obj, 0, 10);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, 66);
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1802,30 +1831,6 @@ void create_screen_menu_screen() {
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff981313), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_text_color(obj, lv_color_hex(0xff01184a), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_label_set_text(obj, "A");
-                }
-            }
-        }
-        {
-            // Optionen_2
-            lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.optionen_2 = obj;
-            lv_obj_set_pos(obj, 135, 384);
-            lv_obj_set_size(obj, 212, 63);
-            lv_obj_add_event_cb(obj, event_handler_cb_menu_screen_optionen_2, LV_EVENT_ALL, flowState);
-            add_style_braun(obj);
-            {
-                lv_obj_t *parent_obj = obj;
-                {
-                    lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.obj37 = obj;
-                    lv_obj_set_pos(obj, 0, 10);
-                    lv_obj_set_size(obj, LV_SIZE_CONTENT, 66);
-                    lv_obj_add_event_cb(obj, event_handler_cb_menu_screen_obj37, LV_EVENT_ALL, flowState);
-                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_obj_set_style_text_font(obj, &ui_font_point70, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff981313), LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_obj_set_style_text_color(obj, lv_color_hex(0xff01184a), LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_label_set_text(obj, "EndScreen");
                 }
             }
         }
@@ -1844,13 +1849,11 @@ void delete_screen_menu_screen() {
     objects.news_panel = 0;
     objects.news = 0;
     objects.start = 0;
-    objects.obj94 = 0;
+    objects.obj93 = 0;
     objects.optionen = 0;
-    objects.obj95 = 0;
+    objects.obj94 = 0;
     objects.optionen_1 = 0;
-    objects.obj96 = 0;
-    objects.optionen_2 = 0;
-    objects.obj37 = 0;
+    objects.obj95 = 0;
     deletePageFlowState(3);
 }
 
@@ -1895,10 +1898,10 @@ void create_screen_choose_player_screen() {
         }
         {
             lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.obj38 = obj;
+            objects.obj37 = obj;
             lv_obj_set_pos(obj, 130, 380);
             lv_obj_set_size(obj, 221, 55);
-            lv_obj_add_event_cb(obj, event_handler_cb_choose_player_screen_obj38, LV_EVENT_ALL, flowState);
+            lv_obj_add_event_cb(obj, event_handler_cb_choose_player_screen_obj37, LV_EVENT_ALL, flowState);
             lv_obj_set_style_bg_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
@@ -1914,10 +1917,10 @@ void create_screen_choose_player_screen() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj39 = obj;
+            objects.obj38 = obj;
             lv_obj_set_pos(obj, 135, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
-            lv_obj_add_event_cb(obj, event_handler_cb_choose_player_screen_obj39, LV_EVENT_ALL, flowState);
+            lv_obj_add_event_cb(obj, event_handler_cb_choose_player_screen_obj38, LV_EVENT_ALL, flowState);
             lv_obj_set_style_text_font(obj, &ui_font_point80, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_text_color(obj, lv_color_hex(0xfffdd111), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_text_opa(obj, 0, LV_PART_MAIN | LV_STATE_DISABLED);
@@ -1941,10 +1944,10 @@ void create_screen_choose_player_screen() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj40 = obj;
+                    objects.obj39 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_choose_player_screen_obj40, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_choose_player_screen_obj39, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1952,7 +1955,7 @@ void create_screen_choose_player_screen() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj97 = obj;
+                            objects.obj96 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1976,11 +1979,11 @@ void delete_screen_choose_player_screen() {
     objects.choose_player_screen = 0;
     objects.obj4 = 0;
     objects.player_roller = 0;
+    objects.obj37 = 0;
     objects.obj38 = 0;
-    objects.obj39 = 0;
     objects.exit_container_1 = 0;
-    objects.obj40 = 0;
-    objects.obj97 = 0;
+    objects.obj39 = 0;
+    objects.obj96 = 0;
     deletePageFlowState(4);
 }
 
@@ -2001,20 +2004,20 @@ void tick_screen_choose_player_screen() {
     }
     {
         bool new_val = evalBooleanProperty(flowState, 5, 3, "Failed to evaluate Disabled state");
-        bool cur_val = lv_obj_has_state(objects.obj39, LV_STATE_DISABLED);
+        bool cur_val = lv_obj_has_state(objects.obj38, LV_STATE_DISABLED);
         if (new_val != cur_val) {
-            tick_value_change_obj = objects.obj39;
-            if (new_val) lv_obj_add_state(objects.obj39, LV_STATE_DISABLED);
-            else lv_obj_clear_state(objects.obj39, LV_STATE_DISABLED);
+            tick_value_change_obj = objects.obj38;
+            if (new_val) lv_obj_add_state(objects.obj38, LV_STATE_DISABLED);
+            else lv_obj_clear_state(objects.obj38, LV_STATE_DISABLED);
             tick_value_change_obj = NULL;
         }
     }
     {
         const char *new_val = evalTextProperty(flowState, 5, 4, "Failed to evaluate Text in Label widget");
-        const char *cur_val = lv_label_get_text(objects.obj39);
+        const char *cur_val = lv_label_get_text(objects.obj38);
         if (strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj39;
-            lv_label_set_text(objects.obj39, new_val);
+            tick_value_change_obj = objects.obj38;
+            lv_label_set_text(objects.obj38, new_val);
             tick_value_change_obj = NULL;
         }
     }
@@ -2056,10 +2059,10 @@ void create_screen_choose_game_screen() {
         }
         {
             lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.obj41 = obj;
+            objects.obj40 = obj;
             lv_obj_set_pos(obj, 130, 380);
             lv_obj_set_size(obj, 221, 55);
-            lv_obj_add_event_cb(obj, event_handler_cb_choose_game_screen_obj41, LV_EVENT_ALL, flowState);
+            lv_obj_add_event_cb(obj, event_handler_cb_choose_game_screen_obj40, LV_EVENT_ALL, flowState);
             lv_obj_set_style_bg_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
@@ -2091,10 +2094,10 @@ void create_screen_choose_game_screen() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj42 = obj;
+                    objects.obj41 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_choose_game_screen_obj42, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_choose_game_screen_obj41, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2102,7 +2105,7 @@ void create_screen_choose_game_screen() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj98 = obj;
+                            objects.obj97 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2126,10 +2129,10 @@ void delete_screen_choose_game_screen() {
     objects.choose_game_screen = 0;
     objects.obj5 = 0;
     objects.game_roller = 0;
-    objects.obj41 = 0;
+    objects.obj40 = 0;
     objects.exit_container_3 = 0;
-    objects.obj42 = 0;
-    objects.obj98 = 0;
+    objects.obj41 = 0;
+    objects.obj97 = 0;
     deletePageFlowState(5);
 }
 
@@ -2235,10 +2238,10 @@ void create_screen_keyboard_screen() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj43 = obj;
+                    objects.obj42 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_keyboard_screen_obj43, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_keyboard_screen_obj42, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2246,7 +2249,7 @@ void create_screen_keyboard_screen() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj99 = obj;
+                            objects.obj98 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2274,8 +2277,8 @@ void delete_screen_keyboard_screen() {
     objects.keyboard = 0;
     objects.keyboard_title = 0;
     objects.exit_container_4 = 0;
-    objects.obj43 = 0;
-    objects.obj99 = 0;
+    objects.obj42 = 0;
+    objects.obj98 = 0;
     deletePageFlowState(6);
 }
 
@@ -2360,10 +2363,10 @@ void create_screen_numpad_screen() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj44 = obj;
+                    objects.obj43 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_numpad_screen_obj44, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_numpad_screen_obj43, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2371,7 +2374,7 @@ void create_screen_numpad_screen() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj100 = obj;
+                            objects.obj99 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2399,8 +2402,8 @@ void delete_screen_numpad_screen() {
     objects.numpad = 0;
     objects.numpad_title = 0;
     objects.exit_container_5 = 0;
-    objects.obj44 = 0;
-    objects.obj100 = 0;
+    objects.obj43 = 0;
+    objects.obj99 = 0;
     deletePageFlowState(7);
 }
 
@@ -2505,10 +2508,10 @@ void create_screen_okay_screen() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj45 = obj;
+                    objects.obj44 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_okay_screen_obj45, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_okay_screen_obj44, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2516,7 +2519,7 @@ void create_screen_okay_screen() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj101 = obj;
+                            objects.obj100 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2542,8 +2545,8 @@ void delete_screen_okay_screen() {
     objects.ja_panel = 0;
     objects.nein_panel = 0;
     objects.exit_container_6 = 0;
-    objects.obj45 = 0;
-    objects.obj101 = 0;
+    objects.obj44 = 0;
+    objects.obj100 = 0;
     deletePageFlowState(8);
 }
 
@@ -2894,10 +2897,10 @@ void create_screen_game_lichtloser() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj46 = obj;
+                    objects.obj45 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_game_lichtloser_obj46, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_game_lichtloser_obj45, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2905,7 +2908,7 @@ void create_screen_game_lichtloser() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj102 = obj;
+                            objects.obj101 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2951,8 +2954,8 @@ void delete_screen_game_lichtloser() {
     objects.button_game = 0;
     objects.button_title_2 = 0;
     objects.exit_container_7 = 0;
-    objects.obj46 = 0;
-    objects.obj102 = 0;
+    objects.obj45 = 0;
+    objects.obj101 = 0;
     deletePageFlowState(9);
 }
 
@@ -3267,6 +3270,7 @@ void create_screen_game_win() {
     objects.game_win = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 480);
+    lv_obj_add_event_cb(obj, event_handler_cb_game_win_game_win, LV_EVENT_ALL, flowState);
     lv_obj_set_style_bg_color(obj, lv_color_hex(0xffc90d0d), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
@@ -3355,10 +3359,10 @@ void create_screen_game_win() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj47 = obj;
+                    objects.obj46 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_game_win_obj47, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_game_win_obj46, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3366,7 +3370,7 @@ void create_screen_game_win() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj103 = obj;
+                            objects.obj102 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3393,8 +3397,8 @@ void delete_screen_game_win() {
     objects.win_container = 0;
     objects.win_panel = 0;
     objects.exit_container_8 = 0;
-    objects.obj47 = 0;
-    objects.obj103 = 0;
+    objects.obj46 = 0;
+    objects.obj102 = 0;
     deletePageFlowState(10);
 }
 
@@ -3411,6 +3415,7 @@ void create_screen_game_win_lose() {
     objects.game_win_lose = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 480);
+    lv_obj_add_event_cb(obj, event_handler_cb_game_win_lose_game_win_lose, LV_EVENT_ALL, flowState);
     lv_obj_set_style_bg_color(obj, lv_color_hex(0xffc90d0d), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
@@ -3521,10 +3526,10 @@ void create_screen_game_win_lose() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj48 = obj;
+                    objects.obj47 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_game_win_lose_obj48, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_game_win_lose_obj47, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3532,7 +3537,7 @@ void create_screen_game_win_lose() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj104 = obj;
+                            objects.obj103 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3561,8 +3566,8 @@ void delete_screen_game_win_lose() {
     objects.lose_anzeige_1 = 0;
     objects.lose_anzeige_title_2 = 0;
     objects.exit_container_9 = 0;
-    objects.obj48 = 0;
-    objects.obj104 = 0;
+    objects.obj47 = 0;
+    objects.obj103 = 0;
     deletePageFlowState(11);
 }
 
@@ -3588,6 +3593,7 @@ void create_screen_game_lose() {
     objects.game_lose = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 480);
+    lv_obj_add_event_cb(obj, event_handler_cb_game_lose_game_lose, LV_EVENT_ALL, flowState);
     lv_obj_set_style_bg_color(obj, lv_color_hex(0xffc90d0d), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
@@ -3675,10 +3681,10 @@ void create_screen_game_lose() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj49 = obj;
+                    objects.obj48 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_game_lose_obj49, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_game_lose_obj48, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3686,7 +3692,7 @@ void create_screen_game_lose() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj105 = obj;
+                            objects.obj104 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3713,8 +3719,8 @@ void delete_screen_game_lose() {
     objects.win_container_1 = 0;
     objects.lose_panel = 0;
     objects.exit_container_10 = 0;
-    objects.obj49 = 0;
-    objects.obj105 = 0;
+    objects.obj48 = 0;
+    objects.obj104 = 0;
     deletePageFlowState(12);
 }
 
@@ -3731,6 +3737,7 @@ void create_screen_game_lose_win() {
     objects.game_lose_win = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 480);
+    lv_obj_add_event_cb(obj, event_handler_cb_game_lose_win_game_lose_win, LV_EVENT_ALL, flowState);
     lv_obj_set_style_bg_color(obj, lv_color_hex(0xffc90d0d), LV_PART_MAIN | LV_STATE_DEFAULT);
     {
         lv_obj_t *parent_obj = obj;
@@ -3840,10 +3847,10 @@ void create_screen_game_lose_win() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj50 = obj;
+                    objects.obj49 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_game_lose_win_obj50, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_game_lose_win_obj49, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3851,7 +3858,7 @@ void create_screen_game_lose_win() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj106 = obj;
+                            objects.obj105 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3880,8 +3887,8 @@ void delete_screen_game_lose_win() {
     objects.win_anzeige_1 = 0;
     objects.lose_anzeige_title_3 = 0;
     objects.exit_container_11 = 0;
-    objects.obj50 = 0;
-    objects.obj106 = 0;
+    objects.obj49 = 0;
+    objects.obj105 = 0;
     deletePageFlowState(13);
 }
 
@@ -3925,7 +3932,7 @@ void create_screen_useroptionen1() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj107 = obj;
+            objects.obj106 = obj;
             lv_obj_set_pos(obj, 92, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -3993,10 +4000,10 @@ void create_screen_useroptionen1() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj51 = obj;
+                    objects.obj50 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_useroptionen1_obj51, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_useroptionen1_obj50, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4004,7 +4011,7 @@ void create_screen_useroptionen1() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj108 = obj;
+                            objects.obj107 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4027,13 +4034,13 @@ void delete_screen_useroptionen1() {
     lv_obj_del(objects.useroptionen1);
     objects.useroptionen1 = 0;
     objects.obj14 = 0;
-    objects.obj107 = 0;
+    objects.obj106 = 0;
     objects.button_container_10 = 0;
     objects.button_10 = 0;
     objects.button_title_10 = 0;
     objects.exit_container_12 = 0;
-    objects.obj51 = 0;
-    objects.obj108 = 0;
+    objects.obj50 = 0;
+    objects.obj107 = 0;
     deletePageFlowState(14);
 }
 
@@ -4080,10 +4087,10 @@ void create_screen_useroptionen1_spiele() {
         }
         {
             lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.obj52 = obj;
+            objects.obj51 = obj;
             lv_obj_set_pos(obj, 130, 380);
             lv_obj_set_size(obj, 221, 55);
-            lv_obj_add_event_cb(obj, event_handler_cb_useroptionen1_spiele_obj52, LV_EVENT_ALL, flowState);
+            lv_obj_add_event_cb(obj, event_handler_cb_useroptionen1_spiele_obj51, LV_EVENT_ALL, flowState);
             lv_obj_set_style_bg_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
@@ -4115,10 +4122,10 @@ void create_screen_useroptionen1_spiele() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj53 = obj;
+                    objects.obj52 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_useroptionen1_spiele_obj53, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_useroptionen1_spiele_obj52, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4126,7 +4133,7 @@ void create_screen_useroptionen1_spiele() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj109 = obj;
+                            objects.obj108 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4150,10 +4157,10 @@ void delete_screen_useroptionen1_spiele() {
     objects.useroptionen1_spiele = 0;
     objects.obj15 = 0;
     objects.options_game_roller = 0;
-    objects.obj52 = 0;
+    objects.obj51 = 0;
     objects.exit_container_13 = 0;
-    objects.obj53 = 0;
-    objects.obj109 = 0;
+    objects.obj52 = 0;
+    objects.obj108 = 0;
     deletePageFlowState(15);
 }
 
@@ -4208,7 +4215,7 @@ void create_screen_useroptionen1_spiele_lichtloser() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj110 = obj;
+            objects.obj109 = obj;
             lv_obj_set_pos(obj, 90, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4233,10 +4240,10 @@ void create_screen_useroptionen1_spiele_lichtloser() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj54 = obj;
+                    objects.obj53 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_useroptionen1_spiele_lichtloser_obj54, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_useroptionen1_spiele_lichtloser_obj53, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4244,7 +4251,7 @@ void create_screen_useroptionen1_spiele_lichtloser() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj111 = obj;
+                            objects.obj110 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4267,10 +4274,10 @@ void delete_screen_useroptionen1_spiele_lichtloser() {
     lv_obj_del(objects.useroptionen1_spiele_lichtloser);
     objects.useroptionen1_spiele_lichtloser = 0;
     objects.obj16 = 0;
-    objects.obj110 = 0;
+    objects.obj109 = 0;
     objects.exit_container_14 = 0;
-    objects.obj54 = 0;
-    objects.obj111 = 0;
+    objects.obj53 = 0;
+    objects.obj110 = 0;
     deletePageFlowState(16);
 }
 
@@ -4305,7 +4312,7 @@ void create_screen_adminoptionen1() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj112 = obj;
+            objects.obj111 = obj;
             lv_obj_set_pos(obj, 92, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4502,10 +4509,10 @@ void create_screen_adminoptionen1() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj55 = obj;
+                    objects.obj54 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_obj55, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_obj54, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4513,7 +4520,7 @@ void create_screen_adminoptionen1() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj113 = obj;
+                            objects.obj112 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4536,7 +4543,7 @@ void delete_screen_adminoptionen1() {
     lv_obj_del(objects.adminoptionen1);
     objects.adminoptionen1 = 0;
     objects.obj17 = 0;
-    objects.obj112 = 0;
+    objects.obj111 = 0;
     objects.button_container_3 = 0;
     objects.button_3 = 0;
     objects.button_title_3 = 0;
@@ -4550,8 +4557,8 @@ void delete_screen_adminoptionen1() {
     objects.button_9 = 0;
     objects.button_title_9 = 0;
     objects.exit_container_15 = 0;
-    objects.obj55 = 0;
-    objects.obj113 = 0;
+    objects.obj54 = 0;
+    objects.obj112 = 0;
     deletePageFlowState(17);
 }
 
@@ -4598,10 +4605,10 @@ void create_screen_adminoptionen1_spiele() {
         }
         {
             lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.obj56 = obj;
+            objects.obj55 = obj;
             lv_obj_set_pos(obj, 130, 380);
             lv_obj_set_size(obj, 221, 55);
-            lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_obj56, LV_EVENT_ALL, flowState);
+            lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_obj55, LV_EVENT_ALL, flowState);
             lv_obj_set_style_bg_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
@@ -4633,10 +4640,10 @@ void create_screen_adminoptionen1_spiele() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj57 = obj;
+                    objects.obj56 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_obj57, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_obj56, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4644,7 +4651,7 @@ void create_screen_adminoptionen1_spiele() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj114 = obj;
+                            objects.obj113 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4668,10 +4675,10 @@ void delete_screen_adminoptionen1_spiele() {
     objects.adminoptionen1_spiele = 0;
     objects.obj18 = 0;
     objects.options_game_roller_1 = 0;
-    objects.obj56 = 0;
+    objects.obj55 = 0;
     objects.exit_container_16 = 0;
-    objects.obj57 = 0;
-    objects.obj114 = 0;
+    objects.obj56 = 0;
+    objects.obj113 = 0;
     deletePageFlowState(18);
 }
 
@@ -4708,6 +4715,7 @@ void create_screen_adminoptionen1_spiele_lichtloser() {
     objects.adminoptionen1_spiele_lichtloser = obj;
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 480);
+    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_adminoptionen1_spiele_lichtloser, LV_EVENT_ALL, flowState);
     lv_obj_add_state(obj, LV_STATE_CHECKED);
     {
         lv_obj_t *parent_obj = obj;
@@ -4726,7 +4734,7 @@ void create_screen_adminoptionen1_spiele_lichtloser() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj115 = obj;
+            objects.obj114 = obj;
             lv_obj_set_pos(obj, 90, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4896,10 +4904,10 @@ void create_screen_adminoptionen1_spiele_lichtloser() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj58 = obj;
+                    objects.obj57 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_obj58, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_obj57, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4907,7 +4915,7 @@ void create_screen_adminoptionen1_spiele_lichtloser() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj116 = obj;
+                            objects.obj115 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -4930,7 +4938,7 @@ void delete_screen_adminoptionen1_spiele_lichtloser() {
     lv_obj_del(objects.adminoptionen1_spiele_lichtloser);
     objects.adminoptionen1_spiele_lichtloser = 0;
     objects.obj19 = 0;
-    objects.obj115 = 0;
+    objects.obj114 = 0;
     objects.slider_container_1 = 0;
     objects.slider_title_7 = 0;
     objects.slider_title_1 = 0;
@@ -4942,8 +4950,8 @@ void delete_screen_adminoptionen1_spiele_lichtloser() {
     objects.button_4 = 0;
     objects.button_title_4 = 0;
     objects.exit_container_17 = 0;
-    objects.obj58 = 0;
-    objects.obj116 = 0;
+    objects.obj57 = 0;
+    objects.obj115 = 0;
     deletePageFlowState(19);
 }
 
@@ -4997,7 +5005,7 @@ void create_screen_adminoptionen1_spiele_lichtloser_joker() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj117 = obj;
+            objects.obj116 = obj;
             lv_obj_set_pos(obj, 150, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5027,10 +5035,10 @@ void create_screen_adminoptionen1_spiele_lichtloser_joker() {
                 }
                 {
                     lv_obj_t *obj = lv_switch_create(parent_obj);
-                    objects.obj59 = obj;
+                    objects.obj58 = obj;
                     lv_obj_set_pos(obj, 17, 13);
                     lv_obj_set_size(obj, 73, 34);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj59, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj58, LV_EVENT_ALL, flowState);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_bg_opa(obj, 130, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xffab7c46), LV_PART_INDICATOR | LV_STATE_DEFAULT);
@@ -5067,10 +5075,10 @@ void create_screen_adminoptionen1_spiele_lichtloser_joker() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
-                    objects.obj60 = obj;
+                    objects.obj59 = obj;
                     lv_obj_set_pos(obj, 105, 5);
                     lv_obj_set_size(obj, 200, 40);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj60, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj59, LV_EVENT_ALL, flowState);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
                     add_style_gold_panel(obj);
                     lv_obj_set_style_border_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5092,11 +5100,11 @@ void create_screen_adminoptionen1_spiele_lichtloser_joker() {
                 }
                 {
                     lv_obj_t *obj = lv_dropdown_create(parent_obj);
-                    objects.obj61 = obj;
+                    objects.obj60 = obj;
                     lv_obj_set_pos(obj, 15, 35);
                     lv_obj_set_size(obj, 380, 50);
                     lv_dropdown_set_options(obj, "");
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj61, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj60, LV_EVENT_ALL, flowState);
                     add_style_gold_dropdown_(obj);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff747474), LV_PART_MAIN | LV_STATE_DISABLED);
                 }
@@ -5120,10 +5128,10 @@ void create_screen_adminoptionen1_spiele_lichtloser_joker() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj62 = obj;
+                    objects.obj61 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj62, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_joker_obj61, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5131,7 +5139,7 @@ void create_screen_adminoptionen1_spiele_lichtloser_joker() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj118 = obj;
+                            objects.obj117 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5154,17 +5162,17 @@ void delete_screen_adminoptionen1_spiele_lichtloser_joker() {
     lv_obj_del(objects.adminoptionen1_spiele_lichtloser_joker);
     objects.adminoptionen1_spiele_lichtloser_joker = 0;
     objects.obj20 = 0;
-    objects.obj117 = 0;
+    objects.obj116 = 0;
     objects.switch_container_1 = 0;
-    objects.obj59 = 0;
+    objects.obj58 = 0;
     objects.switch_title_1 = 0;
     objects.dropdown_container_3 = 0;
-    objects.obj60 = 0;
+    objects.obj59 = 0;
     objects.roller_title_3 = 0;
-    objects.obj61 = 0;
+    objects.obj60 = 0;
     objects.exit_container_18 = 0;
-    objects.obj62 = 0;
-    objects.obj118 = 0;
+    objects.obj61 = 0;
+    objects.obj117 = 0;
     deletePageFlowState(20);
 }
 
@@ -5174,16 +5182,26 @@ void tick_screen_adminoptionen1_spiele_lichtloser_joker() {
     tick_user_widget_background(getFlowState(flowState, 0), 77);
     {
         bool new_val = evalBooleanProperty(flowState, 5, 3, "Failed to evaluate Checked state");
-        bool cur_val = lv_obj_has_state(objects.obj59, LV_STATE_CHECKED);
+        bool cur_val = lv_obj_has_state(objects.obj58, LV_STATE_CHECKED);
         if (new_val != cur_val) {
-            tick_value_change_obj = objects.obj59;
-            if (new_val) lv_obj_add_state(objects.obj59, LV_STATE_CHECKED);
-            else lv_obj_clear_state(objects.obj59, LV_STATE_CHECKED);
+            tick_value_change_obj = objects.obj58;
+            if (new_val) lv_obj_add_state(objects.obj58, LV_STATE_CHECKED);
+            else lv_obj_clear_state(objects.obj58, LV_STATE_CHECKED);
             tick_value_change_obj = NULL;
         }
     }
     {
         bool new_val = evalBooleanProperty(flowState, 8, 3, "Failed to evaluate Disabled state");
+        bool cur_val = lv_obj_has_state(objects.obj59, LV_STATE_DISABLED);
+        if (new_val != cur_val) {
+            tick_value_change_obj = objects.obj59;
+            if (new_val) lv_obj_add_state(objects.obj59, LV_STATE_DISABLED);
+            else lv_obj_clear_state(objects.obj59, LV_STATE_DISABLED);
+            tick_value_change_obj = NULL;
+        }
+    }
+    {
+        bool new_val = evalBooleanProperty(flowState, 10, 3, "Failed to evaluate Disabled state");
         bool cur_val = lv_obj_has_state(objects.obj60, LV_STATE_DISABLED);
         if (new_val != cur_val) {
             tick_value_change_obj = objects.obj60;
@@ -5193,31 +5211,21 @@ void tick_screen_adminoptionen1_spiele_lichtloser_joker() {
         }
     }
     {
-        bool new_val = evalBooleanProperty(flowState, 10, 3, "Failed to evaluate Disabled state");
-        bool cur_val = lv_obj_has_state(objects.obj61, LV_STATE_DISABLED);
-        if (new_val != cur_val) {
-            tick_value_change_obj = objects.obj61;
-            if (new_val) lv_obj_add_state(objects.obj61, LV_STATE_DISABLED);
-            else lv_obj_clear_state(objects.obj61, LV_STATE_DISABLED);
-            tick_value_change_obj = NULL;
-        }
-    }
-    {
         const char *new_val = evalStringArrayPropertyAndJoin(flowState, 10, 4, "Failed to evaluate Options in Dropdown widget", "\n");
-        const char *cur_val = lv_dropdown_get_options(objects.obj61);
+        const char *cur_val = lv_dropdown_get_options(objects.obj60);
         if (strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj61;
-            lv_dropdown_set_options(objects.obj61, new_val);
+            tick_value_change_obj = objects.obj60;
+            lv_dropdown_set_options(objects.obj60, new_val);
             tick_value_change_obj = NULL;
         }
     }
     {
-        if (!(lv_obj_get_state(objects.obj61) & LV_STATE_EDITED)) {
+        if (!(lv_obj_get_state(objects.obj60) & LV_STATE_EDITED)) {
             int32_t new_val = evalIntegerProperty(flowState, 10, 5, "Failed to evaluate Selected in Dropdown widget");
-            int32_t cur_val = lv_dropdown_get_selected(objects.obj61);
+            int32_t cur_val = lv_dropdown_get_selected(objects.obj60);
             if (new_val != cur_val) {
-                tick_value_change_obj = objects.obj61;
-                lv_dropdown_set_selected(objects.obj61, new_val);
+                tick_value_change_obj = objects.obj60;
+                lv_dropdown_set_selected(objects.obj60, new_val);
                 tick_value_change_obj = NULL;
             }
         }
@@ -5250,7 +5258,7 @@ void create_screen_adminoptionen1_spiele_lichtloser_timings() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj119 = obj;
+            objects.obj118 = obj;
             lv_obj_set_pos(obj, 91, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5595,10 +5603,10 @@ void create_screen_adminoptionen1_spiele_lichtloser_timings() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj63 = obj;
+                    objects.obj62 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_timings_obj63, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_spiele_lichtloser_timings_obj62, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5606,7 +5614,7 @@ void create_screen_adminoptionen1_spiele_lichtloser_timings() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj120 = obj;
+                            objects.obj119 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5629,7 +5637,7 @@ void delete_screen_adminoptionen1_spiele_lichtloser_timings() {
     lv_obj_del(objects.adminoptionen1_spiele_lichtloser_timings);
     objects.adminoptionen1_spiele_lichtloser_timings = 0;
     objects.obj21 = 0;
-    objects.obj119 = 0;
+    objects.obj118 = 0;
     objects.slider_container_7 = 0;
     objects.slider_title_11 = 0;
     objects.slider_7 = 0;
@@ -5654,8 +5662,8 @@ void delete_screen_adminoptionen1_spiele_lichtloser_timings() {
     objects.slider_title_24 = 0;
     objects.slider_title_25 = 0;
     objects.exit_container_19 = 0;
-    objects.obj63 = 0;
-    objects.obj120 = 0;
+    objects.obj62 = 0;
+    objects.obj119 = 0;
     deletePageFlowState(21);
 }
 
@@ -5816,7 +5824,7 @@ void create_screen_adminoptionen1_farbeneffekte() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj121 = obj;
+            objects.obj120 = obj;
             lv_obj_set_pos(obj, 81, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point80, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5927,10 +5935,10 @@ void create_screen_adminoptionen1_farbeneffekte() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj64 = obj;
+                    objects.obj63 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_obj64, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_obj63, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5938,7 +5946,7 @@ void create_screen_adminoptionen1_farbeneffekte() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj122 = obj;
+                            objects.obj121 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -5961,7 +5969,7 @@ void delete_screen_adminoptionen1_farbeneffekte() {
     lv_obj_del(objects.adminoptionen1_farbeneffekte);
     objects.adminoptionen1_farbeneffekte = 0;
     objects.obj22 = 0;
-    objects.obj121 = 0;
+    objects.obj120 = 0;
     objects.button_container_25 = 0;
     objects.button_25 = 0;
     objects.button_title_25 = 0;
@@ -5969,8 +5977,8 @@ void delete_screen_adminoptionen1_farbeneffekte() {
     objects.button_26 = 0;
     objects.button_title_26 = 0;
     objects.exit_container_20 = 0;
-    objects.obj64 = 0;
-    objects.obj122 = 0;
+    objects.obj63 = 0;
+    objects.obj121 = 0;
     deletePageFlowState(22);
 }
 
@@ -6006,7 +6014,7 @@ void create_screen_adminoptionen1_farbeneffekte_spielerfarbe() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj123 = obj;
+            objects.obj122 = obj;
             lv_obj_set_pos(obj, 101, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point80, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6052,11 +6060,11 @@ void create_screen_adminoptionen1_farbeneffekte_spielerfarbe() {
                 }
                 {
                     lv_obj_t *obj = lv_dropdown_create(parent_obj);
-                    objects.obj65 = obj;
+                    objects.obj64 = obj;
                     lv_obj_set_pos(obj, 15, 35);
                     lv_obj_set_size(obj, 380, 50);
                     lv_dropdown_set_options(obj, "");
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj65, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj64, LV_EVENT_ALL, flowState);
                     add_style_gold_dropdown_(obj);
                 }
             }
@@ -6078,10 +6086,10 @@ void create_screen_adminoptionen1_farbeneffekte_spielerfarbe() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
-                    objects.obj66 = obj;
+                    objects.obj65 = obj;
                     lv_obj_set_pos(obj, 105, 5);
                     lv_obj_set_size(obj, 200, 40);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj66, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj65, LV_EVENT_ALL, flowState);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
                     add_style_gold_panel(obj);
                     lv_obj_set_style_border_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6103,11 +6111,11 @@ void create_screen_adminoptionen1_farbeneffekte_spielerfarbe() {
                 }
                 {
                     lv_obj_t *obj = lv_dropdown_create(parent_obj);
-                    objects.obj67 = obj;
+                    objects.obj66 = obj;
                     lv_obj_set_pos(obj, 15, 35);
                     lv_obj_set_size(obj, 380, 50);
                     lv_dropdown_set_options(obj, "");
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj67, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj66, LV_EVENT_ALL, flowState);
                     add_style_gold_dropdown_(obj);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff747474), LV_PART_MAIN | LV_STATE_DISABLED);
                 }
@@ -6130,10 +6138,10 @@ void create_screen_adminoptionen1_farbeneffekte_spielerfarbe() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
-                    objects.obj68 = obj;
+                    objects.obj67 = obj;
                     lv_obj_set_pos(obj, 15, 5);
                     lv_obj_set_size(obj, 380, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj68, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj67, LV_EVENT_ALL, flowState);
                     add_style_gold_panel(obj);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff747474), LV_PART_MAIN | LV_STATE_DISABLED);
                 }
@@ -6186,10 +6194,10 @@ void create_screen_adminoptionen1_farbeneffekte_spielerfarbe() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj69 = obj;
+                    objects.obj68 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj69, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_spielerfarbe_obj68, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6197,7 +6205,7 @@ void create_screen_adminoptionen1_farbeneffekte_spielerfarbe() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj124 = obj;
+                            objects.obj123 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6220,21 +6228,21 @@ void delete_screen_adminoptionen1_farbeneffekte_spielerfarbe() {
     lv_obj_del(objects.adminoptionen1_farbeneffekte_spielerfarbe);
     objects.adminoptionen1_farbeneffekte_spielerfarbe = 0;
     objects.obj23 = 0;
-    objects.obj123 = 0;
+    objects.obj122 = 0;
     objects.dropdown_container_9 = 0;
     objects.roller_title_9 = 0;
-    objects.obj65 = 0;
+    objects.obj64 = 0;
     objects.dropdown_container_10 = 0;
-    objects.obj66 = 0;
+    objects.obj65 = 0;
     objects.roller_title_10 = 0;
-    objects.obj67 = 0;
+    objects.obj66 = 0;
     objects.checkbox_contatiner_2 = 0;
-    objects.obj68 = 0;
+    objects.obj67 = 0;
     objects.checkbox_2 = 0;
     objects.checkbox_title_2 = 0;
     objects.exit_container_21 = 0;
-    objects.obj69 = 0;
-    objects.obj124 = 0;
+    objects.obj68 = 0;
+    objects.obj123 = 0;
     deletePageFlowState(23);
 }
 
@@ -6244,26 +6252,36 @@ void tick_screen_adminoptionen1_farbeneffekte_spielerfarbe() {
     tick_user_widget_background(getFlowState(flowState, 0), 83);
     {
         const char *new_val = evalStringArrayPropertyAndJoin(flowState, 6, 3, "Failed to evaluate Options in Dropdown widget", "\n");
-        const char *cur_val = lv_dropdown_get_options(objects.obj65);
+        const char *cur_val = lv_dropdown_get_options(objects.obj64);
         if (strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj65;
-            lv_dropdown_set_options(objects.obj65, new_val);
+            tick_value_change_obj = objects.obj64;
+            lv_dropdown_set_options(objects.obj64, new_val);
             tick_value_change_obj = NULL;
         }
     }
     {
-        if (!(lv_obj_get_state(objects.obj65) & LV_STATE_EDITED)) {
+        if (!(lv_obj_get_state(objects.obj64) & LV_STATE_EDITED)) {
             int32_t new_val = evalIntegerProperty(flowState, 6, 4, "Failed to evaluate Selected in Dropdown widget");
-            int32_t cur_val = lv_dropdown_get_selected(objects.obj65);
+            int32_t cur_val = lv_dropdown_get_selected(objects.obj64);
             if (new_val != cur_val) {
-                tick_value_change_obj = objects.obj65;
-                lv_dropdown_set_selected(objects.obj65, new_val);
+                tick_value_change_obj = objects.obj64;
+                lv_dropdown_set_selected(objects.obj64, new_val);
                 tick_value_change_obj = NULL;
             }
         }
     }
     {
         bool new_val = evalBooleanProperty(flowState, 8, 3, "Failed to evaluate Disabled state");
+        bool cur_val = lv_obj_has_state(objects.obj65, LV_STATE_DISABLED);
+        if (new_val != cur_val) {
+            tick_value_change_obj = objects.obj65;
+            if (new_val) lv_obj_add_state(objects.obj65, LV_STATE_DISABLED);
+            else lv_obj_clear_state(objects.obj65, LV_STATE_DISABLED);
+            tick_value_change_obj = NULL;
+        }
+    }
+    {
+        bool new_val = evalBooleanProperty(flowState, 10, 3, "Failed to evaluate Disabled state");
         bool cur_val = lv_obj_has_state(objects.obj66, LV_STATE_DISABLED);
         if (new_val != cur_val) {
             tick_value_change_obj = objects.obj66;
@@ -6273,42 +6291,32 @@ void tick_screen_adminoptionen1_farbeneffekte_spielerfarbe() {
         }
     }
     {
-        bool new_val = evalBooleanProperty(flowState, 10, 3, "Failed to evaluate Disabled state");
-        bool cur_val = lv_obj_has_state(objects.obj67, LV_STATE_DISABLED);
-        if (new_val != cur_val) {
-            tick_value_change_obj = objects.obj67;
-            if (new_val) lv_obj_add_state(objects.obj67, LV_STATE_DISABLED);
-            else lv_obj_clear_state(objects.obj67, LV_STATE_DISABLED);
-            tick_value_change_obj = NULL;
-        }
-    }
-    {
         const char *new_val = evalStringArrayPropertyAndJoin(flowState, 10, 4, "Failed to evaluate Options in Dropdown widget", "\n");
-        const char *cur_val = lv_dropdown_get_options(objects.obj67);
+        const char *cur_val = lv_dropdown_get_options(objects.obj66);
         if (strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj67;
-            lv_dropdown_set_options(objects.obj67, new_val);
+            tick_value_change_obj = objects.obj66;
+            lv_dropdown_set_options(objects.obj66, new_val);
             tick_value_change_obj = NULL;
         }
     }
     {
-        if (!(lv_obj_get_state(objects.obj67) & LV_STATE_EDITED)) {
+        if (!(lv_obj_get_state(objects.obj66) & LV_STATE_EDITED)) {
             int32_t new_val = evalIntegerProperty(flowState, 10, 5, "Failed to evaluate Selected in Dropdown widget");
-            int32_t cur_val = lv_dropdown_get_selected(objects.obj67);
+            int32_t cur_val = lv_dropdown_get_selected(objects.obj66);
             if (new_val != cur_val) {
-                tick_value_change_obj = objects.obj67;
-                lv_dropdown_set_selected(objects.obj67, new_val);
+                tick_value_change_obj = objects.obj66;
+                lv_dropdown_set_selected(objects.obj66, new_val);
                 tick_value_change_obj = NULL;
             }
         }
     }
     {
         bool new_val = evalBooleanProperty(flowState, 12, 3, "Failed to evaluate Disabled state");
-        bool cur_val = lv_obj_has_state(objects.obj68, LV_STATE_DISABLED);
+        bool cur_val = lv_obj_has_state(objects.obj67, LV_STATE_DISABLED);
         if (new_val != cur_val) {
-            tick_value_change_obj = objects.obj68;
-            if (new_val) lv_obj_add_state(objects.obj68, LV_STATE_DISABLED);
-            else lv_obj_clear_state(objects.obj68, LV_STATE_DISABLED);
+            tick_value_change_obj = objects.obj67;
+            if (new_val) lv_obj_add_state(objects.obj67, LV_STATE_DISABLED);
+            else lv_obj_clear_state(objects.obj67, LV_STATE_DISABLED);
             tick_value_change_obj = NULL;
         }
     }
@@ -6360,7 +6368,7 @@ void create_screen_adminoptionen1_farbeneffekte_grenzfarbe() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj125 = obj;
+            objects.obj124 = obj;
             lv_obj_set_pos(obj, 123, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point80, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6406,11 +6414,11 @@ void create_screen_adminoptionen1_farbeneffekte_grenzfarbe() {
                 }
                 {
                     lv_obj_t *obj = lv_dropdown_create(parent_obj);
-                    objects.obj70 = obj;
+                    objects.obj69 = obj;
                     lv_obj_set_pos(obj, 15, 35);
                     lv_obj_set_size(obj, 380, 50);
                     lv_dropdown_set_options(obj, "");
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj70, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj69, LV_EVENT_ALL, flowState);
                     add_style_gold_dropdown_(obj);
                 }
             }
@@ -6432,10 +6440,10 @@ void create_screen_adminoptionen1_farbeneffekte_grenzfarbe() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
-                    objects.obj71 = obj;
+                    objects.obj70 = obj;
                     lv_obj_set_pos(obj, 105, 5);
                     lv_obj_set_size(obj, 200, 40);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj71, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj70, LV_EVENT_ALL, flowState);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
                     add_style_gold_panel(obj);
                     lv_obj_set_style_border_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6457,11 +6465,11 @@ void create_screen_adminoptionen1_farbeneffekte_grenzfarbe() {
                 }
                 {
                     lv_obj_t *obj = lv_dropdown_create(parent_obj);
-                    objects.obj72 = obj;
+                    objects.obj71 = obj;
                     lv_obj_set_pos(obj, 15, 35);
                     lv_obj_set_size(obj, 380, 50);
                     lv_dropdown_set_options(obj, "");
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj72, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj71, LV_EVENT_ALL, flowState);
                     add_style_gold_dropdown_(obj);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff747474), LV_PART_MAIN | LV_STATE_DISABLED);
                 }
@@ -6485,10 +6493,10 @@ void create_screen_adminoptionen1_farbeneffekte_grenzfarbe() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj73 = obj;
+                    objects.obj72 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj73, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_farbeneffekte_grenzfarbe_obj72, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6496,7 +6504,7 @@ void create_screen_adminoptionen1_farbeneffekte_grenzfarbe() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj126 = obj;
+                            objects.obj125 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6519,17 +6527,17 @@ void delete_screen_adminoptionen1_farbeneffekte_grenzfarbe() {
     lv_obj_del(objects.adminoptionen1_farbeneffekte_grenzfarbe);
     objects.adminoptionen1_farbeneffekte_grenzfarbe = 0;
     objects.obj24 = 0;
-    objects.obj125 = 0;
+    objects.obj124 = 0;
     objects.dropdown_container_11 = 0;
     objects.roller_title_11 = 0;
-    objects.obj70 = 0;
+    objects.obj69 = 0;
     objects.dropdown_container_12 = 0;
-    objects.obj71 = 0;
+    objects.obj70 = 0;
     objects.roller_title_12 = 0;
-    objects.obj72 = 0;
+    objects.obj71 = 0;
     objects.exit_container_22 = 0;
-    objects.obj73 = 0;
-    objects.obj126 = 0;
+    objects.obj72 = 0;
+    objects.obj125 = 0;
     deletePageFlowState(24);
 }
 
@@ -6539,26 +6547,36 @@ void tick_screen_adminoptionen1_farbeneffekte_grenzfarbe() {
     tick_user_widget_background(getFlowState(flowState, 0), 85);
     {
         const char *new_val = evalStringArrayPropertyAndJoin(flowState, 6, 3, "Failed to evaluate Options in Dropdown widget", "\n");
-        const char *cur_val = lv_dropdown_get_options(objects.obj70);
+        const char *cur_val = lv_dropdown_get_options(objects.obj69);
         if (strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj70;
-            lv_dropdown_set_options(objects.obj70, new_val);
+            tick_value_change_obj = objects.obj69;
+            lv_dropdown_set_options(objects.obj69, new_val);
             tick_value_change_obj = NULL;
         }
     }
     {
-        if (!(lv_obj_get_state(objects.obj70) & LV_STATE_EDITED)) {
+        if (!(lv_obj_get_state(objects.obj69) & LV_STATE_EDITED)) {
             int32_t new_val = evalIntegerProperty(flowState, 6, 4, "Failed to evaluate Selected in Dropdown widget");
-            int32_t cur_val = lv_dropdown_get_selected(objects.obj70);
+            int32_t cur_val = lv_dropdown_get_selected(objects.obj69);
             if (new_val != cur_val) {
-                tick_value_change_obj = objects.obj70;
-                lv_dropdown_set_selected(objects.obj70, new_val);
+                tick_value_change_obj = objects.obj69;
+                lv_dropdown_set_selected(objects.obj69, new_val);
                 tick_value_change_obj = NULL;
             }
         }
     }
     {
         bool new_val = evalBooleanProperty(flowState, 8, 3, "Failed to evaluate Disabled state");
+        bool cur_val = lv_obj_has_state(objects.obj70, LV_STATE_DISABLED);
+        if (new_val != cur_val) {
+            tick_value_change_obj = objects.obj70;
+            if (new_val) lv_obj_add_state(objects.obj70, LV_STATE_DISABLED);
+            else lv_obj_clear_state(objects.obj70, LV_STATE_DISABLED);
+            tick_value_change_obj = NULL;
+        }
+    }
+    {
+        bool new_val = evalBooleanProperty(flowState, 10, 3, "Failed to evaluate Disabled state");
         bool cur_val = lv_obj_has_state(objects.obj71, LV_STATE_DISABLED);
         if (new_val != cur_val) {
             tick_value_change_obj = objects.obj71;
@@ -6568,31 +6586,21 @@ void tick_screen_adminoptionen1_farbeneffekte_grenzfarbe() {
         }
     }
     {
-        bool new_val = evalBooleanProperty(flowState, 10, 3, "Failed to evaluate Disabled state");
-        bool cur_val = lv_obj_has_state(objects.obj72, LV_STATE_DISABLED);
-        if (new_val != cur_val) {
-            tick_value_change_obj = objects.obj72;
-            if (new_val) lv_obj_add_state(objects.obj72, LV_STATE_DISABLED);
-            else lv_obj_clear_state(objects.obj72, LV_STATE_DISABLED);
-            tick_value_change_obj = NULL;
-        }
-    }
-    {
         const char *new_val = evalStringArrayPropertyAndJoin(flowState, 10, 4, "Failed to evaluate Options in Dropdown widget", "\n");
-        const char *cur_val = lv_dropdown_get_options(objects.obj72);
+        const char *cur_val = lv_dropdown_get_options(objects.obj71);
         if (strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj72;
-            lv_dropdown_set_options(objects.obj72, new_val);
+            tick_value_change_obj = objects.obj71;
+            lv_dropdown_set_options(objects.obj71, new_val);
             tick_value_change_obj = NULL;
         }
     }
     {
-        if (!(lv_obj_get_state(objects.obj72) & LV_STATE_EDITED)) {
+        if (!(lv_obj_get_state(objects.obj71) & LV_STATE_EDITED)) {
             int32_t new_val = evalIntegerProperty(flowState, 10, 5, "Failed to evaluate Selected in Dropdown widget");
-            int32_t cur_val = lv_dropdown_get_selected(objects.obj72);
+            int32_t cur_val = lv_dropdown_get_selected(objects.obj71);
             if (new_val != cur_val) {
-                tick_value_change_obj = objects.obj72;
-                lv_dropdown_set_selected(objects.obj72, new_val);
+                tick_value_change_obj = objects.obj71;
+                lv_dropdown_set_selected(objects.obj71, new_val);
                 tick_value_change_obj = NULL;
             }
         }
@@ -6624,7 +6632,7 @@ void create_screen_adminoptionen1_system() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj127 = obj;
+            objects.obj126 = obj;
             lv_obj_set_pos(obj, 129, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6778,10 +6786,10 @@ void create_screen_adminoptionen1_system() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj74 = obj;
+                    objects.obj73 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_obj74, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_obj73, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6789,7 +6797,7 @@ void create_screen_adminoptionen1_system() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj128 = obj;
+                            objects.obj127 = obj;
                             lv_obj_set_pos(obj, 1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6819,10 +6827,10 @@ void create_screen_adminoptionen1_system() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj75 = obj;
+                    objects.obj74 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_obj75, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_obj74, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6830,7 +6838,7 @@ void create_screen_adminoptionen1_system() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj129 = obj;
+                            objects.obj128 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6853,7 +6861,7 @@ void delete_screen_adminoptionen1_system() {
     lv_obj_del(objects.adminoptionen1_system);
     objects.adminoptionen1_system = 0;
     objects.obj25 = 0;
-    objects.obj127 = 0;
+    objects.obj126 = 0;
     objects.button_container_12 = 0;
     objects.button_12 = 0;
     objects.button_title_12 = 0;
@@ -6864,11 +6872,11 @@ void delete_screen_adminoptionen1_system() {
     objects.button_15 = 0;
     objects.button_title_15 = 0;
     objects.question_container_7 = 0;
+    objects.obj73 = 0;
+    objects.obj127 = 0;
+    objects.exit_container_23 = 0;
     objects.obj74 = 0;
     objects.obj128 = 0;
-    objects.exit_container_23 = 0;
-    objects.obj75 = 0;
-    objects.obj129 = 0;
     deletePageFlowState(25);
 }
 
@@ -6903,7 +6911,7 @@ void create_screen_adminoptionen1_system_leds() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj130 = obj;
+            objects.obj129 = obj;
             lv_obj_set_pos(obj, 171, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6971,10 +6979,10 @@ void create_screen_adminoptionen1_system_leds() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj76 = obj;
+                    objects.obj75 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_leds_obj76, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_leds_obj75, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -6982,7 +6990,7 @@ void create_screen_adminoptionen1_system_leds() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj131 = obj;
+                            objects.obj130 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7005,13 +7013,13 @@ void delete_screen_adminoptionen1_system_leds() {
     lv_obj_del(objects.adminoptionen1_system_leds);
     objects.adminoptionen1_system_leds = 0;
     objects.obj26 = 0;
-    objects.obj130 = 0;
+    objects.obj129 = 0;
     objects.button_container_18 = 0;
     objects.button_18 = 0;
     objects.button_title_18 = 0;
     objects.exit_container_24 = 0;
-    objects.obj76 = 0;
-    objects.obj131 = 0;
+    objects.obj75 = 0;
+    objects.obj130 = 0;
     deletePageFlowState(26);
 }
 
@@ -7047,7 +7055,7 @@ void create_screen_adminoptionen1_system_leds_helligkeit() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj132 = obj;
+            objects.obj131 = obj;
             lv_obj_set_pos(obj, 78, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point100, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7192,10 +7200,10 @@ void create_screen_adminoptionen1_system_leds_helligkeit() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj77 = obj;
+                    objects.obj76 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_leds_helligkeit_obj77, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_leds_helligkeit_obj76, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7203,7 +7211,7 @@ void create_screen_adminoptionen1_system_leds_helligkeit() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj133 = obj;
+                            objects.obj132 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7226,7 +7234,7 @@ void delete_screen_adminoptionen1_system_leds_helligkeit() {
     lv_obj_del(objects.adminoptionen1_system_leds_helligkeit);
     objects.adminoptionen1_system_leds_helligkeit = 0;
     objects.obj27 = 0;
-    objects.obj132 = 0;
+    objects.obj131 = 0;
     objects.slider_container_2 = 0;
     objects.slider_title_2 = 0;
     objects.slider_2 = 0;
@@ -7236,8 +7244,8 @@ void delete_screen_adminoptionen1_system_leds_helligkeit() {
     objects.slider_title_9 = 0;
     objects.slider_3 = 0;
     objects.exit_container_25 = 0;
-    objects.obj77 = 0;
-    objects.obj133 = 0;
+    objects.obj76 = 0;
+    objects.obj132 = 0;
     deletePageFlowState(27);
 }
 
@@ -7308,7 +7316,7 @@ void create_screen_adminoptionen1_system_anzeige() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj134 = obj;
+            objects.obj133 = obj;
             lv_obj_set_pos(obj, 112, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7376,10 +7384,10 @@ void create_screen_adminoptionen1_system_anzeige() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj78 = obj;
+                    objects.obj77 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_obj78, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_obj77, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7387,7 +7395,7 @@ void create_screen_adminoptionen1_system_anzeige() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj135 = obj;
+                            objects.obj134 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7410,13 +7418,13 @@ void delete_screen_adminoptionen1_system_anzeige() {
     lv_obj_del(objects.adminoptionen1_system_anzeige);
     objects.adminoptionen1_system_anzeige = 0;
     objects.obj28 = 0;
-    objects.obj134 = 0;
+    objects.obj133 = 0;
     objects.button_container_29 = 0;
     objects.button_29 = 0;
     objects.button_title_29 = 0;
     objects.exit_container_26 = 0;
-    objects.obj78 = 0;
-    objects.obj135 = 0;
+    objects.obj77 = 0;
+    objects.obj134 = 0;
     deletePageFlowState(28);
 }
 
@@ -7452,7 +7460,7 @@ void create_screen_adminoptionen1_system_anzeige_idle() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj136 = obj;
+            objects.obj135 = obj;
             lv_obj_set_pos(obj, 188, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7482,10 +7490,10 @@ void create_screen_adminoptionen1_system_anzeige_idle() {
                 }
                 {
                     lv_obj_t *obj = lv_switch_create(parent_obj);
-                    objects.obj79 = obj;
+                    objects.obj78 = obj;
                     lv_obj_set_pos(obj, 17, 13);
                     lv_obj_set_size(obj, 73, 34);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_idle_obj79, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_idle_obj78, LV_EVENT_ALL, flowState);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_bg_opa(obj, 130, LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xffab7c46), LV_PART_INDICATOR | LV_STATE_DEFAULT);
@@ -7522,10 +7530,10 @@ void create_screen_adminoptionen1_system_anzeige_idle() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
-                    objects.obj80 = obj;
+                    objects.obj79 = obj;
                     lv_obj_set_pos(obj, 105, 5);
                     lv_obj_set_size(obj, 200, 40);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_idle_obj80, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_idle_obj79, LV_EVENT_ALL, flowState);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
                     add_style_gold_panel(obj);
                     lv_obj_set_style_border_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7547,11 +7555,11 @@ void create_screen_adminoptionen1_system_anzeige_idle() {
                 }
                 {
                     lv_obj_t *obj = lv_dropdown_create(parent_obj);
-                    objects.obj81 = obj;
+                    objects.obj80 = obj;
                     lv_obj_set_pos(obj, 15, 35);
                     lv_obj_set_size(obj, 380, 50);
                     lv_dropdown_set_options(obj, "");
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_idle_obj81, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_idle_obj80, LV_EVENT_ALL, flowState);
                     add_style_gold_dropdown_(obj);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff747474), LV_PART_MAIN | LV_STATE_DISABLED);
                 }
@@ -7574,10 +7582,10 @@ void create_screen_adminoptionen1_system_anzeige_idle() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
-                    objects.obj82 = obj;
+                    objects.obj81 = obj;
                     lv_obj_set_pos(obj, 15, 5);
                     lv_obj_set_size(obj, 380, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_idle_obj82, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_idle_obj81, LV_EVENT_ALL, flowState);
                     add_style_gold_panel(obj);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff747474), LV_PART_MAIN | LV_STATE_DISABLED);
                 }
@@ -7630,10 +7638,10 @@ void create_screen_adminoptionen1_system_anzeige_idle() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj83 = obj;
+                    objects.obj82 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_idle_obj83, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_anzeige_idle_obj82, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7641,7 +7649,7 @@ void create_screen_adminoptionen1_system_anzeige_idle() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj137 = obj;
+                            objects.obj136 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7664,21 +7672,21 @@ void delete_screen_adminoptionen1_system_anzeige_idle() {
     lv_obj_del(objects.adminoptionen1_system_anzeige_idle);
     objects.adminoptionen1_system_anzeige_idle = 0;
     objects.obj29 = 0;
-    objects.obj136 = 0;
+    objects.obj135 = 0;
     objects.switch_container_2 = 0;
-    objects.obj79 = 0;
+    objects.obj78 = 0;
     objects.switch_title_2 = 0;
     objects.dropdown_container_4 = 0;
-    objects.obj80 = 0;
+    objects.obj79 = 0;
     objects.roller_title_4 = 0;
-    objects.obj81 = 0;
+    objects.obj80 = 0;
     objects.checkbox_contatiner_1 = 0;
-    objects.obj82 = 0;
+    objects.obj81 = 0;
     objects.checkbox_1 = 0;
     objects.checkbox_title_1 = 0;
     objects.exit_container_27 = 0;
-    objects.obj83 = 0;
-    objects.obj137 = 0;
+    objects.obj82 = 0;
+    objects.obj136 = 0;
     deletePageFlowState(29);
 }
 
@@ -7688,16 +7696,26 @@ void tick_screen_adminoptionen1_system_anzeige_idle() {
     tick_user_widget_background(getFlowState(flowState, 0), 95);
     {
         bool new_val = evalBooleanProperty(flowState, 5, 3, "Failed to evaluate Checked state");
-        bool cur_val = lv_obj_has_state(objects.obj79, LV_STATE_CHECKED);
+        bool cur_val = lv_obj_has_state(objects.obj78, LV_STATE_CHECKED);
         if (new_val != cur_val) {
-            tick_value_change_obj = objects.obj79;
-            if (new_val) lv_obj_add_state(objects.obj79, LV_STATE_CHECKED);
-            else lv_obj_clear_state(objects.obj79, LV_STATE_CHECKED);
+            tick_value_change_obj = objects.obj78;
+            if (new_val) lv_obj_add_state(objects.obj78, LV_STATE_CHECKED);
+            else lv_obj_clear_state(objects.obj78, LV_STATE_CHECKED);
             tick_value_change_obj = NULL;
         }
     }
     {
         bool new_val = evalBooleanProperty(flowState, 8, 3, "Failed to evaluate Disabled state");
+        bool cur_val = lv_obj_has_state(objects.obj79, LV_STATE_DISABLED);
+        if (new_val != cur_val) {
+            tick_value_change_obj = objects.obj79;
+            if (new_val) lv_obj_add_state(objects.obj79, LV_STATE_DISABLED);
+            else lv_obj_clear_state(objects.obj79, LV_STATE_DISABLED);
+            tick_value_change_obj = NULL;
+        }
+    }
+    {
+        bool new_val = evalBooleanProperty(flowState, 10, 3, "Failed to evaluate Disabled state");
         bool cur_val = lv_obj_has_state(objects.obj80, LV_STATE_DISABLED);
         if (new_val != cur_val) {
             tick_value_change_obj = objects.obj80;
@@ -7707,42 +7725,32 @@ void tick_screen_adminoptionen1_system_anzeige_idle() {
         }
     }
     {
-        bool new_val = evalBooleanProperty(flowState, 10, 3, "Failed to evaluate Disabled state");
-        bool cur_val = lv_obj_has_state(objects.obj81, LV_STATE_DISABLED);
-        if (new_val != cur_val) {
-            tick_value_change_obj = objects.obj81;
-            if (new_val) lv_obj_add_state(objects.obj81, LV_STATE_DISABLED);
-            else lv_obj_clear_state(objects.obj81, LV_STATE_DISABLED);
-            tick_value_change_obj = NULL;
-        }
-    }
-    {
         const char *new_val = evalStringArrayPropertyAndJoin(flowState, 10, 4, "Failed to evaluate Options in Dropdown widget", "\n");
-        const char *cur_val = lv_dropdown_get_options(objects.obj81);
+        const char *cur_val = lv_dropdown_get_options(objects.obj80);
         if (strcmp(new_val, cur_val) != 0) {
-            tick_value_change_obj = objects.obj81;
-            lv_dropdown_set_options(objects.obj81, new_val);
+            tick_value_change_obj = objects.obj80;
+            lv_dropdown_set_options(objects.obj80, new_val);
             tick_value_change_obj = NULL;
         }
     }
     {
-        if (!(lv_obj_get_state(objects.obj81) & LV_STATE_EDITED)) {
+        if (!(lv_obj_get_state(objects.obj80) & LV_STATE_EDITED)) {
             int32_t new_val = evalIntegerProperty(flowState, 10, 5, "Failed to evaluate Selected in Dropdown widget");
-            int32_t cur_val = lv_dropdown_get_selected(objects.obj81);
+            int32_t cur_val = lv_dropdown_get_selected(objects.obj80);
             if (new_val != cur_val) {
-                tick_value_change_obj = objects.obj81;
-                lv_dropdown_set_selected(objects.obj81, new_val);
+                tick_value_change_obj = objects.obj80;
+                lv_dropdown_set_selected(objects.obj80, new_val);
                 tick_value_change_obj = NULL;
             }
         }
     }
     {
         bool new_val = evalBooleanProperty(flowState, 12, 3, "Failed to evaluate Disabled state");
-        bool cur_val = lv_obj_has_state(objects.obj82, LV_STATE_DISABLED);
+        bool cur_val = lv_obj_has_state(objects.obj81, LV_STATE_DISABLED);
         if (new_val != cur_val) {
-            tick_value_change_obj = objects.obj82;
-            if (new_val) lv_obj_add_state(objects.obj82, LV_STATE_DISABLED);
-            else lv_obj_clear_state(objects.obj82, LV_STATE_DISABLED);
+            tick_value_change_obj = objects.obj81;
+            if (new_val) lv_obj_add_state(objects.obj81, LV_STATE_DISABLED);
+            else lv_obj_clear_state(objects.obj81, LV_STATE_DISABLED);
             tick_value_change_obj = NULL;
         }
     }
@@ -7793,7 +7801,7 @@ void create_screen_adminoptionen1_system_debug2() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj138 = obj;
+            objects.obj137 = obj;
             lv_obj_set_pos(obj, 145, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7903,10 +7911,10 @@ void create_screen_adminoptionen1_system_debug2() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj84 = obj;
+                    objects.obj83 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_debug2_obj84, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_debug2_obj83, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7914,7 +7922,7 @@ void create_screen_adminoptionen1_system_debug2() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj139 = obj;
+                            objects.obj138 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -7937,7 +7945,7 @@ void delete_screen_adminoptionen1_system_debug2() {
     lv_obj_del(objects.adminoptionen1_system_debug2);
     objects.adminoptionen1_system_debug2 = 0;
     objects.obj30 = 0;
-    objects.obj138 = 0;
+    objects.obj137 = 0;
     objects.button_container_46 = 0;
     objects.button_46 = 0;
     objects.button_title_46 = 0;
@@ -7945,8 +7953,8 @@ void delete_screen_adminoptionen1_system_debug2() {
     objects.button_50 = 0;
     objects.button_title_50 = 0;
     objects.exit_container_28 = 0;
-    objects.obj84 = 0;
-    objects.obj139 = 0;
+    objects.obj83 = 0;
+    objects.obj138 = 0;
     deletePageFlowState(30);
 }
 
@@ -7981,7 +7989,7 @@ void create_screen_adminoptionen1_system_debug2_tests() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj140 = obj;
+            objects.obj139 = obj;
             lv_obj_set_pos(obj, 154, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8133,10 +8141,10 @@ void create_screen_adminoptionen1_system_debug2_tests() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj85 = obj;
+                    objects.obj84 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_debug2_tests_obj85, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system_debug2_tests_obj84, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8144,7 +8152,7 @@ void create_screen_adminoptionen1_system_debug2_tests() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj141 = obj;
+                            objects.obj140 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8167,7 +8175,7 @@ void delete_screen_adminoptionen1_system_debug2_tests() {
     lv_obj_del(objects.adminoptionen1_system_debug2_tests);
     objects.adminoptionen1_system_debug2_tests = 0;
     objects.obj31 = 0;
-    objects.obj140 = 0;
+    objects.obj139 = 0;
     objects.button_container_47 = 0;
     objects.button_47 = 0;
     objects.button_title_47 = 0;
@@ -8178,8 +8186,8 @@ void delete_screen_adminoptionen1_system_debug2_tests() {
     objects.button_49 = 0;
     objects.button_title_49 = 0;
     objects.exit_container_29 = 0;
-    objects.obj85 = 0;
-    objects.obj141 = 0;
+    objects.obj84 = 0;
+    objects.obj140 = 0;
     deletePageFlowState(31);
 }
 
@@ -8214,7 +8222,7 @@ void create_screen_adminoptionen1_system2() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj142 = obj;
+            objects.obj141 = obj;
             lv_obj_set_pos(obj, 129, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8324,10 +8332,10 @@ void create_screen_adminoptionen1_system2() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj86 = obj;
+                    objects.obj85 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system2_obj86, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_system2_obj85, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8335,7 +8343,7 @@ void create_screen_adminoptionen1_system2() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj143 = obj;
+                            objects.obj142 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8358,7 +8366,7 @@ void delete_screen_adminoptionen1_system2() {
     lv_obj_del(objects.adminoptionen1_system2);
     objects.adminoptionen1_system2 = 0;
     objects.obj32 = 0;
-    objects.obj142 = 0;
+    objects.obj141 = 0;
     objects.button_container_38 = 0;
     objects.button_38 = 0;
     objects.button_title_38 = 0;
@@ -8366,8 +8374,8 @@ void delete_screen_adminoptionen1_system2() {
     objects.button_39 = 0;
     objects.button_title_39 = 0;
     objects.exit_container_30 = 0;
-    objects.obj86 = 0;
-    objects.obj143 = 0;
+    objects.obj85 = 0;
+    objects.obj142 = 0;
     deletePageFlowState(32);
 }
 
@@ -8403,7 +8411,7 @@ void create_screen_adminoptionen1_bonus() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            objects.obj144 = obj;
+            objects.obj143 = obj;
             lv_obj_set_pos(obj, 149, 6);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, 65);
             lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8471,10 +8479,10 @@ void create_screen_adminoptionen1_bonus() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj87 = obj;
+                    objects.obj86 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_bonus_obj87, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_adminoptionen1_bonus_obj86, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8482,7 +8490,7 @@ void create_screen_adminoptionen1_bonus() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj145 = obj;
+                            objects.obj144 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8505,13 +8513,13 @@ void delete_screen_adminoptionen1_bonus() {
     lv_obj_del(objects.adminoptionen1_bonus);
     objects.adminoptionen1_bonus = 0;
     objects.obj33 = 0;
-    objects.obj144 = 0;
+    objects.obj143 = 0;
     objects.button_container_7 = 0;
     objects.button_7 = 0;
     objects.button_title_7 = 0;
     objects.exit_container_31 = 0;
-    objects.obj87 = 0;
-    objects.obj145 = 0;
+    objects.obj86 = 0;
+    objects.obj144 = 0;
     deletePageFlowState(33);
 }
 
@@ -8567,7 +8575,7 @@ void create_screen_optionen_template() {
                 }
                 {
                     lv_obj_t *obj = lv_switch_create(parent_obj);
-                    objects.obj146 = obj;
+                    objects.obj145 = obj;
                     lv_obj_set_pos(obj, 17, 13);
                     lv_obj_set_size(obj, 73, 34);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8748,7 +8756,7 @@ void create_screen_optionen_template() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj147 = obj;
+                    objects.obj146 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
                     add_style_gold(obj);
@@ -8758,7 +8766,7 @@ void create_screen_optionen_template() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj148 = obj;
+                            objects.obj147 = obj;
                             lv_obj_set_pos(obj, -1, 10);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8775,6 +8783,47 @@ void create_screen_optionen_template() {
             lv_obj_t *obj = lv_obj_create(parent_obj);
             objects.question_container_1 = obj;
             lv_obj_set_pos(obj, 410, 60);
+            lv_obj_set_size(obj, 70, 60);
+            lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_btn_create(parent_obj);
+                    objects.obj87 = obj;
+                    lv_obj_set_pos(obj, 8, 5);
+                    lv_obj_set_size(obj, 50, 50);
+                    lv_obj_add_event_cb(obj, event_handler_cb_optionen_template_obj87, LV_EVENT_ALL, flowState);
+                    add_style_gold(obj);
+                    lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            objects.obj148 = obj;
+                            lv_obj_set_pos(obj, -1, 10);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_obj_set_style_text_font(obj, &ui_font_point80, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_text(obj, "1");
+                        }
+                    }
+                }
+            }
+        }
+        {
+            // questionContainer_2
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.question_container_2 = obj;
+            lv_obj_set_pos(obj, 410, 125);
             lv_obj_set_size(obj, 70, 60);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8805,17 +8854,17 @@ void create_screen_optionen_template() {
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_text_font(obj, &ui_font_point80, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_label_set_text(obj, "1");
+                            lv_label_set_text(obj, "2");
                         }
                     }
                 }
             }
         }
         {
-            // questionContainer_2
+            // exitContainer
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.question_container_2 = obj;
-            lv_obj_set_pos(obj, 410, 125);
+            objects.exit_container = obj;
+            lv_obj_set_pos(obj, 408, 345);
             lv_obj_set_size(obj, 70, 60);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8841,22 +8890,22 @@ void create_screen_optionen_template() {
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
                             objects.obj150 = obj;
-                            lv_obj_set_pos(obj, -1, 10);
+                            lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                             lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_text_font(obj, &ui_font_point80, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_label_set_text(obj, "2");
+                            lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_text(obj, "<");
                         }
                     }
                 }
             }
         }
         {
-            // exitContainer
+            // exitContainer_32
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.exit_container = obj;
-            lv_obj_set_pos(obj, 408, 345);
+            objects.exit_container_32 = obj;
+            lv_obj_set_pos(obj, 408, 418);
             lv_obj_set_size(obj, 70, 60);
             lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -8893,47 +8942,6 @@ void create_screen_optionen_template() {
                 }
             }
         }
-        {
-            // exitContainer_32
-            lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.exit_container_32 = obj;
-            lv_obj_set_pos(obj, 408, 418);
-            lv_obj_set_size(obj, 70, 60);
-            lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_radius(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
-            {
-                lv_obj_t *parent_obj = obj;
-                {
-                    lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj91 = obj;
-                    lv_obj_set_pos(obj, 8, 5);
-                    lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_optionen_template_obj91, LV_EVENT_ALL, flowState);
-                    add_style_gold(obj);
-                    lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    {
-                        lv_obj_t *parent_obj = obj;
-                        {
-                            lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj152 = obj;
-                            lv_obj_set_pos(obj, -1, 15);
-                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                            lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_text_color(obj, lv_color_hex(0xff000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_obj_set_style_text_font(obj, &ui_font_point120, LV_PART_MAIN | LV_STATE_DEFAULT);
-                            lv_label_set_text(obj, "<");
-                        }
-                    }
-                }
-            }
-        }
     }
     
     eez_flow_delete_screen_on_unload(SCREEN_ID_OPTIONEN_TEMPLATE - 1);
@@ -8946,7 +8954,7 @@ void delete_screen_optionen_template() {
     objects.optionen_template = 0;
     objects.obj34 = 0;
     objects.switch_container = 0;
-    objects.obj146 = 0;
+    objects.obj145 = 0;
     objects.switch_title = 0;
     objects.checkbox_contatiner = 0;
     objects.checkbox = 0;
@@ -8958,20 +8966,20 @@ void delete_screen_optionen_template() {
     objects.button = 0;
     objects.button_title = 0;
     objects.question_container = 0;
+    objects.obj146 = 0;
     objects.obj147 = 0;
-    objects.obj148 = 0;
     objects.question_container_1 = 0;
+    objects.obj87 = 0;
+    objects.obj148 = 0;
+    objects.question_container_2 = 0;
     objects.obj88 = 0;
     objects.obj149 = 0;
-    objects.question_container_2 = 0;
+    objects.exit_container = 0;
     objects.obj89 = 0;
     objects.obj150 = 0;
-    objects.exit_container = 0;
+    objects.exit_container_32 = 0;
     objects.obj90 = 0;
     objects.obj151 = 0;
-    objects.exit_container_32 = 0;
-    objects.obj91 = 0;
-    objects.obj152 = 0;
     deletePageFlowState(34);
 }
 
@@ -9119,10 +9127,10 @@ void create_screen_optionen_template_2() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj92 = obj;
+                    objects.obj91 = obj;
                     lv_obj_set_pos(obj, 8, 5);
                     lv_obj_set_size(obj, 50, 50);
-                    lv_obj_add_event_cb(obj, event_handler_cb_optionen_template_2_obj92, LV_EVENT_ALL, flowState);
+                    lv_obj_add_event_cb(obj, event_handler_cb_optionen_template_2_obj91, LV_EVENT_ALL, flowState);
                     add_style_gold(obj);
                     lv_obj_set_style_shadow_color(obj, lv_color_hex(0xffab7c46), LV_PART_MAIN | LV_STATE_DEFAULT);
                     lv_obj_set_style_shadow_opa(obj, 200, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -9130,7 +9138,7 @@ void create_screen_optionen_template_2() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
-                            objects.obj153 = obj;
+                            objects.obj152 = obj;
                             lv_obj_set_pos(obj, -1, 15);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
                             lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -9159,8 +9167,8 @@ void delete_screen_optionen_template_2() {
     objects.roller_title_2 = 0;
     objects.roller_2 = 0;
     objects.exit_container_33 = 0;
-    objects.obj92 = 0;
-    objects.obj153 = 0;
+    objects.obj91 = 0;
+    objects.obj152 = 0;
     deletePageFlowState(35);
 }
 
@@ -9336,7 +9344,7 @@ extern void add_style(lv_obj_t *obj, int32_t styleIndex);
 extern void remove_style(lv_obj_t *obj, int32_t styleIndex);
 
 static const char *screen_names[] = { "idleScreen", "logoScreen", "loadingScreen", "menuScreen", "choosePlayerScreen", "chooseGameScreen", "keyboardScreen", "numpadScreen", "okayScreen", "game_lichtloser", "gameWin", "gameWin_Lose", "gameLose", "gameLose_Win", "useroptionen1", "useroptionen1_spiele", "useroptionen1_spiele_lichtloser", "adminoptionen1", "adminoptionen1_spiele", "adminoptionen1_spiele_lichtloser", "adminoptionen1_spiele_lichtloser_joker", "adminoptionen1_spiele_lichtloser_timings", "adminoptionen1_farbeneffekte", "adminoptionen1_farbeneffekte_spielerfarbe", "adminoptionen1_farbeneffekte_grenzfarbe", "adminoptionen1_system", "adminoptionen1_system_leds", "adminoptionen1_system_leds_helligkeit", "adminoptionen1_system_anzeige", "adminoptionen1_system_anzeige_idle", "adminoptionen1_system_debug2", "adminoptionen1_system_debug2_tests", "adminoptionen1_system2", "adminoptionen1_bonus", "optionenTemplate", "optionenTemplate_2" };
-static const char *object_names[] = { "idle_screen", "logo_screen", "loading_screen", "menu_screen", "choose_player_screen", "choose_game_screen", "keyboard_screen", "numpad_screen", "okay_screen", "game_lichtloser", "game_win", "game_win_lose", "game_lose", "game_lose_win", "useroptionen1", "useroptionen1_spiele", "useroptionen1_spiele_lichtloser", "adminoptionen1", "adminoptionen1_spiele", "adminoptionen1_spiele_lichtloser", "adminoptionen1_spiele_lichtloser_joker", "adminoptionen1_spiele_lichtloser_timings", "adminoptionen1_farbeneffekte", "adminoptionen1_farbeneffekte_spielerfarbe", "adminoptionen1_farbeneffekte_grenzfarbe", "adminoptionen1_system", "adminoptionen1_system_leds", "adminoptionen1_system_leds_helligkeit", "adminoptionen1_system_anzeige", "adminoptionen1_system_anzeige_idle", "adminoptionen1_system_debug2", "adminoptionen1_system_debug2_tests", "adminoptionen1_system2", "adminoptionen1_bonus", "optionen_template", "optionen_template_2", "obj0", "obj0__background_panel_1", "obj1", "obj1__background_panel_1", "obj2", "obj2__background_panel_1", "obj3", "obj3__background_panel_1", "obj4", "obj4__background_panel_1", "obj5", "obj5__background_panel_1", "obj6", "obj6__background_panel_1", "obj7", "obj7__background_panel_1", "obj8", "obj8__background_panel_1", "obj9", "obj9__background_panel_1", "obj10", "obj10__background_panel_1", "obj11", "obj11__background_panel_1", "obj12", "obj12__background_panel_1", "obj13", "obj13__background_panel_1", "obj14", "obj14__background_panel_1", "obj15", "obj15__background_panel_1", "obj16", "obj16__background_panel_1", "obj17", "obj17__background_panel_1", "obj18", "obj18__background_panel_1", "obj19", "obj19__background_panel_1", "obj20", "obj20__background_panel_1", "obj21", "obj21__background_panel_1", "obj22", "obj22__background_panel_1", "obj23", "obj23__background_panel_1", "obj24", "obj24__background_panel_1", "obj25", "obj25__background_panel_1", "obj26", "obj26__background_panel_1", "obj27", "obj27__background_panel_1", "obj28", "obj28__background_panel_1", "obj29", "obj29__background_panel_1", "obj30", "obj30__background_panel_1", "obj31", "obj31__background_panel_1", "obj32", "obj32__background_panel_1", "obj33", "obj33__background_panel_1", "obj34", "obj34__background_panel_1", "obj35", "obj35__background_panel_1", "obj36", "start", "optionen", "optionen_1", "optionen_2", "obj37", "player_roller", "obj38", "obj39", "obj40", "game_roller", "obj41", "obj42", "obj43", "obj44", "obj45", "score_player1", "score_panel1", "score1", "score_player2", "score_panel2", "score2", "score_player3", "score_panel3", "score3", "score_player4", "score_panel4", "score4", "score_player5", "score_panel5", "score5", "score_player6", "score_panel6", "score6", "button_game", "obj46", "obj47", "obj48", "obj49", "obj50", "button_10", "obj51", "options_game_roller", "obj52", "obj53", "obj54", "button_3", "button_5", "button_6", "button_9", "obj55", "options_game_roller_1", "obj56", "obj57", "slider_lichtloserrounds", "button_1", "button_4", "obj58", "obj59", "obj60", "obj61", "obj62", "obj63", "button_25", "button_26", "obj64", "obj65", "obj66", "obj67", "obj68", "checkbox_2", "obj69", "obj70", "obj71", "obj72", "obj73", "button_12", "button_13", "button_15", "obj74", "obj75", "button_18", "obj76", "slider_2", "slider_3", "obj77", "button_29", "obj78", "obj79", "obj80", "obj81", "obj82", "checkbox_1", "obj83", "button_46", "obj84", "button_49", "obj85", "button_39", "obj86", "button_7", "obj87", "obj88", "obj89", "obj90", "obj91", "obj92", "start_idle", "version", "logo", "obj93", "news_container", "news_panel", "news", "obj94", "obj95", "obj96", "exit_container_1", "obj97", "exit_container_3", "obj98", "keyboard_area", "keyboard", "keyboard_title", "exit_container_4", "obj99", "numpad_area", "numpad", "numpad_title", "exit_container_5", "obj100", "ja_panel", "nein_panel", "exit_container_6", "obj101", "scores", "button_container_2", "button_title_2", "exit_container_7", "obj102", "win_lose_container", "win_container", "win_panel", "exit_container_8", "obj103", "win_lose_container_2", "win_container_2", "win_panel_1", "lose_anzeige_1", "lose_anzeige_title_2", "exit_container_9", "obj104", "win_lose_container_1", "win_container_1", "lose_panel", "exit_container_10", "obj105", "win_lose_container_3", "win_container_3", "lose_panel_1", "win_anzeige_1", "lose_anzeige_title_3", "exit_container_11", "obj106", "obj107", "button_container_10", "button_title_10", "exit_container_12", "obj108", "exit_container_13", "obj109", "obj110", "exit_container_14", "obj111", "obj112", "button_container_3", "button_title_3", "button_container_5", "button_title_5", "button_container_6", "button_title_6", "button_container_9", "button_title_9", "exit_container_15", "obj113", "exit_container_16", "obj114", "obj115", "slider_container_1", "slider_title_7", "slider_title_1", "button_container_1", "button_title_1", "button_container_4", "button_title_4", "exit_container_17", "obj116", "obj117", "switch_container_1", "switch_title_1", "dropdown_container_3", "roller_title_3", "exit_container_18", "obj118", "obj119", "slider_container_7", "slider_title_11", "slider_7", "slider_title_12", "slider_title_13", "slider_title_14", "slider_container_8", "slider_title_15", "slider_8", "slider_title_16", "slider_title_17", "slider_title_18", "slider_container_9", "slider_title_19", "slider_9", "slider_title_20", "slider_title_21", "slider_title_22", "slider_container_10", "slider_title_23", "slider_1", "slider_title_24", "slider_title_25", "exit_container_19", "obj120", "obj121", "button_container_25", "button_title_25", "button_container_26", "button_title_26", "exit_container_20", "obj122", "obj123", "dropdown_container_9", "roller_title_9", "dropdown_container_10", "roller_title_10", "checkbox_contatiner_2", "checkbox_title_2", "exit_container_21", "obj124", "obj125", "dropdown_container_11", "roller_title_11", "dropdown_container_12", "roller_title_12", "exit_container_22", "obj126", "obj127", "button_container_12", "button_title_12", "button_container_13", "button_title_13", "button_container_15", "button_title_15", "question_container_7", "obj128", "exit_container_23", "obj129", "obj130", "button_container_18", "button_title_18", "exit_container_24", "obj131", "obj132", "slider_container_2", "slider_title_2", "slider_title_8", "slider_container_3", "slider_title_3", "slider_title_9", "exit_container_25", "obj133", "obj134", "button_container_29", "button_title_29", "exit_container_26", "obj135", "obj136", "switch_container_2", "switch_title_2", "dropdown_container_4", "roller_title_4", "checkbox_contatiner_1", "checkbox_title_1", "exit_container_27", "obj137", "obj138", "button_container_46", "button_title_46", "button_container_50", "button_50", "button_title_50", "exit_container_28", "obj139", "obj140", "button_container_47", "button_47", "button_title_47", "button_container_48", "button_48", "button_title_48", "button_container_49", "button_title_49", "exit_container_29", "obj141", "obj142", "button_container_38", "button_38", "button_title_38", "button_container_39", "button_title_39", "exit_container_30", "obj143", "obj144", "button_container_7", "button_title_7", "exit_container_31", "obj145", "switch_container", "obj146", "switch_title", "checkbox_contatiner", "checkbox", "checkbox_title", "slider_container", "slider_title", "slider", "button_container", "button", "button_title", "question_container", "obj147", "obj148", "question_container_1", "obj149", "question_container_2", "obj150", "exit_container", "obj151", "exit_container_32", "obj152", "dropdown_container_2", "roller_title_1", "roller_container_2", "roller_title_2", "roller_2", "exit_container_33", "obj153" };
+static const char *object_names[] = { "idle_screen", "logo_screen", "loading_screen", "menu_screen", "choose_player_screen", "choose_game_screen", "keyboard_screen", "numpad_screen", "okay_screen", "game_lichtloser", "game_win", "game_win_lose", "game_lose", "game_lose_win", "useroptionen1", "useroptionen1_spiele", "useroptionen1_spiele_lichtloser", "adminoptionen1", "adminoptionen1_spiele", "adminoptionen1_spiele_lichtloser", "adminoptionen1_spiele_lichtloser_joker", "adminoptionen1_spiele_lichtloser_timings", "adminoptionen1_farbeneffekte", "adminoptionen1_farbeneffekte_spielerfarbe", "adminoptionen1_farbeneffekte_grenzfarbe", "adminoptionen1_system", "adminoptionen1_system_leds", "adminoptionen1_system_leds_helligkeit", "adminoptionen1_system_anzeige", "adminoptionen1_system_anzeige_idle", "adminoptionen1_system_debug2", "adminoptionen1_system_debug2_tests", "adminoptionen1_system2", "adminoptionen1_bonus", "optionen_template", "optionen_template_2", "obj0", "obj0__background_panel_1", "obj1", "obj1__background_panel_1", "obj2", "obj2__background_panel_1", "obj3", "obj3__background_panel_1", "obj4", "obj4__background_panel_1", "obj5", "obj5__background_panel_1", "obj6", "obj6__background_panel_1", "obj7", "obj7__background_panel_1", "obj8", "obj8__background_panel_1", "obj9", "obj9__background_panel_1", "obj10", "obj10__background_panel_1", "obj11", "obj11__background_panel_1", "obj12", "obj12__background_panel_1", "obj13", "obj13__background_panel_1", "obj14", "obj14__background_panel_1", "obj15", "obj15__background_panel_1", "obj16", "obj16__background_panel_1", "obj17", "obj17__background_panel_1", "obj18", "obj18__background_panel_1", "obj19", "obj19__background_panel_1", "obj20", "obj20__background_panel_1", "obj21", "obj21__background_panel_1", "obj22", "obj22__background_panel_1", "obj23", "obj23__background_panel_1", "obj24", "obj24__background_panel_1", "obj25", "obj25__background_panel_1", "obj26", "obj26__background_panel_1", "obj27", "obj27__background_panel_1", "obj28", "obj28__background_panel_1", "obj29", "obj29__background_panel_1", "obj30", "obj30__background_panel_1", "obj31", "obj31__background_panel_1", "obj32", "obj32__background_panel_1", "obj33", "obj33__background_panel_1", "obj34", "obj34__background_panel_1", "obj35", "obj35__background_panel_1", "obj36", "start", "optionen", "optionen_1", "player_roller", "obj37", "obj38", "obj39", "game_roller", "obj40", "obj41", "obj42", "obj43", "obj44", "score_player1", "score_panel1", "score1", "score_player2", "score_panel2", "score2", "score_player3", "score_panel3", "score3", "score_player4", "score_panel4", "score4", "score_player5", "score_panel5", "score5", "score_player6", "score_panel6", "score6", "button_game", "obj45", "obj46", "obj47", "obj48", "obj49", "button_10", "obj50", "options_game_roller", "obj51", "obj52", "obj53", "button_3", "button_5", "button_6", "button_9", "obj54", "options_game_roller_1", "obj55", "obj56", "slider_lichtloserrounds", "button_1", "button_4", "obj57", "obj58", "obj59", "obj60", "obj61", "obj62", "button_25", "button_26", "obj63", "obj64", "obj65", "obj66", "obj67", "checkbox_2", "obj68", "obj69", "obj70", "obj71", "obj72", "button_12", "button_13", "button_15", "obj73", "obj74", "button_18", "obj75", "slider_2", "slider_3", "obj76", "button_29", "obj77", "obj78", "obj79", "obj80", "obj81", "checkbox_1", "obj82", "button_46", "obj83", "button_49", "obj84", "button_39", "obj85", "button_7", "obj86", "obj87", "obj88", "obj89", "obj90", "obj91", "start_idle", "version", "logo", "obj92", "news_container", "news_panel", "news", "obj93", "obj94", "obj95", "exit_container_1", "obj96", "exit_container_3", "obj97", "keyboard_area", "keyboard", "keyboard_title", "exit_container_4", "obj98", "numpad_area", "numpad", "numpad_title", "exit_container_5", "obj99", "ja_panel", "nein_panel", "exit_container_6", "obj100", "scores", "button_container_2", "button_title_2", "exit_container_7", "obj101", "win_lose_container", "win_container", "win_panel", "exit_container_8", "obj102", "win_lose_container_2", "win_container_2", "win_panel_1", "lose_anzeige_1", "lose_anzeige_title_2", "exit_container_9", "obj103", "win_lose_container_1", "win_container_1", "lose_panel", "exit_container_10", "obj104", "win_lose_container_3", "win_container_3", "lose_panel_1", "win_anzeige_1", "lose_anzeige_title_3", "exit_container_11", "obj105", "obj106", "button_container_10", "button_title_10", "exit_container_12", "obj107", "exit_container_13", "obj108", "obj109", "exit_container_14", "obj110", "obj111", "button_container_3", "button_title_3", "button_container_5", "button_title_5", "button_container_6", "button_title_6", "button_container_9", "button_title_9", "exit_container_15", "obj112", "exit_container_16", "obj113", "obj114", "slider_container_1", "slider_title_7", "slider_title_1", "button_container_1", "button_title_1", "button_container_4", "button_title_4", "exit_container_17", "obj115", "obj116", "switch_container_1", "switch_title_1", "dropdown_container_3", "roller_title_3", "exit_container_18", "obj117", "obj118", "slider_container_7", "slider_title_11", "slider_7", "slider_title_12", "slider_title_13", "slider_title_14", "slider_container_8", "slider_title_15", "slider_8", "slider_title_16", "slider_title_17", "slider_title_18", "slider_container_9", "slider_title_19", "slider_9", "slider_title_20", "slider_title_21", "slider_title_22", "slider_container_10", "slider_title_23", "slider_1", "slider_title_24", "slider_title_25", "exit_container_19", "obj119", "obj120", "button_container_25", "button_title_25", "button_container_26", "button_title_26", "exit_container_20", "obj121", "obj122", "dropdown_container_9", "roller_title_9", "dropdown_container_10", "roller_title_10", "checkbox_contatiner_2", "checkbox_title_2", "exit_container_21", "obj123", "obj124", "dropdown_container_11", "roller_title_11", "dropdown_container_12", "roller_title_12", "exit_container_22", "obj125", "obj126", "button_container_12", "button_title_12", "button_container_13", "button_title_13", "button_container_15", "button_title_15", "question_container_7", "obj127", "exit_container_23", "obj128", "obj129", "button_container_18", "button_title_18", "exit_container_24", "obj130", "obj131", "slider_container_2", "slider_title_2", "slider_title_8", "slider_container_3", "slider_title_3", "slider_title_9", "exit_container_25", "obj132", "obj133", "button_container_29", "button_title_29", "exit_container_26", "obj134", "obj135", "switch_container_2", "switch_title_2", "dropdown_container_4", "roller_title_4", "checkbox_contatiner_1", "checkbox_title_1", "exit_container_27", "obj136", "obj137", "button_container_46", "button_title_46", "button_container_50", "button_50", "button_title_50", "exit_container_28", "obj138", "obj139", "button_container_47", "button_47", "button_title_47", "button_container_48", "button_48", "button_title_48", "button_container_49", "button_title_49", "exit_container_29", "obj140", "obj141", "button_container_38", "button_38", "button_title_38", "button_container_39", "button_title_39", "exit_container_30", "obj142", "obj143", "button_container_7", "button_title_7", "exit_container_31", "obj144", "switch_container", "obj145", "switch_title", "checkbox_contatiner", "checkbox", "checkbox_title", "slider_container", "slider_title", "slider", "button_container", "button", "button_title", "question_container", "obj146", "obj147", "question_container_1", "obj148", "question_container_2", "obj149", "exit_container", "obj150", "exit_container_32", "obj151", "dropdown_container_2", "roller_title_1", "roller_container_2", "roller_title_2", "roller_2", "exit_container_33", "obj152" };
 static const char *style_names[] = { "Gold", "Braun", "GoldSelBraun", "GoldTextArea", "GoldKeyboard", "goldPanel", "GoldDropdown^", "BG-left", "BG-right" };
 
 
