@@ -66,6 +66,7 @@ struct LlSpinPlan {
 };
 
 static LlSpinPlan g_llSpinPlan{false, 1, 1, 0, 0, 0, 1, 20, 200, 0, 0, false, 0, 0, 0};
+static unsigned long g_lastLlSpinCmdMs = 0;
 
 static uint8_t playerIndexFromGroup(uint8_t group, uint8_t pc);
 static void blinkGroupColor(uint8_t group, uint32_t color, uint8_t cycles, uint16_t onMs, uint16_t offMs);
@@ -132,6 +133,7 @@ static void ledRingTest() {
 
 // ===================== Borders ==================
 static uint8_t currentPlayerCount = 0;
+static bool g_jokerEnabled = false;
 
 // Border-Preview-State (wird auch genutzt, um die Farbe der Marker festzulegen)
 static uint8_t previewBorderMode = 0;        // 0=einfarbig, 1=Regenbogen
@@ -164,11 +166,11 @@ static void setBordersForPlayers(uint8_t pc, bool on) {
 
   if (on) {
     switch (pc) {
-      case 2: { const uint8_t g[] = {18, 36};             for (uint8_t i : g) setGroup(i, colorOn); } break;
-      case 3: { const uint8_t g[] = {12, 24, 36};         for (uint8_t i : g) setGroup(i, colorOn); } break;
-      case 4: { const uint8_t g[] = {4, 13, 22, 31};      for (uint8_t i : g) setGroup(i, colorOn); } break;
-      case 5: { const uint8_t g[] = {2, 9, 16, 23, 30, 1};for (uint8_t i : g) setGroup(i, colorOn); } break;
-      case 6: { const uint8_t g[] = {3, 9, 15, 21, 27, 33};for (uint8_t i : g) setGroup(i, colorOn);} break;
+      case 2: { const uint8_t g[] = {27, 9};              for (uint8_t i : g) setGroup(i, colorOn); } break;
+      case 3: { const uint8_t g[] = {30, 6, 18};          for (uint8_t i : g) setGroup(i, colorOn); } break;
+      case 4: { const uint8_t g[] = {31, 4, 13, 22};      for (uint8_t i : g) setGroup(i, colorOn); } break;
+      case 5: { const uint8_t g[] = {33, 4, 5, 12, 19, 26};for (uint8_t i : g) setGroup(i, colorOn); } break;
+      case 6: { const uint8_t g[] = {33, 3, 9, 15, 21, 27};for (uint8_t i : g) setGroup(i, colorOn);} break;
       default: break;
     }
   }
@@ -254,23 +256,23 @@ static void runPlayerPreview() {
     };
     switch (pc) {
       case 2: {
-        uint8_t groupsPer = 18;
+        const uint8_t ranges[2][2] = { {28, 9}, {10, 27} };
         for (uint8_t p = 0; p < 2; ++p) {
           uint32_t col = previewPlayerOwnRandom ? gameStrip.gamma32(gameStrip.ColorHSV((uint16_t)(p * 40) * 256))
                                                 : playerColors[p % 6];
-          fillRange(p * groupsPer + 1, p * groupsPer + groupsPer, col);
+          fillRange(ranges[p][0], ranges[p][1], col);
         }
       } break;
       case 3: {
-        uint8_t groupsPer = 12;
+        const uint8_t ranges[3][2] = { {31, 6}, {7, 18}, {19, 30} };
         for (uint8_t p = 0; p < 3; ++p) {
           uint32_t col = previewPlayerOwnRandom ? gameStrip.gamma32(gameStrip.ColorHSV((uint16_t)(p * 40) * 256))
                                                 : playerColors[p % 6];
-          fillRange(p * groupsPer + 1, p * groupsPer + groupsPer, col);
+          fillRange(ranges[p][0], ranges[p][1], col);
         }
       } break;
       case 4: {
-        uint8_t segs[4][2] = { {5,13}, {14,22}, {23,31}, {32,4} };
+        uint8_t segs[4][2] = { {32,4}, {5,13}, {14,22}, {23,31} };
         for (uint8_t p = 0; p < 4; ++p) {
           uint32_t col = previewPlayerOwnRandom ? gameStrip.gamma32(gameStrip.ColorHSV((uint16_t)(p * 40) * 256))
                                                 : playerColors[p % 6];
@@ -278,7 +280,7 @@ static void runPlayerPreview() {
         }
       } break;
       case 5: {
-        uint8_t segs[5][2] = { {3,9}, {10,16}, {17,23}, {24,30}, {31,1} };
+        uint8_t segs[5][2] = { {34,4}, {6,12}, {13,19}, {20,26}, {27,33} };
         for (uint8_t p = 0; p < 5; ++p) {
           uint32_t col = previewPlayerOwnRandom ? gameStrip.gamma32(gameStrip.ColorHSV((uint16_t)(p * 40) * 256))
                                                 : playerColors[p % 6];
@@ -286,7 +288,7 @@ static void runPlayerPreview() {
         }
       } break;
       case 6: {
-        uint8_t segs[6][2] = { {4,9}, {10,15}, {16,21}, {22,27}, {28,33}, {34,3} };
+        uint8_t segs[6][2] = { {34,3}, {4,9}, {10,15}, {16,21}, {22,27}, {28,33} };
         for (uint8_t p = 0; p < 6; ++p) {
           uint32_t col = previewPlayerOwnRandom ? gameStrip.gamma32(gameStrip.ColorHSV((uint16_t)(p * 40) * 256))
                                                 : playerColors[p % 6];
@@ -298,15 +300,22 @@ static void runPlayerPreview() {
 
   // Joker-Segment (nur 5 Spieler)
   if (pc == 5) {
-    uint16_t baseJoker = groupBase(2);
-    if (previewInactiveMode == 0) {
+    uint16_t baseJoker = groupBase(5);
+    if (g_jokerEnabled) {
+      // Joker an: zeige gewählte Farbe (Gold oder Rainbow-Standbild)
+      if (previewInactiveMode == 2 || previewInactiveMode == 1) {
+        uint32_t col = (previewInactiveMode == 2) ? gameStrip.Color(128, 90, 0) : gameStrip.Color(80,80,80);
+        for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(baseJoker + i, col);
+      } else {
+        // Rainbow Standbild als Fallback
+        for (uint8_t i = 0; i < 12; ++i) {
+          uint16_t hue = (uint16_t)i * (65535 / 12);
+          gameStrip.setPixelColor(baseJoker + i, gameStrip.gamma32(gameStrip.ColorHSV(hue)));
+        }
+      }
+    } else {
+      // Joker aus: Segment dunkel
       for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(baseJoker + i, 0);
-    } else if (previewInactiveMode == 1) {
-      uint32_t grayCol = gameStrip.Color(80, 80, 80);
-      for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(baseJoker + i, grayCol);
-    } else if (previewInactiveMode == 2) {
-      uint32_t dimGold = gameStrip.Color(128, 90, 0);
-      for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(baseJoker + i, dimGold);
     }
   }
 
@@ -326,10 +335,10 @@ static void runBorderPreview() {
 
   if (previewBorderMode == 0) {
     uint32_t col = borderPreviewToColor();
-    const uint8_t g6[] = {3, 9, 15, 21, 27, 33};
+    const uint8_t g6[] = {33, 4, 5, 12, 19, 26};
     for (uint8_t g : g6) setGroup(g, col);
   } else {
-    const uint8_t g6[] = {3, 9, 15, 21, 27, 33};
+    const uint8_t g6[] = {33, 4, 5, 12, 19, 26};
     for (uint8_t i = 0; i < 6; ++i) {
       uint16_t hue = (uint16_t)i * (65536 / 6);
       uint32_t c = borderStrip.gamma32(borderStrip.ColorHSV(hue));
@@ -346,14 +355,15 @@ static int8_t  jokerDir  = 1;
 static unsigned long jokerLastStepMs = 0;
 static unsigned long jokerPhaseStartMs = 0;
 static bool jokerActive = false;
+static bool jokerHitActive = false;
+static uint8_t jokerHitMode = 0; // 0=gold, 1=rainbow
+static int8_t jokerHitPos = 0;
+static int8_t jokerHitDir = 1;
+static unsigned long jokerHitLastStepMs = 0;
 
 static void clearJoker() {
-  uint16_t base2  = groupBase(2);
-  uint16_t base19 = groupBase(19);
-  for (uint8_t i = 0; i < 12; ++i) {
-    gameStrip.setPixelColor(base2 + i, 0);
-    gameStrip.setPixelColor(base19 + i, 0);
-  }
+  uint16_t base5 = groupBase(5);
+  for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base5 + i, 0);
   gameStrip.show();
 }
 
@@ -365,39 +375,64 @@ static void updateJokerAnimation() {
   unsigned long phaseMs = now - jokerPhaseStartMs;
 
   const uint32_t gold = gameStrip.Color(255, 180, 0);
-  uint16_t base2  = groupBase(2);
-  uint16_t base19 = groupBase(19);
+  uint16_t base5  = groupBase(5);
 
   if (jokerMode == 1 && phaseMs >= 6000) {
-    for (uint8_t i = 0; i < 12; ++i) {
-      gameStrip.setPixelColor(base2  + i, gold);
-      gameStrip.setPixelColor(base19 + i, gold);
-    }
+    for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base5 + i, gold);
     for (uint8_t g = 1; g <= 36; ++g) {
-      if (g == 2 || g == 19) continue;
+      if (g == 5) continue;
       uint16_t base = groupBase(g);
       uint16_t hue = (uint16_t)((phaseMs / 10) + g * (65536/36));
       for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base + i, gameStrip.ColorHSV(hue));
     }
   } else if (phaseMs < 3000) {
-    for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base19 + i, gold);
-    for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base2 + i, 0);
-    gameStrip.setPixelColor(base2 + jokerPos, gold);
+    for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base5 + i, 0);
+    gameStrip.setPixelColor(base5 + jokerPos, gold);
     if (jokerPos == 0 || jokerPos == 11) jokerDir = -jokerDir;
   } else if (phaseMs < 6000) {
     bool on = ((phaseMs / 250) % 2) == 0;
     uint32_t c = on ? gold : 0;
-    for (uint8_t i = 0; i < 12; ++i) {
-      gameStrip.setPixelColor(base2  + i, c);
-      gameStrip.setPixelColor(base19 + i, c);
-    }
+    for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base5 + i, c);
   } else {
-    for (uint8_t i = 0; i < 12; ++i) {
-      gameStrip.setPixelColor(base2 + i, gold);
-      gameStrip.setPixelColor(base19 + i, gold);
-    }
+    for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base5 + i, gold);
   }
   jokerPos += jokerDir;
+  gameStrip.show();
+}
+
+static void clearJokerHit() {
+  jokerHitActive = false;
+  uint16_t base5 = groupBase(5);
+  for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base5 + i, 0);
+  gameStrip.show();
+}
+
+static void updateJokerHitAnimation() {
+  if (!jokerHitActive) return;
+  unsigned long now = millis();
+  if (now - jokerHitLastStepMs < 40) return;
+  jokerHitLastStepMs = now;
+
+  uint16_t base5 = groupBase(5);
+  // clear previous
+  for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(base5 + i, 0);
+
+  if (jokerHitMode == 0) {
+    // Gold: wandernde einzelne LED
+    uint32_t col = gameStrip.Color(255, 180, 0);
+    gameStrip.setPixelColor(base5 + jokerHitPos, col);
+    jokerHitPos += jokerHitDir;
+    if (jokerHitPos <= 0 || jokerHitPos >= 11) {
+      jokerHitDir = -jokerHitDir;
+    }
+  } else {
+    // Rainbow: kompletter Block als laufender Regenbogen
+    uint16_t hueBase = (uint16_t)((now / 5) & 0xFFFF);
+    for (uint8_t i = 0; i < 12; ++i) {
+      uint16_t hue = hueBase + (uint16_t)i * (65535 / 12);
+      gameStrip.setPixelColor(base5 + i, gameStrip.gamma32(gameStrip.ColorHSV(hue)));
+    }
+  }
   gameStrip.show();
 }
 
@@ -481,32 +516,34 @@ static uint8_t playerIndexFromGroup(uint8_t g, uint8_t pc) {
   }
   switch (pc) {
     case 2:
-      return (g >= 1 && g <= 18) ? 0 : 1;
+      if ((g >= 28 && g <= 36) || (g >= 1 && g <= 9)) return 0;
+      return 1; // 10..27
     case 3:
-      if (g >= 1 && g <= 12)  return 0;
-      if (g >= 13 && g <= 24) return 1;
+      if ((g >= 31 && g <= 36) || (g >= 1 && g <= 6)) return 0;
+      if (g >= 7  && g <= 18) return 1;
+      // 19..30 -> Spieler 2
       return 2;
     case 4:
-      if (g >= 5  && g <= 13) return 0;
-      if (g >= 14 && g <= 22) return 1;
-      if (g >= 23 && g <= 31) return 2;
-      // 32..36 oder 1..4 -> Spieler 3
+      if ((g >= 32 && g <= 36) || (g >= 1 && g <= 4)) return 0;
+      if (g >= 5  && g <= 13) return 1;
+      if (g >= 14 && g <= 22) return 2;
+      // 23..31 -> Spieler 3
       return 3;
     case 5:
-      if (g == 2) return 255; // Joker-Segment
-      if (g >= 3  && g <= 9 ) return 0;
-      if (g >= 10 && g <= 16) return 1;
-      if (g >= 17 && g <= 23) return 2;
-      if (g >= 24 && g <= 30) return 3;
-      // 31..36,1 -> Spieler 4
+      if (g == 5) return 255; // Joker-Segment
+      if ((g >= 34 && g <= 36) || (g >= 1 && g <= 4)) return 0;
+      if (g >= 6  && g <= 12) return 1;
+      if (g >= 13 && g <= 19) return 2;
+      if (g >= 20 && g <= 26) return 3;
+      // 27..33 -> Spieler 4 (index 4)
       return 4;
     case 6:
-      if (g >= 4  && g <= 9 ) return 0;
-      if (g >= 10 && g <= 15) return 1;
-      if (g >= 16 && g <= 21) return 2;
-      if (g >= 22 && g <= 27) return 3;
-      if (g >= 28 && g <= 33) return 4;
-      // 34..36,1..3 -> Spieler 5
+      if ((g >= 34 && g <= 36) || (g >= 1 && g <= 3)) return 0;
+      if (g >= 4  && g <= 9 ) return 1;
+      if (g >= 10 && g <= 15) return 2;
+      if (g >= 16 && g <= 21) return 3;
+      if (g >= 22 && g <= 27) return 4;
+      // 28..33 -> Spieler 5
       return 5;
   }
   return 255;
@@ -594,6 +631,8 @@ static void startLlSpinPlan(uint8_t startGroup,
     g_llSpinPlan.totalSteps = 36;
   }
   g_llSpinPlan.hitColor = 0;
+  // neuer Spin beendet Joker-Hit-Anzeige
+  clearJokerHit();
 }
 
 static void stopLlSpinPlan(bool clearGameLeds) {
@@ -632,8 +671,19 @@ static void updateLlSpin() {
       } else if (idx >= 36) {
         idx -= 36;
       }
+      // Joker aus und 5 Spieler: Gruppe 5 überspringen
+      if (!g_jokerEnabled && currentPlayerCount == 5 && idx == 4) { // idx 4 => Gruppe 5
+        idx += g_llSpinPlan.dir;
+        if (idx < 0) idx += 36;
+        if (idx >= 36) idx -= 36;
+      }
       g_llSpinPlan.currentGroup = (uint8_t)(idx + 1);
-      llShowGroupWhite(g_llSpinPlan.currentGroup);
+      // Joker (5er) soll beim Drehen gold leuchten, sonst weiß
+      if (g_jokerEnabled && currentPlayerCount == 5 && g_llSpinPlan.currentGroup == 5) {
+        llSetGroupColor(g_llSpinPlan.currentGroup, gameStrip.Color(255,180,0));
+      } else {
+        llShowGroupWhite(g_llSpinPlan.currentGroup);
+      }
       g_llSpinPlan.stepIndex++;
     }
     return;
@@ -694,7 +744,10 @@ static void handleLine(const char *line) {
   }
 
   if (strncmp(line, "CFG_JOKER ", 10) == 0) {
-    int en = 0; if (sscanf(line + 10, "%d", &en) == 1) { /* optional persist */ }
+    int en = 0;
+    if (sscanf(line + 10, "%d", &en) == 1) {
+      g_jokerEnabled = (en != 0);
+    }
     return;
   }
 
@@ -714,7 +767,18 @@ static void handleLine(const char *line) {
     jokerActive = true; jokerPos = 0; jokerDir = 1; jokerLastStepMs = 0; jokerPhaseStartMs = millis(); return;
   }
   if (strcmp(line, "JOKER:PREVIEW:STOP") == 0) {
-    jokerActive = false; clearJoker(); return;
+    jokerActive = false; clearJoker(); clearJokerHit(); return;
+  }
+  if (strncmp(line, "JOKER_HIT ", 10) == 0) {
+    int mode = 0;
+    sscanf(line + 10, "%d", &mode);
+    jokerHitMode = (mode == 1) ? 1 : 0;
+    jokerHitActive = true;
+    jokerHitPos = 0;
+    jokerHitDir = 1;
+    jokerHitLastStepMs = 0;
+    clearJoker(); // ensure only hit animation is running on group 5
+    return;
   }
 
   if (strncmp(line, "PLAYER_PREVIEW ", 15) == 0) {
@@ -742,10 +806,12 @@ static void handleLine(const char *line) {
   if (strcmp(line, "PREVIEW_CLEAR") == 0) {
     stopLlSpinPlan(true);
     clearAll();
+    jokerHitActive = false;
     return;
   }
   if (strcmp(line, "GAME_END") == 0) {
     jokerActive = false;
+    jokerHitActive = false;
     stopLlSpinPlan(true);
     clearAll();
     return;
@@ -771,6 +837,11 @@ static void handleLine(const char *line) {
   }
 
   if (strncmp(line, "LL_SPIN ", 8) == 0) {
+    unsigned long now = millis();
+    if (now - g_lastLlSpinCmdMs < 50) {
+      return;
+    }
+    g_lastLlSpinCmdMs = now;
     int startGroup, accelSteps, maxSteps, decelSteps;
     int dir, stepMs, blinkMs;
     int count = sscanf(line + 8, "%d %d %d %d %d %d %d",
@@ -835,7 +906,8 @@ void setup() {
 void loop() {
   rs485Poll();
   updateJokerAnimation();
+  updateJokerHitAnimation();
   updateLlSpin();
-  delay(5);
+  delay(1);
 }
 

@@ -12,6 +12,7 @@ extern void action_cmd_send_spin_start_to_arduino(lv_event_t * e);
 extern void action_cmd_send_joker_start_to_arduino(lv_event_t * e);
 extern void action_cmd_send_joker_stop_to_arduino(lv_event_t * e);
 extern void action_cmd_send_joker_preview(lv_event_t * e);
+extern void action_cmd_send_joker_hit_to_arduino(lv_event_t * e);
 extern void action_cmd_send_borders_state_to_arduino(lv_event_t * e);
 extern void action_cmd_send_player_colors_preview(lv_event_t * e);
 extern void action_cmd_send_border_colors_preview(lv_event_t * e);

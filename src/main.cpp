@@ -154,8 +154,18 @@ constexpr int RS485_RX_PIN = 43;
 constexpr int RS485_TX_PIN = 44;
 
 static inline void rs485SendRaw(const uint8_t *data, size_t len) {
-  RS485.write(data, len);
+  if (!data || len == 0) {
+    return;
+  }
+  size_t written = RS485.write(data, len);
+  if (written < len) {
+    delay(2);
+    written += RS485.write(data + written, len - written);
+  }
   RS485.flush();
+  if (written < len) {
+    USBSerial.printf("[RS485-TX-ERR] only %u/%u bytes written\n", (unsigned)written, (unsigned)len);
+  }
 }
 
 static void logRs485Line(const char *prefix, const char *line, size_t len = 0) {
@@ -233,13 +243,15 @@ struct LichtLoserSpinState {
   bool active;
   bool hitPublished;
   uint32_t spinEndMs;
+  uint32_t publishAtMs;
   uint32_t buttonEnableMs;
   uint8_t currentGroup; // 1..36
 };
 
-static LichtLoserSpinState g_llSpinState = { false, false, 0, 0, 1 };
+static LichtLoserSpinState g_llSpinState = { false, false, 0, 0, 0, 1 };
 static bool g_llScoreLogInit = false;
 static int32_t g_llLastScores[6] = {0, 0, 0, 0, 0, 0};
+static const uint32_t kHitPublishDelayMs = 3000;
 
 static uint32_t llClampToRange(uint32_t value, uint32_t minVal, uint32_t maxVal) {
   if (value < minVal) {
@@ -278,6 +290,7 @@ static void lichtLoserResetSpinState() {
   g_llSpinState.active = false;
   g_llSpinState.hitPublished = false;
   g_llSpinState.spinEndMs = 0;
+  g_llSpinState.publishAtMs = 0;
   g_llSpinState.buttonEnableMs = 0;
   if (g_llSpinState.currentGroup < 1 || g_llSpinState.currentGroup > 36) {
     g_llSpinState.currentGroup = 1;
@@ -348,6 +361,14 @@ static bool lichtLoserPlanSpin(uint8_t startGroup,
   }
   uint8_t startIndex = static_cast<uint8_t>(startGroup - 1); // 0..35
 
+  int playerCount = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_COUNT);
+  bool jokerEnabled = gv_b(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED);
+  // Joker aus: Startgruppe 5 vermeiden im 5-Spieler-Modus
+  if (playerCount == 5 && !jokerEnabled && startGroup == 5) {
+    startGroup = 6;
+    startIndex = static_cast<uint8_t>(startGroup - 1);
+  }
+
   int32_t signedOffset = dir * static_cast<int32_t>(totalSteps % 36);
   int32_t idx = static_cast<int32_t>(startIndex) + signedOffset;
   while (idx < 0) {
@@ -357,8 +378,16 @@ static bool lichtLoserPlanSpin(uint8_t startGroup,
     idx -= 36;
   }
   uint8_t finalGroup = static_cast<uint8_t>(idx + 1); // 1..36
+  // Joker aus: Endgruppe 5 vermeiden im 5-Spieler-Modus
+  if (playerCount == 5 && !jokerEnabled && finalGroup == 5) {
+    int next = static_cast<int>(finalGroup) + dir;
+    if (next < 1) next = 36;
+    if (next > 36) next = 1;
+    finalGroup = static_cast<uint8_t>(next);
+  }
 
   totalDurationMs = 0;
+  const uint32_t loopOverheadMs = 1; // Arduino loop tick delay(1) adds latency per step
   const float kExpo = 3.0f;
   const float expoNorm = 1.0f - expf(-kExpo);
   for (uint32_t step = 0; step < totalSteps; ++step) {
@@ -377,7 +406,7 @@ static bool lichtLoserPlanSpin(uint8_t startGroup,
     }
     uint32_t stepDelay = static_cast<uint32_t>(stepMs * fDelay);
     stepDelay = llClampToRange(stepDelay, 1, 2000);
-    totalDurationMs += stepDelay;
+    totalDurationMs += stepDelay + loopOverheadMs;
   }
 
   uint16_t blinkMs = static_cast<uint16_t>(stepMs * 2);
@@ -407,12 +436,22 @@ static void lichtLoserUpdate() {
 
   uint32_t now = millis();
 
-  if (g_llSpinState.active && now >= g_llSpinState.spinEndMs) {
+  if (g_llSpinState.active && now >= g_llSpinState.publishAtMs) {
     g_llSpinState.active = false;
     eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_SPIN_IN_PROGRESS, eez::IntegerValue(0));
     if (!g_llSpinState.hitPublished) {
-      g_llSpinState.hitPublished = true;
-      lichtLoserPublishHit(g_llSpinState.currentGroup);
+      int pc = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_COUNT);
+      bool jokerEnabled = gv_b(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED);
+      if (pc == 5 && jokerEnabled && g_llSpinState.currentGroup == 5) {
+        int mode = gv_i(FLOW_GLOBAL_VARIABLE_JOKER_COLOR_INDEX);
+        char buf[32];
+        snprintf(buf, sizeof(buf), "JOKER_HIT %d\n", (mode == 1) ? 1 : 0);
+        rs485SendLine(buf);
+        g_llSpinState.hitPublished = true;
+      } else {
+        g_llSpinState.hitPublished = true;
+        lichtLoserPublishHit(g_llSpinState.currentGroup);
+      }
     }
   }
 
@@ -483,6 +522,14 @@ extern "C" void action_cmd_send_spin_start_to_arduino(lv_event_t *e) {
     return;
   }
 
+  // Joker-Status an Mega senden (für group-5-Handling)
+  {
+    int en = gv_b(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED) ? 1 : 0;
+    char cfg[32];
+    snprintf(cfg, sizeof(cfg), "CFG_JOKER %d\n", en);
+    rs485SendLine(cfg);
+  }
+
   char buf[96];
   uint32_t totalMs = 0;
   uint8_t finalGroup = g_llSpinState.currentGroup;
@@ -494,12 +541,26 @@ extern "C" void action_cmd_send_spin_start_to_arduino(lv_event_t *e) {
   eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_BLINK_ACTIVE, eez::BooleanValue(false));
   eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_BLINK_PHASE, eez::BooleanValue(false));
 
-  rs485SendLine(buf);
+  // Joker-Status an Mega senden (für Skip/Gold-Anzeige im Spin)
+  {
+    int en = gv_b(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED) ? 1 : 0;
+    char cfg[32];
+    snprintf(cfg, sizeof(cfg), "CFG_JOKER %d\n", en);
+    rs485SendLine(cfg);
+  }
+
+  for (int attempt = 0; attempt < 3; ++attempt) {
+    rs485SendLine(buf);
+    if (attempt < 2) {
+      delay(10);
+    }
+  }
 
   g_llSpinState.active = true;
   g_llSpinState.hitPublished = false;
   g_llSpinState.spinEndMs = now + totalMs;
-  g_llSpinState.buttonEnableMs = g_llSpinState.spinEndMs + 2000;
+  g_llSpinState.publishAtMs = g_llSpinState.spinEndMs + kHitPublishDelayMs;
+  g_llSpinState.buttonEnableMs = g_llSpinState.publishAtMs + 2000;
   g_llSpinState.currentGroup = finalGroup;
 
   eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_SPIN_IN_PROGRESS, eez::IntegerValue(1));
@@ -508,12 +569,25 @@ extern "C" void action_cmd_send_spin_start_to_arduino(lv_event_t *e) {
 
 extern "C" void action_cmd_send_joker_start_to_arduino(lv_event_t *e) {
   (void)e;
+  int en = gv_b(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED) ? 1 : 0;
+  char cfg[32];
+  snprintf(cfg, sizeof(cfg), "CFG_JOKER %d\n", en);
+  rs485SendLine(cfg);
   rs485SendLine("JOKER:PREVIEW:START\n");
 }
 
 extern "C" void action_cmd_send_joker_stop_to_arduino(lv_event_t *e) {
   (void)e;
   rs485SendLine("JOKER:PREVIEW:STOP\n");
+}
+
+// Joker-Hit: startet die Joker-Hit-Animation auf dem Mega (Gruppe 5), kein Score-Abzug
+extern "C" void action_cmd_send_joker_hit_to_arduino(lv_event_t *e) {
+  (void)e;
+  int mode = gv_i(FLOW_GLOBAL_VARIABLE_JOKER_COLOR_INDEX); // 0 = Gold, 1 = Regenbogen
+  char buf[32];
+  snprintf(buf, sizeof(buf), "JOKER_HIT %d\n", (mode == 1) ? 1 : 0);
+  rs485SendLine(buf);
 }
 
 extern "C" void action_cmd_send_joker_preview(lv_event_t *e) {

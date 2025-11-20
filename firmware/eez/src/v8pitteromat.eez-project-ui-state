@@ -1,10 +1,9 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[v8pitteromat.eez-project]:/userPages/21",
-    "selectedUserWidgetObject": "[v8pitteromat.eez-project]:/userWidgets/-1",
-    "selectedActionObject": "[v8pitteromat.eez-project]:/actions/46",
-    "selectedGlobalVariableObject": "[v8pitteromat.eez-project]:/variables/globalVariables/105",
-    "selectedBitmapObject": "[v8pitteromat.eez-project]:/bitmaps/-1",
+    "selectedUserPageObject": "[v8pitteromat.eez-project]:/userPages/9",
+    "selectedActionObject": "[v8pitteromat.eez-project]:/actions/24",
+    "selectedGlobalVariableObject": "[v8pitteromat.eez-project]:/variables/globalVariables/60",
+    "selectedEnumObject": "[v8pitteromat.eez-project]:/variables/enums/-1",
     "subnavigationSelectedItems": {
       "variables-tab/sub-navigation/selected-item": "Global"
     }
@@ -82,7 +81,7 @@
           },
           {
             "type": "border",
-            "selected": 0,
+            "selected": 3,
             "location": "bottom",
             "children": [
               {
@@ -211,53 +210,43 @@
             {
               "type": "tabset",
               "id": "EDITORS",
-              "weight": 67.9258289703316,
+              "weight": 49.79690117252931,
+              "selected": 2,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
                 {
                   "type": "tab",
-                  "id": "#f9f7cad2-d4c2-4135-90fe-a658bfe6aeaf",
-                  "name": "actLichtLoser_HitWatcher",
+                  "id": "#0223398a-36db-4a33-901d-b914d62f31f5",
+                  "name": "UpdateSeat",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[v8pitteromat.eez-project]:/actions/46",
-                    "permanent": false
-                  },
-                  "icon": "material:code"
-                },
-                {
-                  "type": "tab",
-                  "id": "#1e50d97a-b7a7-4aec-aeb0-4fc3245a1add",
-                  "name": "LichtLoser_StartHitBlink",
-                  "component": "editor",
-                  "config": {
-                    "objectPath": "[v8pitteromat.eez-project]:/actions/32",
+                    "objectPath": "[v8pitteromat.eez-project]:/actions/24",
                     "permanent": true
                   },
                   "icon": "material:code"
                 },
                 {
                   "type": "tab",
-                  "id": "#f8d6934c-c09d-4eca-819d-a952a406055e",
-                  "name": "Lichtloser_ShowEndScreens",
+                  "id": "#6fd9f670-b863-4d94-ab7c-c90cb20f00f9",
+                  "name": "game_lichtloser",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[v8pitteromat.eez-project]:/actions/27",
-                    "permanent": true
-                  },
-                  "icon": "material:code"
-                },
-                {
-                  "type": "tab",
-                  "id": "#c9296352-2f2a-4f9e-985f-0039cddeca35",
-                  "name": "adminoptionen1_spiele_lichtloser_timings",
-                  "component": "editor",
-                  "config": {
-                    "objectPath": "[v8pitteromat.eez-project]:/userPages/21",
+                    "objectPath": "[v8pitteromat.eez-project]:/userPages/9",
                     "permanent": false
                   },
                   "icon": "svg:page"
+                },
+                {
+                  "type": "tab",
+                  "id": "#a98c3be6-92e8-4e6c-a781-b073b4b54c5f",
+                  "name": "UpdateSlots",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[v8pitteromat.eez-project]:/actions/25",
+                    "permanent": true
+                  },
+                  "icon": "material:code"
                 }
               ],
               "active": true
@@ -265,7 +254,7 @@
             {
               "type": "row",
               "id": "#bf9719d8-ceca-4747-9f89-b828646fbc37",
-              "weight": 17.074171029668413,
+              "weight": 35.20309882747069,
               "children": [
                 {
                   "type": "tabset",
@@ -1090,25 +1079,31 @@
       "selection": {
         "0": {
           "1": {
-            "1": {},
+            "1": {
+              "0": {
+                "$selected": true
+              }
+            },
             "3": {
               "0": {}
             },
             "5": {},
+            "6": {},
             "7": {},
             "9": {},
             "11": {
-              "0": {
-                "$selected": true
-              }
+              "0": {}
             }
+          },
+          "2": {
+            "0": {}
           }
         }
       },
       "transform": {
         "translate": {
-          "x": -400,
-          "y": -240
+          "x": -263,
+          "y": -275
         },
         "scale": 1
       },
@@ -1546,7 +1541,14 @@
     },
     "[v8pitteromat.eez-project]:/userPages/20[flow-state]": {
       "selection": {
-        "0": {}
+        "0": {
+          "2": {},
+          "3": {
+            "1": {
+              "$selected": true
+            }
+          }
+        }
       },
       "transform": {
         "translate": {
@@ -1834,12 +1836,14 @@
     },
     "[v8pitteromat.eez-project]:/actions/46[flow-state]": {
       "selection": {
-        "4": {}
+        "3": {
+          "$selected": true
+        }
       },
       "transform": {
         "translate": {
-          "x": -229.87500000000006,
-          "y": -98
+          "x": -904,
+          "y": -100
         },
         "scale": 1
       }
@@ -1848,25 +1852,32 @@
       "selection": {
         "3": {},
         "11": {},
+        "14": {},
         "28": {},
-        "47": {
+        "43": {},
+        "44": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -2290,
+          "y": -479
+        },
+        "scale": 1.1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/26[flow-state]": {
+      "selection": {
+        "3": {},
+        "4": {},
+        "5": {},
+        "6": {
           "$selected": true
         }
       },
       "transform": {
         "translate": {
-          "x": -2047.3117556158606,
-          "y": -411.26916553595674
-        },
-        "scale": 1
-      }
-    },
-    "[v8pitteromat.eez-project]:/actions/26[flow-state]": {
-      "selection": {},
-      "transform": {
-        "translate": {
-          "x": -456.5,
-          "y": -135
+          "x": -828.5,
+          "y": -50
         },
         "scale": 1
       }
@@ -1877,21 +1888,22 @@
       },
       "transform": {
         "translate": {
-          "x": -336,
-          "y": -172.5
+          "x": -1180,
+          "y": -391.5
         },
         "scale": 1
       }
     },
     "[v8pitteromat.eez-project]:/actions/31[flow-state]": {
       "selection": {
-        "1": {},
-        "6": {}
+        "1": {
+          "$selected": true
+        }
       },
       "transform": {
         "translate": {
-          "x": -283.5,
-          "y": -119.5
+          "x": -330.5,
+          "y": -127.5
         },
         "scale": 1
       }
@@ -1900,8 +1912,8 @@
       "selection": {},
       "transform": {
         "translate": {
-          "x": -709,
-          "y": -68
+          "x": -141,
+          "y": -71
         },
         "scale": 1
       }
@@ -2028,50 +2040,56 @@
     },
     "[v8pitteromat.eez-project]:/actions/32[flow-state]": {
       "selection": {
-        "$selected": true
+        "1": {},
+        "5": {
+          "$selected": true
+        }
       },
       "transform": {
         "translate": {
-          "x": -234,
-          "y": 15
+          "x": -512,
+          "y": -146
         },
         "scale": 1
       }
     },
     "[v8pitteromat.eez-project]:/actions/30[flow-state]": {
-      "selection": {},
+      "selection": {
+        "1": {
+          "$selected": true
+        }
+      },
       "transform": {
         "translate": {
-          "x": -461,
-          "y": 12
+          "x": -569,
+          "y": 0
         },
         "scale": 1
       }
     },
     "[v8pitteromat.eez-project]:/actions/24[flow-state]": {
       "selection": {
-        "15": {
+        "11": {
           "$selected": true
-        }
+        },
+        "15": {}
       },
       "transform": {
         "translate": {
-          "x": -415,
-          "y": -198.5
+          "x": -414,
+          "y": 23.5
         },
         "scale": 1
       }
     },
     "[v8pitteromat.eez-project]:/actions/25[flow-state]": {
       "selection": {
-        "9": {
-          "$selected": true
-        }
+        "9": {}
       },
       "transform": {
         "translate": {
-          "x": -348.5,
-          "y": -330.5
+          "x": -279.5,
+          "y": -389.5
         },
         "scale": 1
       }
@@ -2085,6 +2103,18 @@
       "transform": {
         "translate": {
           "x": 0,
+          "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/22[flow-state]": {
+      "selection": {
+        "$selected": true
+      },
+      "transform": {
+        "translate": {
+          "x": -375,
           "y": 0
         },
         "scale": 1
