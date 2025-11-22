@@ -1,5 +1,5 @@
 // MEGA_RS485_PitterOmat.ino
-// Arduino Mega RS485 SLAVE + Adafruit NeoPixel control für Spiel + Grenzen
+// Arduino Mega RS485 SLAVE + Adafruit NeoPixel control fÃ¼r Spiel + Grenzen
 
 // Forward-Decl fuer Arduino-Prototyperzeugung (LlSpinPlan wird weiter unten definiert)
 struct LlSpinPlan;
@@ -46,7 +46,7 @@ static void updateJokerAnimation();
 static void handleSpinParams(int,int,int,int,int,int,int);
 static uint8_t spinOneRound();
 
-// Neue, vom ESP vorgegebene Spin-Planung für LichtLoser
+// Neue, vom ESP vorgegebene Spin-Planung fÃ¼r LichtLoser
 struct LlSpinPlan {
   bool active;
   uint8_t startGroup;   // 1..36
@@ -144,7 +144,7 @@ static uint32_t borderPreviewToColor() {
     if (previewBorderSingleColor == 0) return borderStrip.Color(120,30,0);
     else return borderStrip.Color(80,80,80);
   }
-  // Default-Farbe wenn Regenbogen gewählt war und ein einzelner Marker gesetzt wird
+  // Default-Farbe wenn Regenbogen gewÃ¤hlt war und ein einzelner Marker gesetzt wird
   return borderStrip.Color(128,128,128);
 }
 
@@ -204,7 +204,7 @@ static uint32_t lastSpinColor = 0;
 static uint32_t makeSingleColor(uint8_t idx) {
   switch (idx) {
     case 1: return gameStrip.Color(0,0,255);   // Blau
-    case 2: return gameStrip.Color(0,255,0);   // Grün
+    case 2: return gameStrip.Color(0,255,0);   // GrÃ¼n
     case 3: return gameStrip.Color(255,0,0);   // Rot
     default: {
       uint16_t hue = (uint16_t)random(0, 65536);
@@ -270,7 +270,7 @@ static void applyPlayerColorConfig() {
       initPlayerColors(); // feste Standardfarben
     }
   } else if (colorMode == 2) {
-    // random baseline; echte Random-Per-Hit später
+    // random baseline; echte Random-Per-Hit spÃ¤ter
     for (uint8_t i = 0; i < 6; ++i) {
       uint16_t hue = (uint16_t)random(0, 65536);
       playerColors[i] = gameStrip.gamma32(gameStrip.ColorHSV(hue));
@@ -280,7 +280,7 @@ static void applyPlayerColorConfig() {
 
 static void initPlayerColors() {
   playerColors[0] = gameStrip.Color(255,0,0);   // S1 Rot
-  playerColors[1] = gameStrip.Color(0,255,0);   // S2 Grün
+  playerColors[1] = gameStrip.Color(0,255,0);   // S2 GrÃ¼n
   playerColors[2] = gameStrip.Color(0,0,255);   // S3 Blau
   playerColors[3] = gameStrip.Color(255,255,0); // S4 Gelb
   playerColors[4] = gameStrip.Color(255,0,255); // S5 Magenta
@@ -298,7 +298,7 @@ static void runPlayerPreview() {
   if (pc < 2 || pc > 6) pc = 6;
 
   if (previewPlayerMode == 0) {
-    // eine Farbe für alle
+    // eine Farbe fÃ¼r alle
     if (previewPlayerSingleColor == 0) {
       uint16_t hue = random(0, 65536);
       uint32_t col = gameStrip.gamma32(gameStrip.ColorHSV(hue));
@@ -384,7 +384,7 @@ static void runPlayerPreview() {
   if (pc == 5) {
     uint16_t baseJoker = groupBase(5);
     if (g_jokerEnabled) {
-      // Joker an: zeige gewählte Farbe (Gold oder Rainbow-Standbild)
+      // Joker an: zeige gewÃ¤hlte Farbe (Gold oder Rainbow-Standbild)
       if (previewInactiveMode == 2 || previewInactiveMode == 1) {
         uint32_t col = (previewInactiveMode == 2) ? gameStrip.Color(128, 90, 0) : gameStrip.Color(80,80,80);
         for (uint8_t i = 0; i < 12; ++i) gameStrip.setPixelColor(baseJoker + i, col);
@@ -652,7 +652,7 @@ static float llStepDelayFactor(const LlSpinPlan &plan, uint32_t step) {
 
   if (step < accel && accel > 0) {
     float k = (float)step / (float)accel;
-    // exponentiell abfallend: startet bei 1.5 und nähert sich 0.5
+    // exponentiell abfallend: startet bei 1.5 und nÃ¤hert sich 0.5
     float decay = expf(-3.0f * k);
     return 0.5f + decay;
   }
@@ -662,7 +662,7 @@ static float llStepDelayFactor(const LlSpinPlan &plan, uint32_t step) {
   if (decel > 0) {
     uint32_t decelIndex = step - accel - max;
     float k = (float)decelIndex / (float)decel;
-    // exponentiell ansteigend: wächst von 0.5 zu 2.0
+    // exponentiell ansteigend: wÃ¤chst von 0.5 zu 2.0
     const float denom = 1.0f - expf(-3.0f);
     float rise = (1.0f - expf(-3.0f * k)) / (denom > 0.0f ? denom : 1.0f);
     return 0.5f + rise * 1.5f;
@@ -754,17 +754,11 @@ static void updateLlSpin() {
       } else if (idx >= 36) {
         idx -= 36;
       }
-      // Joker aus und 5 Spieler: Gruppe 5 überspringen
-      if (!g_jokerEnabled && currentPlayerCount == 5 && idx == 4) { // idx 4 => Gruppe 5
-        idx += g_llSpinPlan.dir;
-    if (idx < 0) idx += 36;
-    if (idx >= 36) idx -= 36;
-  }
-  g_llSpinPlan.currentGroup = (uint8_t)(idx + 1);
-  // Kurz aufblitzen in konfigurierter Farbe (vorherige Gruppe wird gelöscht)
-  uint32_t c = computeSpinColor(g_llSpinPlan.currentGroup);
-  llShowGroupColor(g_llSpinPlan.currentGroup, c);
-  g_llSpinPlan.stepIndex++;
+      g_llSpinPlan.currentGroup = (uint8_t)(idx + 1);
+      // Kurz aufblitzen in konfigurierter Farbe (vorherige Gruppe wird geloescht)
+      uint32_t c = computeSpinColor(g_llSpinPlan.currentGroup);
+      llShowGroupColor(g_llSpinPlan.currentGroup, c);
+      g_llSpinPlan.stepIndex++;
     }
     return;
   }
@@ -931,7 +925,7 @@ static void handleLine(const char *line) {
       uint8_t hitGroup = spinOneRound();
       // kurzes Blink in Spielerfarbe
       uint8_t pidx = playerIndexFromGroup(hitGroup, currentPlayerCount);
-      uint32_t col = (pidx >= 1 && pidx <= 6) ? playerColors[pidx - 1] : gameStrip.Color(255,180,0); // Joker→Gold
+      uint32_t col = (pidx >= 1 && pidx <= 6) ? playerColors[pidx - 1] : gameStrip.Color(255,180,0); // Jokerâ†’Gold
       blinkGroupColor(hitGroup, col, 5, 80, 80);
 
     }
@@ -1022,4 +1016,7 @@ void loop() {
   updateLlSpin();
   delay(1);
 }
+
+
+
 

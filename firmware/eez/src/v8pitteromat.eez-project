@@ -131,7 +131,7 @@
         "objID": "ac97e340-d8cd-431b-efd3-cbc4747c49fa",
         "name": "gameLabels",
         "type": "array:string",
-        "defaultValue": "[\"LichtLoser\",\"Reaction Wheel\"]",
+        "defaultValue": "[\"LichtLoser\"]",
         "persistent": false,
         "native": false
       },
@@ -139,7 +139,7 @@
         "objID": "59a8293f-66b5-44ee-abdc-429e66b94a33",
         "name": "gameIds",
         "type": "array:string",
-        "defaultValue": "[\"lichtLoser\",\"reactionWheel\"]",
+        "defaultValue": "[\"lichtLoser\"]",
         "persistent": false,
         "native": false
       },
@@ -147,7 +147,7 @@
         "objID": "89350e06-1d8b-4aab-f91c-d3348a5cee5f",
         "name": "gameLabelsStr",
         "type": "string",
-        "defaultValue": "\"LichtLoser\\nReaction Wheel\"",
+        "defaultValue": "\"LichtLoser\"",
         "persistent": false
       },
       {
@@ -8970,8 +8970,8 @@
         {
           "objID": "beb70c5f-3a35-49d8-ff16-9efae8f52505",
           "type": "CallActionActionComponent",
-          "left": -59,
-          "top": 15,
+          "left": 198,
+          "top": -40,
           "width": 168,
           "height": 24,
           "customInputs": [],
@@ -8985,8 +8985,8 @@
         {
           "objID": "a81e5d93-3f1a-4f4d-8e90-a5b13704f5f3",
           "type": "EndActionComponent",
-          "left": 190,
-          "top": 15,
+          "left": 427,
+          "top": 188,
           "width": 87,
           "height": 24,
           "customInputs": [],
@@ -9001,6 +9001,58 @@
           "height": 24,
           "customInputs": [],
           "customOutputs": []
+        },
+        {
+          "objID": "69e6e390-2572-4870-c36c-8d2164eb11bd",
+          "type": "DelayActionComponent",
+          "left": 279,
+          "top": 1,
+          "width": 87,
+          "height": 54,
+          "customInputs": [],
+          "customOutputs": [],
+          "milliseconds": "15"
+        },
+        {
+          "objID": "f680b30c-056b-4d9c-cc1f-3753992f6928",
+          "type": "CallActionActionComponent",
+          "left": 198,
+          "top": 69,
+          "width": 168,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "cmd_SendPreviewClear",
+          "userPropertyValues": {
+            "objID": "13ad46d7-3880-4db7-fa38-525cb74e247a",
+            "values": {}
+          }
+        },
+        {
+          "objID": "7374b009-0109-4807-e24b-0ebb18b4a04d",
+          "type": "DelayActionComponent",
+          "left": 279,
+          "top": 120,
+          "width": 87,
+          "height": 54,
+          "customInputs": [],
+          "customOutputs": [],
+          "milliseconds": "15"
+        },
+        {
+          "objID": "5c6553ea-ef0e-4fe7-eeb3-85d95485026b",
+          "type": "CallActionActionComponent",
+          "left": 198,
+          "top": 188,
+          "width": 168,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "cmd_SendPreviewClear",
+          "userPropertyValues": {
+            "objID": "cf6fee3a-dd6f-4a43-f3f9-5b85fc27f0e0",
+            "values": {}
+          }
         }
       ],
       "connectionLines": [
@@ -9019,17 +9071,45 @@
           "input": "@seqin"
         },
         {
-          "objID": "cb40a351-4438-4b9d-b1b7-d67d63269893",
-          "source": "beb70c5f-3a35-49d8-ff16-9efae8f52505",
-          "output": "@seqout",
-          "target": "a81e5d93-3f1a-4f4d-8e90-a5b13704f5f3",
-          "input": "@seqin"
-        },
-        {
           "objID": "53c5b448-59e7-4b59-a279-661be5f9c555",
           "source": "acfa96fb-e800-4b18-e61c-b2f6832eb4f0",
           "output": "@seqout",
           "target": "88418e82-c903-4d3d-b652-a3b042c653fb",
+          "input": "@seqin"
+        },
+        {
+          "objID": "41fadd9e-80be-42c6-84ab-5fd3465e9bfa",
+          "source": "beb70c5f-3a35-49d8-ff16-9efae8f52505",
+          "output": "@seqout",
+          "target": "69e6e390-2572-4870-c36c-8d2164eb11bd",
+          "input": "@seqin"
+        },
+        {
+          "objID": "cc3f50a6-5410-46f5-c19a-6a7ae38d8c4a",
+          "source": "69e6e390-2572-4870-c36c-8d2164eb11bd",
+          "output": "@seqout",
+          "target": "f680b30c-056b-4d9c-cc1f-3753992f6928",
+          "input": "@seqin"
+        },
+        {
+          "objID": "6da8c5de-7db6-4f7d-9794-25ffff5e6bd9",
+          "source": "7374b009-0109-4807-e24b-0ebb18b4a04d",
+          "output": "@seqout",
+          "target": "5c6553ea-ef0e-4fe7-eeb3-85d95485026b",
+          "input": "@seqin"
+        },
+        {
+          "objID": "8601bb5f-d3ea-4d45-e5b3-70fc7604ab00",
+          "source": "f680b30c-056b-4d9c-cc1f-3753992f6928",
+          "output": "@seqout",
+          "target": "7374b009-0109-4807-e24b-0ebb18b4a04d",
+          "input": "@seqin"
+        },
+        {
+          "objID": "d0591dbe-3d67-47d8-ad5d-ce234b14b240",
+          "source": "5c6553ea-ef0e-4fe7-eeb3-85d95485026b",
+          "output": "@seqout",
+          "target": "a81e5d93-3f1a-4f4d-8e90-a5b13704f5f3",
           "input": "@seqin"
         }
       ],
@@ -9278,7 +9358,7 @@
               "type": "LVGLLabelWidget",
               "left": 3,
               "top": 465,
-              "width": 57,
+              "width": 56,
               "height": 11,
               "customInputs": [],
               "customOutputs": [],
@@ -9320,7 +9400,7 @@
               },
               "group": "",
               "groupIndex": 0,
-              "text": "version: 0.4",
+              "text": "version: 0.5",
               "textType": "literal",
               "longMode": "WRAP",
               "recolor": false
@@ -14170,6 +14250,31 @@
               "useStackType": "literal"
             }
           ]
+        },
+        {
+          "objID": "0d673649-47c7-468a-e5a3-c77fdb28a657",
+          "type": "CallActionActionComponent",
+          "left": 391,
+          "top": -119,
+          "width": 110,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": [],
+          "action": "unLoadGame",
+          "userPropertyValues": {
+            "objID": "b6cbc3f1-1e32-4e5e-eda2-6a750754bd65",
+            "values": {}
+          }
+        },
+        {
+          "objID": "860a38b4-3b99-405c-827b-0974d70659fb",
+          "type": "EndActionComponent",
+          "left": 525,
+          "top": -119,
+          "width": 87,
+          "height": 24,
+          "customInputs": [],
+          "customOutputs": []
         }
       ],
       "connectionLines": [
@@ -14178,6 +14283,20 @@
           "source": "0dca1d36-037a-4e6a-e6ec-bb58274c0074",
           "output": "RELEASED",
           "target": "1d7344d2-5efd-42b0-cd39-bcc3dce3c99f",
+          "input": "@seqin"
+        },
+        {
+          "objID": "726ca376-2e85-45cc-ccb7-a550347339f7",
+          "source": "1d7344d2-5efd-42b0-cd39-bcc3dce3c99f",
+          "output": "@seqout",
+          "target": "0d673649-47c7-468a-e5a3-c77fdb28a657",
+          "input": "@seqin"
+        },
+        {
+          "objID": "6fd2597a-987a-43a8-8d17-64dd8dce3069",
+          "source": "0d673649-47c7-468a-e5a3-c77fdb28a657",
+          "output": "@seqout",
+          "target": "860a38b4-3b99-405c-827b-0974d70659fb",
           "input": "@seqin"
         }
       ],
