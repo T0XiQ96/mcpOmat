@@ -1,9 +1,8 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[v8pitteromat.eez-project]:/userPages/9",
-    "selectedActionObject": "[v8pitteromat.eez-project]:/actions/24",
+    "selectedUserPageObject": "[v8pitteromat.eez-project]:/userPages/0",
+    "selectedActionObject": "[v8pitteromat.eez-project]:/actions/28",
     "selectedGlobalVariableObject": "[v8pitteromat.eez-project]:/variables/globalVariables/60",
-    "selectedEnumObject": "[v8pitteromat.eez-project]:/variables/enums/-1",
     "subnavigationSelectedItems": {
       "variables-tab/sub-navigation/selected-item": "Global"
     }
@@ -217,6 +216,17 @@
               "children": [
                 {
                   "type": "tab",
+                  "id": "#59e45fbd-950a-4709-8cc9-8157dca92cef",
+                  "name": "Lichtloser_OnHit",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[v8pitteromat.eez-project]:/actions/28",
+                    "permanent": false
+                  },
+                  "icon": "material:code"
+                },
+                {
+                  "type": "tab",
                   "id": "#0223398a-36db-4a33-901d-b914d62f31f5",
                   "name": "UpdateSeat",
                   "component": "editor",
@@ -229,10 +239,10 @@
                 {
                   "type": "tab",
                   "id": "#6fd9f670-b863-4d94-ab7c-c90cb20f00f9",
-                  "name": "game_lichtloser",
+                  "name": "idleScreen",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[v8pitteromat.eez-project]:/userPages/9",
+                    "objectPath": "[v8pitteromat.eez-project]:/userPages/0",
                     "permanent": false
                   },
                   "icon": "svg:page"
@@ -1542,7 +1552,9 @@
     "[v8pitteromat.eez-project]:/userPages/20[flow-state]": {
       "selection": {
         "0": {
-          "2": {},
+          "2": {
+            "1": {}
+          },
           "3": {
             "1": {
               "$selected": true
@@ -1602,7 +1614,17 @@
     },
     "[v8pitteromat.eez-project]:/userPages/23[flow-state]": {
       "selection": {
-        "0": {}
+        "0": {
+          "2": {},
+          "3": {
+            "1": {}
+          },
+          "4": {
+            "1": {
+              "$selected": true
+            }
+          }
+        }
       },
       "transform": {
         "translate": {
@@ -1620,7 +1642,14 @@
     },
     "[v8pitteromat.eez-project]:/userPages/24[flow-state]": {
       "selection": {
-        "0": {}
+        "0": {
+          "2": {},
+          "3": {
+            "1": {
+              "$selected": true
+            }
+          }
+        }
       },
       "transform": {
         "translate": {
@@ -1850,17 +1879,16 @@
     },
     "[v8pitteromat.eez-project]:/actions/28[flow-state]": {
       "selection": {
-        "3": {},
-        "11": {},
-        "14": {},
-        "28": {},
-        "43": {},
-        "44": {}
+        "10": {},
+        "13": {},
+        "27": {},
+        "42": {},
+        "43": {}
       },
       "transform": {
         "translate": {
-          "x": -2290,
-          "y": -479
+          "x": -1985,
+          "y": -544
         },
         "scale": 1.1
       }
@@ -1876,8 +1904,8 @@
       },
       "transform": {
         "translate": {
-          "x": -828.5,
-          "y": -50
+          "x": -718.5,
+          "y": -52
         },
         "scale": 1
       }
@@ -1888,8 +1916,8 @@
       },
       "transform": {
         "translate": {
-          "x": -1180,
-          "y": -391.5
+          "x": 184,
+          "y": -306.5
         },
         "scale": 1
       }
@@ -1912,8 +1940,8 @@
       "selection": {},
       "transform": {
         "translate": {
-          "x": -141,
-          "y": -71
+          "x": -894,
+          "y": -72
         },
         "scale": 1
       }
@@ -2041,14 +2069,12 @@
     "[v8pitteromat.eez-project]:/actions/32[flow-state]": {
       "selection": {
         "1": {},
-        "5": {
-          "$selected": true
-        }
+        "$selected": true
       },
       "transform": {
         "translate": {
-          "x": -512,
-          "y": -146
+          "x": -168,
+          "y": -23
         },
         "scale": 1
       }
@@ -2076,8 +2102,8 @@
       },
       "transform": {
         "translate": {
-          "x": -414,
-          "y": 23.5
+          "x": -225,
+          "y": -47.5
         },
         "scale": 1
       }
@@ -2116,6 +2142,20 @@
         "translate": {
           "x": -375,
           "y": 0
+        },
+        "scale": 1
+      }
+    },
+    "[v8pitteromat.eez-project]:/actions/47[flow-state]": {
+      "selection": {
+        "3": {
+          "$selected": true
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -629,
+          "y": 12
         },
         "scale": 1
       }

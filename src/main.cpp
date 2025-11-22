@@ -412,15 +412,27 @@ static bool lichtLoserPlanSpin(uint8_t startGroup,
   uint16_t blinkMs = static_cast<uint16_t>(stepMs * 2);
   blinkMs = static_cast<uint16_t>(llClampToRange(blinkMs, 80, 500));
 
+  // Zusatz: Joker-Status und Player-Color-Konfig mitsenden
+  int jokerEn          = gv_b(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED) ? 1 : 0;
+  int colorModeIdx     = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_COLOR_MODE_INDEX);
+  int colorSingleIdx   = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_SINGLE_COLOR_INDEX);
+  int colorOwnRand     = gv_b(FLOW_GLOBAL_VARIABLE_PLAYER_OWN_COLOR_FLAG) ? 1 : 0;
+  int colorRandomPerHit= (colorModeIdx == 2) ? 1 : 0;
+
   int written = snprintf(cmdBuf, cmdBufSize,
-                         "LL_SPIN %u %u %u %u %d %u %u\n",
+                         "LL_SPIN %u %u %u %u %d %u %u %d %d %d %d %d\n",
                          static_cast<unsigned>(startGroup),
                          static_cast<unsigned>(accelSteps),
                          static_cast<unsigned>(maxSteps),
                          static_cast<unsigned>(decelSteps),
                          dir,
                          static_cast<unsigned>(stepMs),
-                         static_cast<unsigned>(blinkMs));
+                         static_cast<unsigned>(blinkMs),
+                         jokerEn,
+                         colorModeIdx,
+                         colorSingleIdx,
+                         colorOwnRand,
+                         colorRandomPerHit);
   if (written <= 0 || static_cast<size_t>(written) >= cmdBufSize) {
     return false;
   }
@@ -522,6 +534,17 @@ extern "C" void action_cmd_send_spin_start_to_arduino(lv_event_t *e) {
     return;
   }
 
+  // Playercount durchreichen, sonst kennt der Mega im 5er-Modus die Joker-Lücke nicht
+  {
+    int pc = gv_i(FLOW_GLOBAL_VARIABLE_PLAYER_COUNT);
+    if (pc < 0) {
+      pc = 0;
+    }
+    char pcBuf[32];
+    snprintf(pcBuf, sizeof(pcBuf), "CFG_PLAYERS %d\n", pc);
+    rs485SendLine(pcBuf);
+  }
+
   // Joker-Status an Mega senden (für group-5-Handling)
   {
     int en = gv_b(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED) ? 1 : 0;
@@ -540,14 +563,6 @@ extern "C" void action_cmd_send_spin_start_to_arduino(lv_event_t *e) {
   // Stop UI hit blink when starting a new spin
   eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_BLINK_ACTIVE, eez::BooleanValue(false));
   eez::flow::setGlobalVariable(FLOW_GLOBAL_VARIABLE_HIT_BLINK_PHASE, eez::BooleanValue(false));
-
-  // Joker-Status an Mega senden (für Skip/Gold-Anzeige im Spin)
-  {
-    int en = gv_b(FLOW_GLOBAL_VARIABLE_JOKER_ENABLED) ? 1 : 0;
-    char cfg[32];
-    snprintf(cfg, sizeof(cfg), "CFG_JOKER %d\n", en);
-    rs485SendLine(cfg);
-  }
 
   for (int attempt = 0; attempt < 3; ++attempt) {
     rs485SendLine(buf);

@@ -1563,7 +1563,7 @@ void create_screen_idle_screen() {
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_color(obj, lv_color_hex(0xfffdd111), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_label_set_text(obj, "version: 0.3");
+            lv_label_set_text(obj, "version: 0.4");
         }
     }
     
