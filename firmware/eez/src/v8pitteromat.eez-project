@@ -9011,7 +9011,7 @@
           "height": 54,
           "customInputs": [],
           "customOutputs": [],
-          "milliseconds": "15"
+          "milliseconds": "30"
         },
         {
           "objID": "f680b30c-056b-4d9c-cc1f-3753992f6928",
@@ -9037,7 +9037,7 @@
           "height": 54,
           "customInputs": [],
           "customOutputs": [],
-          "milliseconds": "15"
+          "milliseconds": "30"
         },
         {
           "objID": "5c6553ea-ef0e-4fe7-eeb3-85d95485026b",
@@ -9834,7 +9834,7 @@
             },
             {
               "objID": "24bb064a-2814-4848-e374-a30139c4fea6",
-              "eventName": "SCREEN_LOADED",
+              "eventName": "SCREEN_LOAD_START",
               "handlerType": "action",
               "action": "unLoadGame",
               "userData": 0
@@ -14250,31 +14250,6 @@
               "useStackType": "literal"
             }
           ]
-        },
-        {
-          "objID": "0d673649-47c7-468a-e5a3-c77fdb28a657",
-          "type": "CallActionActionComponent",
-          "left": 391,
-          "top": -119,
-          "width": 110,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": [],
-          "action": "unLoadGame",
-          "userPropertyValues": {
-            "objID": "b6cbc3f1-1e32-4e5e-eda2-6a750754bd65",
-            "values": {}
-          }
-        },
-        {
-          "objID": "860a38b4-3b99-405c-827b-0974d70659fb",
-          "type": "EndActionComponent",
-          "left": 525,
-          "top": -119,
-          "width": 87,
-          "height": 24,
-          "customInputs": [],
-          "customOutputs": []
         }
       ],
       "connectionLines": [
@@ -14283,20 +14258,6 @@
           "source": "0dca1d36-037a-4e6a-e6ec-bb58274c0074",
           "output": "RELEASED",
           "target": "1d7344d2-5efd-42b0-cd39-bcc3dce3c99f",
-          "input": "@seqin"
-        },
-        {
-          "objID": "726ca376-2e85-45cc-ccb7-a550347339f7",
-          "source": "1d7344d2-5efd-42b0-cd39-bcc3dce3c99f",
-          "output": "@seqout",
-          "target": "0d673649-47c7-468a-e5a3-c77fdb28a657",
-          "input": "@seqin"
-        },
-        {
-          "objID": "6fd2597a-987a-43a8-8d17-64dd8dce3069",
-          "source": "0d673649-47c7-468a-e5a3-c77fdb28a657",
-          "output": "@seqout",
-          "target": "860a38b4-3b99-405c-827b-0974d70659fb",
           "input": "@seqin"
         }
       ],

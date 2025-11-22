@@ -55,7 +55,7 @@ static void event_handler_cb_menu_screen_menu_screen(lv_event_t *e) {
         e->user_data = (void *)0;
         flowPropagateValueLVGLEvent(flowState, -1, 49, e);
     }
-    if (event == LV_EVENT_SCREEN_LOADED) {
+    if (event == LV_EVENT_SCREEN_LOAD_START) {
         e->user_data = (void *)0;
         flowPropagateValueLVGLEvent(flowState, -1, 79, e);
     }
@@ -1563,7 +1563,7 @@ void create_screen_idle_screen() {
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_obj_set_style_text_color(obj, lv_color_hex(0xfffdd111), LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_label_set_text(obj, "version: 0.4");
+            lv_label_set_text(obj, "version: 0.5");
         }
     }
     

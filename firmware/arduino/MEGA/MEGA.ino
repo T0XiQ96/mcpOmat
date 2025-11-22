@@ -754,6 +754,12 @@ static void updateLlSpin() {
       } else if (idx >= 36) {
         idx -= 36;
       }
+      // Joker aus und 5 Spieler: Gruppe 5 überspringen, damit Pfad zum ESP-Plan passt
+      if (!g_jokerEnabled && currentPlayerCount == 5 && idx == 4) { // idx 4 => Gruppe 5
+        idx += g_llSpinPlan.dir;
+        if (idx < 0) idx += 36;
+        if (idx >= 36) idx -= 36;
+      }
       g_llSpinPlan.currentGroup = (uint8_t)(idx + 1);
       // Kurz aufblitzen in konfigurierter Farbe (vorherige Gruppe wird geloescht)
       uint32_t c = computeSpinColor(g_llSpinPlan.currentGroup);

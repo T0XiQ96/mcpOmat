@@ -369,21 +369,22 @@ static bool lichtLoserPlanSpin(uint8_t startGroup,
     startIndex = static_cast<uint8_t>(startGroup - 1);
   }
 
-  int32_t signedOffset = dir * static_cast<int32_t>(totalSteps % 36);
-  int32_t idx = static_cast<int32_t>(startIndex) + signedOffset;
-  while (idx < 0) {
-    idx += 36;
-  }
-  while (idx >= 36) {
-    idx -= 36;
-  }
-  uint8_t finalGroup = static_cast<uint8_t>(idx + 1); // 1..36
-  // Joker aus: Endgruppe 5 vermeiden im 5-Spieler-Modus
-  if (playerCount == 5 && !jokerEnabled && finalGroup == 5) {
-    int next = static_cast<int>(finalGroup) + dir;
-    if (next < 1) next = 36;
-    if (next > 36) next = 1;
-    finalGroup = static_cast<uint8_t>(next);
+  auto advanceGroup = [&](uint8_t g, int dirStep) -> uint8_t {
+    int idx = static_cast<int>(g) - 1;
+    idx += dirStep;
+    while (idx < 0) idx += 36;
+    while (idx >= 36) idx -= 36;
+    if (!jokerEnabled && playerCount == 5 && idx == 4) { // Gruppe 5 auslassen
+      idx += dirStep;
+      while (idx < 0) idx += 36;
+      while (idx >= 36) idx -= 36;
+    }
+    return static_cast<uint8_t>(idx + 1);
+  };
+
+  uint8_t finalGroup = startGroup;
+  for (uint32_t s = 0; s < totalSteps; ++s) {
+    finalGroup = advanceGroup(finalGroup, dir);
   }
 
   totalDurationMs = 0;
